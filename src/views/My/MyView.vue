@@ -1,5 +1,5 @@
 <template>
-Home
+我的页面
 </template>
 
 <script lang="ts" setup>
