@@ -1,6 +1,6 @@
 <template>
-  Home
-  <Docker></Docker>
+  首页
+  <Docker :currentIndex="0"></Docker>
 </template>
 
 <script lang="ts" setup>
