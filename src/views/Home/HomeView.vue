@@ -4,10 +4,7 @@
     <div class="header"></div>
 
     <div class="cardList">
-      <Card title="图表">
-        <div class="price">-123.01</div>
-        <div class="chart"></div>
-      </Card>
+      <ChartCard title="日趋势"></ChartCard>
 
       <Card title="最近交易">
         <ul class="recent">
@@ -42,6 +39,7 @@
 
 <script lang="ts" setup>
 import Card from '../../components/Card.vue';
+import ChartCard from '../../components/ChartCard.vue';
 import Circle from '../../components/Circle.vue';
 import Docker from '../../components/Docker.vue';
 </script>
@@ -49,18 +47,6 @@ import Docker from '../../components/Docker.vue';
 <style lang="less" scoped>
 .header {
   height: 50px;
-}
-
-.price {
-  font-size: 20px;
-  font-weight: 700;
-  color: #ff6c7a;
-  margin-bottom: 10px;
-}
-
-.chart {
-  height: 150px;
-  background-color: #ccc;
 }
 
 .recent {
