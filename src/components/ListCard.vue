@@ -70,7 +70,7 @@ defineProps({
 
     &__desc {
       margin-top: 2px;
-      font-size: 12px;
+      font-size: 10px;
       color: #999;
     }
   }
