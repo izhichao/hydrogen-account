@@ -1,8 +1,8 @@
 <template>
   <div class="main-content">
     <Circle></Circle>
-    <div class="header"></div>
-
+    <!-- <div class="header"></div> -->
+    <Header></Header>
     <div class="cardList">
       <ChartCard title="日趋势"></ChartCard>
       <ListCard title="最近交易" :list="recentDealList"></ListCard>
@@ -13,6 +13,7 @@
 </template>
 
 <script lang="ts" setup>
+import Header from '../../components/Header.vue';
 import ChartCard from '../../components/ChartCard.vue';
 import ListCard, { Deal } from '../../components/ListCard.vue';
 import Circle from '../../components/Circle.vue';
@@ -30,8 +31,6 @@ const accountList: Deal[] = [
 ]
 </script>
 
-<style lang="less" scoped>
-.header {
-  height: 50px;
-}
+<style lang="less">
+
 </style>

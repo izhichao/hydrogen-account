@@ -1,7 +1,7 @@
 <template>
   <div class="main-content">
     <Circle></Circle>
-    <div class="header"></div>
+    <Header></Header>
 
     <div class="cardList">
       <ChartCard title="分类统计"></ChartCard>
@@ -14,6 +14,7 @@
 
 <script lang="ts" setup>
 import Circle from '../../components/Circle.vue';
+import Header from '../../components/Header.vue';
 import ChartCard from '../../components/ChartCard.vue';
 import Docker from '../../components/Docker.vue';
 </script>
