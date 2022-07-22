@@ -1,7 +1,6 @@
 <template>
   <div class="main-content">
     <Circle></Circle>
-    <!-- <div class="header"></div> -->
     <Header></Header>
     <div class="cardList">
       <ChartCard title="日趋势"></ChartCard>

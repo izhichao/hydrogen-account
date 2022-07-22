@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <div class="card__header">
+    <div class="card__header" v-show="showHeader">
       <div class="card__header__title">{{ title }}</div>
       <div class="card__header__more">></div>
     </div>
@@ -13,8 +13,11 @@
 <script lang="ts" setup>
 defineProps({
   title: {
-    type: String,
-    required: true
+    type: String
+  },
+  showHeader: {
+    type: Boolean,
+    default: true
   }
 });
 </script>
