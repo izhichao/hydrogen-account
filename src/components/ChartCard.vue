@@ -20,7 +20,7 @@ defineProps({
   font-size: 20px;
   font-weight: 700;
   color: #ff6c7a;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 
 .chart {

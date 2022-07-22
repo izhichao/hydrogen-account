@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts" setup>
-const props = defineProps({
+defineProps({
   title: {
     type: String,
     required: true
@@ -31,8 +31,8 @@ const props = defineProps({
 
   &__header {
     display: flex;
-    height: 24px;
-    margin-bottom: 10px;
+    height: 20px;
+    margin-bottom: 5px;
     justify-content: space-between;
     align-items: center;
 
