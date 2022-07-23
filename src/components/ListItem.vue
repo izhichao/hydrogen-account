@@ -57,5 +57,9 @@ defineProps({
     font-size: 10px;
     color: #999;
   }
+
+  &__price {
+    font-size: 14px;
+  }
 }
 </style>
