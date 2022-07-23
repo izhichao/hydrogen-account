@@ -1,6 +1,7 @@
 <template>
   <div class="main-content">
     <Circle></Circle>
+    <Header title="我的"></Header>
     <div class="cardList">
       <Card :showHeader="false">
         <div class="total">
@@ -38,6 +39,7 @@
 </template>
 
 <script lang="ts" setup>
+import Header from '../../components/Header.vue';
 import Circle from '../../components/Circle.vue';
 import Docker from '../../components/Docker.vue';
 import Card from '../../components/Card.vue';
@@ -52,10 +54,6 @@ const selectList = [
 
 <style lang="less" scoped>
 @import '../../style/variables.less';
-
-.cardList {
-  margin-top: 50px;
-}
 
 .total {
   display: flex;

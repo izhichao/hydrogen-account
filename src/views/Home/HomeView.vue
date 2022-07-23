@@ -1,7 +1,9 @@
 <template>
   <div class="main-content">
     <Circle></Circle>
-    <Header></Header>
+    <Header title="首页">
+      <span class="header__search iconfont">&#xe623;</span>
+    </Header>
     <div class="cardList">
       <ChartCard title="日趋势"></ChartCard>
       <ListCard title="最近交易" :list="recentDealList"></ListCard>
@@ -26,10 +28,14 @@ const recentDealList: Deal[] = [
 
 const accountList: Deal[] = [
   { id: 0, title: '支付宝', amount: 5000 },
-  { id: 1, title: '微信', amount: 5000 },
-]
+  { id: 1, title: '微信', amount: 5000 }
+];
 </script>
 
-<style lang="less">
-
+<style lang="less" scoped>
+.header {
+  &__search {
+    font-size: 20px;
+  }
+}
 </style>

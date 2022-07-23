@@ -1,7 +1,7 @@
 <template>
   <div class="main-content">
     <Circle></Circle>
-    <Header></Header>
+    <Header title="统计"></Header>
 
     <div class="cardList">
       <ChartCard title="分类统计"></ChartCard>
