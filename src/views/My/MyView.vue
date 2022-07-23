@@ -29,7 +29,7 @@
           <div class="select__item" v-for="(item, index) in selectList" :key="item.text">
             <div class="select__item__icon iconfont" v-html="item.icon"></div>
             <div class="select__item__title">{{ item.text }}</div>
-            <div class="select__item__enter iconfont">&gt;</div>
+            <div class="select__item__enter iconfont">&#xe645;</div>
           </div>
         </div>
       </Card>
@@ -45,10 +45,10 @@ import Docker from '../../components/Docker.vue';
 import Card from '../../components/Card.vue';
 
 const selectList = [
-  { icon: '&#xe660;', text: '分类' },
-  { icon: '&#xe628;', text: '导入' },
-  { icon: '&#xe605;', text: '导出' },
-  { icon: '&#xe605;', text: '分享' },
+  { icon: '&#xe65e;', text: '分类' },
+  { icon: '&#xe621;', text: '导入' },
+  { icon: '&#xe622;', text: '导出' },
+  { icon: '&#xe739;', text: '分享' }
 ];
 </script>
 
@@ -104,26 +104,25 @@ const selectList = [
     padding: 12px 0;
 
     &__icon {
+      margin: 0 10px 0 8px;
       width: 22px;
       height: 22px;
-      font-size: 20px;
-      background-color: red;
+      font-size: 18px;
     }
 
     &__title {
       color: @fontColor;
       line-height: 22px;
-      margin-left: 17px;
       font-size: 14px;
     }
 
     &__enter {
       position: absolute;
       right: 8px;
-      color: #c2c4ca;
+      // color: #c2c4ca;
+      transform: rotate(180deg);
       line-height: 22px;
-      font-size: 12px;
-      font-weight: bold;
+      font-size: 14px;
     }
   }
 }
