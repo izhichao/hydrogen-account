@@ -22,6 +22,16 @@
           </div>
         </div>
       </Card>
+
+      <Card :showHeader="false">
+        <div class="select">
+          <div class="select__item" v-for="(item, index) in selectList" :key="item.text">
+            <div class="select__item__icon iconfont" v-html="item.icon"></div>
+            <div class="select__item__title">{{ item.text }}</div>
+            <div class="select__item__enter iconfont">&gt;</div>
+          </div>
+        </div>
+      </Card>
     </div>
   </div>
   <Docker :currentIndex="2"></Docker>
@@ -31,9 +41,18 @@
 import Circle from '../../components/Circle.vue';
 import Docker from '../../components/Docker.vue';
 import Card from '../../components/Card.vue';
+
+const selectList = [
+  { icon: '&#xe660;', text: '分类' },
+  { icon: '&#xe628;', text: '导入' },
+  { icon: '&#xe605;', text: '导出' },
+  { icon: '&#xe605;', text: '分享' },
+];
 </script>
 
 <style lang="less" scoped>
+@import '../../style/variables.less';
+
 .cardList {
   margin-top: 50px;
 }
@@ -58,7 +77,7 @@ import Card from '../../components/Card.vue';
 .statistics {
   display: flex;
   padding: 5px 0;
-  
+
   &__count {
     flex: 1;
     display: flex;
@@ -74,6 +93,39 @@ import Card from '../../components/Card.vue';
     &__amount {
       font-weight: 700;
       color: #333;
+    }
+  }
+}
+
+.select {
+  padding: 0 6px;
+  box-sizing: border-box;
+  &__item {
+    display: flex;
+    position: relative;
+    padding: 12px 0;
+
+    &__icon {
+      width: 22px;
+      height: 22px;
+      font-size: 20px;
+      background-color: red;
+    }
+
+    &__title {
+      color: @fontColor;
+      line-height: 22px;
+      margin-left: 17px;
+      font-size: 14px;
+    }
+
+    &__enter {
+      position: absolute;
+      right: 8px;
+      color: #c2c4ca;
+      line-height: 22px;
+      font-size: 12px;
+      font-weight: bold;
     }
   }
 }
