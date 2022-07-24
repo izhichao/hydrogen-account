@@ -18,12 +18,12 @@
 </template>
 
 <script lang="ts" setup>
-import Header from '../../components/Header.vue';
-import ChartCard from '../../components/ChartCard.vue';
-import ListCard, { Deal } from '../../components/ListCard.vue';
-import Circle from '../../components/Circle.vue';
-import Docker from '../../components/Docker.vue';
-import Calculator from '../../components/Calculator.vue';
+import Header from '../components/Header.vue';
+import ChartCard from '../components/ChartCard.vue';
+import ListCard, { Deal } from '../components/ListCard.vue';
+import Circle from '../components/Circle.vue';
+import Docker from '../components/Docker.vue';
+import Calculator from '../components/Calculator.vue';
 import { ref } from 'vue';
 
 const recentDealList: Deal[] = [
@@ -37,14 +37,14 @@ const accountList: Deal[] = [
   { id: 1, title: '微信', amount: 5000 }
 ];
 
-const calcStatus = ref(false)
+const calcStatus = ref(false);
 const handlePop = () => {
   calcStatus.value = true;
-}
+};
 </script>
 
 <style lang="less" scoped>
-@import '../../style/variables.less';
+@import '../style/variables.less';
 
 .header {
   &__search {
