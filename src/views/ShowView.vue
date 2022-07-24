@@ -13,10 +13,10 @@
 </template>
 
 <script lang="ts" setup>
-import Circle from '../../components/Circle.vue';
-import Header from '../../components/Header.vue';
-import ChartCard from '../../components/ChartCard.vue';
-import Docker from '../../components/Docker.vue';
+import Circle from '../components/Circle.vue';
+import Header from '../components/Header.vue';
+import ChartCard from '../components/ChartCard.vue';
+import Docker from '../components/Docker.vue';
 </script>
 
 <style lang="less" scoped>

@@ -26,7 +26,7 @@
 
       <Card :showHeader="false">
         <div class="select">
-          <div class="select__item" v-for="(item, index) in selectList" :key="item.text">
+          <div class="select__item" v-for="(item, index) in selectList" :key="item.text" @click="handleClick(index)">
             <div class="select__item__icon iconfont" v-html="item.icon"></div>
             <div class="select__item__title">{{ item.text }}</div>
             <div class="select__item__enter iconfont">&#xe645;</div>
@@ -39,21 +39,40 @@
 </template>
 
 <script lang="ts" setup>
-import Header from '../../components/Header.vue';
-import Circle from '../../components/Circle.vue';
-import Docker from '../../components/Docker.vue';
-import Card from '../../components/Card.vue';
+import Header from '../components/Header.vue';
+import Circle from '../components/Circle.vue';
+import Docker from '../components/Docker.vue';
+import Card from '../components/Card.vue';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const selectList = [
   { icon: '&#xe65e;', text: '分类' },
   { icon: '&#xe621;', text: '导入' },
   { icon: '&#xe622;', text: '导出' },
   { icon: '&#xe739;', text: '分享' }
 ];
+
+const handleClick = (index: number) => {
+  switch (index) {
+    case 0:
+      router.push({ name: 'Category' });
+      break;
+    case 1:
+      console.log('导入');
+      break;
+    case 2:
+      console.log('导出');
+      break;
+    case 3:
+      console.log('分享');
+      break;
+  }
+};
 </script>
 
 <style lang="less" scoped>
-@import '../../style/variables.less';
+@import '../style/variables.less';
 
 .total {
   display: flex;
