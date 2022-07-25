@@ -35,7 +35,7 @@ const categrouyList = [
   bottom: 0;
 }
 .header {
-  padding: 0 25px;
+  padding: 0 20px;
   background-image: @linearColor;
 }
 
@@ -44,15 +44,15 @@ const categrouyList = [
 }
 
 .add {
-  height: 50px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-top: 10px;
 
   &__input {
     flex: 1;
     margin: 0 10px 0 0;
-    height: 30px;
+    height: 32px;
     border-radius: 16px;
     border: none;
     outline: none;
