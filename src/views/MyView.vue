@@ -2,7 +2,7 @@
   <div class="main-content">
     <Circle></Circle>
     <Header title="我的"></Header>
-    <div class="cardList">
+    <div class="card-list">
       <Card :showHeader="false">
         <div class="total">
           <div class="total__title">总资产</div>

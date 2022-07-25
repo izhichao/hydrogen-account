@@ -3,7 +3,7 @@
     <Circle></Circle>
     <Header title="统计"></Header>
 
-    <div class="cardList">
+    <div class="card-list">
       <ChartCard title="分类统计"></ChartCard>
       <ChartCard title="日趋势"></ChartCard>
       <ChartCard title="月趋势"></ChartCard>

@@ -4,7 +4,7 @@
     <Header title="首页">
       <span class="header__search iconfont">&#xe623;</span>
     </Header>
-    <div class="cardList">
+    <div class="card-list">
       <ChartCard title="日趋势"></ChartCard>
       <Card title="最近交易">
         <ul class="list">
