@@ -64,8 +64,4 @@ const categrouyList = [
     background-color: @themeColor;
   }
 }
-
-:deep(.item:first-child) {
-  margin-top: 0;
-}
 </style>

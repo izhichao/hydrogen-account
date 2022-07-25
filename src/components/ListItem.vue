@@ -40,10 +40,6 @@ defineProps({
   padding-left: 24px;
   height: 34px;
 
-  &:first-child {
-    margin-top: 15px;
-  }
-
   &:not(:last-child) {
     margin-bottom: 10px;
   }

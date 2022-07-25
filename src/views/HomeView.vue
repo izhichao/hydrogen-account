@@ -6,8 +6,16 @@
     </Header>
     <div class="cardList">
       <ChartCard title="日趋势"></ChartCard>
-      <ListCard title="最近交易" :list="recentDealList"></ListCard>
-      <ListCard title="所有账户" :list="accountList"></ListCard>
+      <Card title="最近交易">
+        <ul class="list">
+          <ListItem v-for="item in recentDealList" :key="item.id" :item="item"></ListItem>
+        </ul>
+      </Card>
+      <Card title="所有账户">
+        <ul class="list">
+          <ListItem v-for="item in accountList" :key="item.id" :item="item"></ListItem>
+        </ul>
+      </Card>
     </div>
   </div>
   <var-button class="btn" type="primary" size="large" round @click="handlePop">
@@ -19,11 +27,11 @@
 
 <script lang="ts" setup>
 import Header from '../components/Header.vue';
-import ChartCard from '../components/ChartCard.vue';
-import ListCard from '../components/ListCard.vue';
-import { Deal } from '../components/ListItem.vue'
 import Circle from '../components/Circle.vue';
 import Docker from '../components/Docker.vue';
+import ChartCard from '../components/ChartCard.vue';
+import Card from '../components/Card.vue';
+import ListItem, { Deal } from '../components/ListItem.vue';
 import Calculator from '../components/Calculator.vue';
 import { ref } from 'vue';
 
