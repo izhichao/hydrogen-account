@@ -4,17 +4,29 @@
       <div class="item__title">{{ item.title }}</div>
       <div class="item__desc" v-show="item.desc">{{ item.desc }}</div>
     </div>
-    <div class="item__price">{{ item.amount }}</div>
+    <div class="item__price" v-show="!showBtn">{{ item.amount }}</div>
+    <div class="item__btn" v-show="showBtn">
+      <slot></slot>
+    </div>
   </li>
 </template>
 
 <script lang="ts" setup>
 import { PropType } from 'vue';
-import { Deal } from './ListCard.vue';
+export interface Deal {
+  id: number;
+  title: string;
+  desc?: string;
+  amount?: number;
+}
 defineProps({
   item: {
     type: Object as PropType<Deal>,
     required: true
+  },
+  showBtn: {
+    type: Boolean,
+    default: false
   }
 });
 </script>

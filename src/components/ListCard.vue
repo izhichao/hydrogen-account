@@ -9,13 +9,7 @@
 <script lang="ts" setup>
 import { PropType } from 'vue';
 import Card from './Card.vue';
-import ListItem from './ListItem.vue';
-export interface Deal {
-  id: number;
-  title: string;
-  desc?: string;
-  amount: number;
-}
+import ListItem, { Deal } from './ListItem.vue';
 
 defineProps({
   title: {

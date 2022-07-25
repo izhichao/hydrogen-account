@@ -20,7 +20,8 @@
 <script lang="ts" setup>
 import Header from '../components/Header.vue';
 import ChartCard from '../components/ChartCard.vue';
-import ListCard, { Deal } from '../components/ListCard.vue';
+import ListCard from '../components/ListCard.vue';
+import { Deal } from '../components/ListItem.vue'
 import Circle from '../components/Circle.vue';
 import Docker from '../components/Docker.vue';
 import Calculator from '../components/Calculator.vue';
