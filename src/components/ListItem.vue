@@ -12,14 +12,14 @@
 </template>
 
 <script lang="ts" setup>
-import { PropType } from 'vue';
+import { PropType, ref } from 'vue';
 export interface Deal {
   id: number;
   title: string;
   desc?: string;
   amount?: number;
 }
-defineProps({
+const props = defineProps({
   item: {
     type: Object as PropType<Deal>,
     required: true
@@ -29,6 +29,11 @@ defineProps({
     default: false
   }
 });
+
+const height = ref('32px');
+if (props.item.desc) {
+  height.value = '32px';
+}
 </script>
 
 <style lang="less" scoped>
@@ -38,7 +43,7 @@ defineProps({
   align-items: center;
   justify-content: space-between;
   padding-left: 24px;
-  height: 34px;
+  height: v-bind(height);
 
   &:not(:last-child) {
     margin-bottom: 10px;
