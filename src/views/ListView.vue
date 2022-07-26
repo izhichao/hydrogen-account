@@ -12,9 +12,9 @@
       </Card>
 
       <!-- 账户统计 -->
-      <!-- <Card :showHeader="false">
+      <Card :showHeader="false">
         <ListItem v-for="item in accountList" :item="item"></ListItem>
-      </Card> -->
+      </Card>
 
       <div class="deal" v-for="(item, key) in dealList" :key="key">
         <div class="deal__day">
@@ -46,7 +46,10 @@ const accountList: Deal[] = [
 ];
 
 const dealList = {
-  20220725: [{ id: 2, title: '购物', amount: -4.58 }],
+  20220725: [
+    { id: 1, title: '购物', amount: -4.58 },
+    { id: 2, title: '购物', amount: -4.58 }
+    ],
   20220726: [
     { id: 0, title: '购物', desc: '手机壳', amount: -4.58 },
     { id: 2, title: '购物', amount: -4.58 },
