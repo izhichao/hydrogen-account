@@ -1,18 +1,20 @@
 <template>
   <li class="item">
     <div>
-      <div class="item__title">{{ item.title }}</div>
-      <div class="item__desc" v-show="item.desc">{{ item.desc }}</div>
+      <div class="item__title">
+        <span>{{ item.title }}</span>
+        <span class="item__desc" v-if="item.desc">{{ item.desc }}</span>
+      </div>
     </div>
-    <div class="item__price" v-show="!showBtn">{{ item.amount }}</div>
-    <div class="item__btn" v-show="showBtn">
+    <div class="item__price" v-if="!showBtn">{{ item.amount }}</div>
+    <div class="item__btn" v-if="showBtn">
       <slot></slot>
     </div>
   </li>
 </template>
 
 <script lang="ts" setup>
-import { PropType, ref } from 'vue';
+import { PropType } from 'vue';
 export interface Deal {
   id: number;
   title: string;
@@ -30,10 +32,6 @@ const props = defineProps({
   }
 });
 
-const height = ref('32px');
-if (props.item.desc) {
-  height.value = '32px';
-}
 </script>
 
 <style lang="less" scoped>
@@ -43,7 +41,7 @@ if (props.item.desc) {
   align-items: center;
   justify-content: space-between;
   padding-left: 24px;
-  height: v-bind(height);
+  height: 30px;
 
   &:not(:last-child) {
     margin-bottom: 10px;
@@ -66,8 +64,9 @@ if (props.item.desc) {
   }
 
   &__desc {
-    margin-top: 2px;
+    margin-left: 5px;
     font-size: 10px;
+    font-weight: 400;
     color: #999;
   }
 
