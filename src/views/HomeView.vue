@@ -5,13 +5,13 @@
       <span class="header__search iconfont">&#xe623;</span>
     </Header>
     <div class="card-list">
-      <ChartCard title="日趋势"></ChartCard>
-      <Card title="最近交易">
+      <ChartCard title="日趋势" @more="handleMore"></ChartCard>
+      <Card title="最近交易" @more="handleMore">
         <ul class="list">
           <ListItem v-for="item in recentDealList" :key="item.id" :item="item"></ListItem>
         </ul>
       </Card>
-      <Card title="所有账户">
+      <Card title="所有账户" @more="handleMore">
         <ul class="list">
           <ListItem v-for="item in accountList" :key="item.id" :item="item"></ListItem>
         </ul>
@@ -34,7 +34,9 @@ import Card from '../components/Card.vue';
 import ListItem, { Deal } from '../components/ListItem.vue';
 import Calculator from '../components/Calculator.vue';
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const recentDealList: Deal[] = [
   { id: 0, title: '购物', desc: '手机壳', amount: -4.58 },
   { id: 1, title: '购物', desc: '手机壳', amount: -4.58 },
@@ -49,6 +51,10 @@ const accountList: Deal[] = [
 const calcStatus = ref(false);
 const handlePop = () => {
   calcStatus.value = true;
+};
+
+const handleMore = () => {
+  router.push({ name: 'List' });
 };
 </script>
 

@@ -3,7 +3,7 @@
     <Circle></Circle>
     <Header title="我的"></Header>
     <div class="card-list">
-      <Card :showHeader="false">
+      <Card :header="false">
         <div class="total">
           <div class="total__title">总资产</div>
           <div class="total__amount">999</div>
@@ -24,7 +24,7 @@
         </div>
       </Card>
 
-      <Card :showHeader="false">
+      <Card :header="false">
         <div class="select">
           <div class="select__item" v-for="(item, index) in selectList" :key="item.text" @click="handleClick(index)">
             <div class="select__item__icon iconfont" v-html="item.icon"></div>

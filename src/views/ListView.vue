@@ -2,7 +2,7 @@
   <Header title="所有交易" :showBack="true"></Header>
   <div class="main-content">
     <div class="card-list">
-      <Card :showHeader="false">
+      <Card :header="false">
         <ul>
           <li class="top" v-for="item in topModel">
             <div class="top__title">{{ item.title }}</div>
@@ -12,8 +12,11 @@
       </Card>
 
       <!-- 账户统计 -->
-      <Card :showHeader="false">
+      <Card :header="false">
         <ListItem v-for="item in accountList" :item="item"></ListItem>
+        <div class="add-btn">
+          123
+        </div>
       </Card>
 
       <div class="deal" v-for="(item, key) in dealList" :key="key">
@@ -22,7 +25,7 @@
           <div class="deal__day__total">-120</div>
         </div>
 
-        <Card :showHeader="false">
+        <Card :header="false">
           <ListItem v-for="subItem in item" :item="subItem"></ListItem>
         </Card>
       </div>

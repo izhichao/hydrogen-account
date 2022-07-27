@@ -7,7 +7,7 @@
         <var-icon name="plus" />
       </var-button>
     </div>
-    <Card :showHeader="false">
+    <Card :header="false">
       <ListItem v-for="item in categrouyList" :item="item" :showBtn="true">
         <var-icon name="menu" size="18" class="edit" />
         <var-icon name="delete" size="18" class="delete" />
