@@ -6,8 +6,8 @@
         <span class="item__desc" v-if="item.desc">{{ item.desc }}</span>
       </div>
     </div>
-    <div class="item__price" v-if="!showBtn">{{ item.amount }}</div>
-    <div class="item__btn" v-if="showBtn">
+    <div class="item__price" v-if="!button">{{ item.amount }}</div>
+    <div class="item__btn" v-if="button">
       <slot></slot>
     </div>
   </li>
@@ -15,7 +15,7 @@
 
 <script lang="ts" setup>
 import { PropType } from 'vue';
-export interface Deal {
+export interface Item {
   id: number;
   title: string;
   desc?: string;
@@ -23,10 +23,10 @@ export interface Deal {
 }
 const props = defineProps({
   item: {
-    type: Object as PropType<Deal>,
+    type: Object as PropType<Item>,
     required: true
   },
-  showBtn: {
+  button: {
     type: Boolean,
     default: false
   }

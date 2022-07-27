@@ -31,19 +31,19 @@ import Circle from '../components/Circle.vue';
 import Docker from '../components/Docker.vue';
 import ChartCard from '../components/ChartCard.vue';
 import Card from '../components/Card.vue';
-import ListItem, { Deal } from '../components/ListItem.vue';
+import ListItem, { Item } from '../components/ListItem.vue';
 import Calculator from '../components/Calculator.vue';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
-const recentDealList: Deal[] = [
+const recentDealList: Item[] = [
   { id: 0, title: '购物', desc: '手机壳', amount: -4.58 },
   { id: 1, title: '购物', desc: '手机壳', amount: -4.58 },
   { id: 2, title: '购物', amount: -4.58 }
 ];
 
-const accountList: Deal[] = [
+const accountList: Item[] = [
   { id: 0, title: '支付宝', amount: 5000 },
   { id: 1, title: '微信', amount: 5000 }
 ];

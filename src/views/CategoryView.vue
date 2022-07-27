@@ -8,8 +8,8 @@
       </var-button>
     </div>
     <Card :header="false">
-      <ListItem v-for="item in categrouyList" :item="item" :showBtn="true">
-        <var-icon name="menu" size="18" class="edit" />
+      <ListItem v-for="item in categrouyList" :item="item" :button="true">
+        <var-icon name="cog " size="18" class="edit"/>
         <var-icon name="delete" size="18" class="delete" />
       </ListItem>
     </Card>
@@ -23,8 +23,8 @@ import ListItem from '../components/ListItem.vue';
 
 const categrouyList = [
   { id: 0, title: '购物', desc: '共10条交易' },
-  // { id: 1, title: '水电费', desc: '共100条交易' },
-  // { id: 2, title: '交通', desc: '共99条交易' }
+  { id: 1, title: '水电费', desc: '共100条交易' },
+  { id: 2, title: '交通', desc: '共99条交易' }
 ];
 </script>
 
