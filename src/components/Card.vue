@@ -1,8 +1,8 @@
 <template>
   <div class="card">
-    <div class="card__header" v-show="showHeader">
+    <div class="card__header" v-if="header">
       <div class="card__header__title">{{ title }}</div>
-      <div class="card__header__more iconfont">&#xe658;</div>
+      <div class="card__header__more iconfont" @click="$emit('more')">&#xe658;</div>
     </div>
     <div class="card__content">
       <slot></slot>
@@ -15,7 +15,7 @@ defineProps({
   title: {
     type: String
   },
-  showHeader: {
+  header: {
     type: Boolean,
     default: true
   }
