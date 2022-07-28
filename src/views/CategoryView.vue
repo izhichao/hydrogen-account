@@ -1,5 +1,5 @@
 <template>
-  <Header title="分类" :showBack="true"></Header>
+  <Header title="分类" :back="true"></Header>
   <div class="main-content">
     <div class="add">
       <input type="text" class="add__input" />

@@ -54,7 +54,7 @@ const handlePop = () => {
 };
 
 const handleMore = () => {
-  router.push({ name: 'List' });
+  router.push({ name: 'Chart' });
 };
 </script>
 

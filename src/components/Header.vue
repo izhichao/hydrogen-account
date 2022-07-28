@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <div class="header__left" @click="handleBack">
-      <span v-show="showBack" class="header__back iconfont">&#xe645;</span>
+      <span v-show="back" class="header__back iconfont">&#xe645;</span>
       <span class="header__title">{{ title }}</span>
     </div>
     <div class="header__right">
@@ -16,14 +16,14 @@ const props = defineProps({
     type: String,
     required: true
   },
-  showBack: {
+  back: {
     type: Boolean,
     default: false
   }
 });
 
 const handleBack = () => {
-  props.showBack && history.back();
+  props.back && history.back();
 };
 </script>
 

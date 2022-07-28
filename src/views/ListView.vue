@@ -1,5 +1,5 @@
 <template>
-  <Header title="所有交易" :showBack="true"></Header>
+  <Header title="所有交易" :back="true"></Header>
   <div class="main-content">
     <div class="card-list">
       <Card :header="false">
@@ -53,14 +53,13 @@ const accountList: Item[] = [
 ];
 
 const isAccount = ref(false);
-if (accountList) {
-  isAccount.value = true;
-}
+// if (accountList) {
+//   isAccount.value = true;
+// }
 
 const dealList = {
   20220725: [
-    { id: 1, title: '购物', amount: -4.58 },
-    { id: 2, title: '购物', amount: -4.58 }
+    { id: 1, title: '购物', amount: -4.58 }
   ],
   20220726: [
     { id: 0, title: '购物', desc: '手机壳', amount: -4.58 },
