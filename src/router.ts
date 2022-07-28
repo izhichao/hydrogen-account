@@ -6,7 +6,8 @@ const routes: RouteRecordRaw[] = [
   { path: '/my', name: 'My', component: () => import(/* webpackChunkName: "my" */ './views/MyView.vue') },
   { path: '/category', name: 'Category', component: () => import(/* webpackChunkName: "category" */ './views/CategoryView.vue') },
   { path: '/list', name: 'List', component: () => import(/* webpackChunkName: "list" */ './views/ListView.vue') },
-  { path: '/chart', name: 'Chart', component: () => import(/* webpackChunkName: "chart" */ './views/ChartListView.vue') }
+  { path: '/chart', name: 'Chart', component: () => import(/* webpackChunkName: "chart" */ './views/ChartListView.vue') },
+  { path: '/detail', name: 'Detail', component: () => import(/* webpackChunkName: "detail" */ './views/DetailView.vue') }
 ];
 
 const router = createRouter({
