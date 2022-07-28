@@ -53,4 +53,9 @@ defineProps({
     }
   }
 }
+
+// 列表项只有一个时，修改padding值
+.padding-small {
+  padding: 10px 15px;
+}
 </style>
