@@ -1,5 +1,5 @@
 <template>
-  <Card :title="title">
+  <Card :title="title" :header="header">
     <div class="price">-123.01</div>
     <div class="chart"></div>
   </Card>
@@ -11,6 +11,10 @@ defineProps({
   title: {
     type: String,
     required: true
+  },
+  header: {
+    type: Boolean,
+    default: true
   }
 });
 </script>
