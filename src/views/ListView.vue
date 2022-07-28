@@ -12,7 +12,7 @@
       </Card>
 
       <!-- 账户统计 -->
-      <Card :header="false" v-if="isAccount">
+      <Card :header="false" v-if="isAccount" class="padding-small">
         <ListItem v-for="item in accountList" :item="item"></ListItem>
 
         <div class="add" v-ripple>
@@ -20,14 +20,15 @@
         </div>
       </Card>
 
-      <template v-if="!isAccount">
+      <!-- 交易统计 -->
+      <template v-if="isAccount">
         <div class="deal" v-for="(item, key) in dealList" :key="key">
           <div class="deal__day">
             <div class="deal__day__time">{{ key }}</div>
             <div class="deal__day__total">-120</div>
           </div>
 
-          <Card :header="false">
+          <Card :header="false" :class="{ 'padding-small': item.length === 1 }">
             <ListItem v-for="subItem in item" :item="subItem"></ListItem>
           </Card>
         </div>
@@ -53,14 +54,12 @@ const accountList: Item[] = [
 ];
 
 const isAccount = ref(false);
-// if (accountList) {
-//   isAccount.value = true;
-// }
+if (accountList) {
+  isAccount.value = true;
+}
 
 const dealList = {
-  20220725: [
-    { id: 1, title: '购物', amount: -4.58 }
-  ],
+  20220725: [{ id: 1, title: '购物', amount: -4.58 }],
   20220726: [
     { id: 0, title: '购物', desc: '手机壳', amount: -4.58 },
     { id: 2, title: '购物', amount: -4.58 },
@@ -71,18 +70,7 @@ const dealList = {
 
 <style lang="less" scoped>
 @import '../style/variables.less';
-.main-content {
-  top: 50px;
-  bottom: 0;
-}
-.header {
-  padding: 0 20px;
-  background-image: @linearColor;
-}
-
-.card-list {
-  padding-top: 10px;
-}
+@import '../style/inner.less';
 
 .top {
   display: flex;

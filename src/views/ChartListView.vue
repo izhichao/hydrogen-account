@@ -3,7 +3,7 @@
   <div class="main-content">
     <div class="card-list">
       <ChartCard title="分类"></ChartCard>
-      <Card :header="false" class="card-item">
+      <Card :header="false" class="padding-small">
         <ListItem :item="{ id: 1, title: '购物', desc: '10笔', amount: -100 }"></ListItem>
       </Card>
     </div>
@@ -19,20 +19,5 @@ import ListItem from '../components/ListItem.vue';
 
 <style lang="less" scoped>
 @import '../style/variables.less';
-.main-content {
-  top: 50px;
-  bottom: 0;
-}
-.header {
-  padding: 0 20px;
-  background-image: @linearColor;
-}
-
-.card-list {
-  padding-top: 10px;
-}
-
-.card-item {
-  padding: 10px 15px;
-}
+@import '../style/inner.less';
 </style>
