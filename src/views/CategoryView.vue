@@ -9,8 +9,8 @@
     </div>
     <Card :header="false">
       <ListItem v-for="item in categoryList" :item="item" :button="true">
-        <var-icon name="cog " size="18" class="edit"/>
-        <var-icon name="delete" size="18" class="delete" />
+        <var-icon name="cog " size="18" class="edit" color="#333" />
+        <var-icon name="delete" size="18" class="delete" color="#333" />
       </ListItem>
     </Card>
   </div>

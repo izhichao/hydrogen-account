@@ -57,7 +57,7 @@ import Card from '../components/Card.vue';
 const showDate = ref(false);
 const showTime = ref(false);
 const itemData = reactive({
-  amount: 0,
+  amount: '0',
   category: 0,
   date: '2021-04-08',
   time: '11:20',
