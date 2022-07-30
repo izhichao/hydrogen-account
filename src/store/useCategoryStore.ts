@@ -33,6 +33,9 @@ export const useCategoryStore = defineStore('category', {
         }
         return category;
       });
+      console.log(newCategoryList);
+      
+      // this.categoryList = newCategoryList;
     }
   },
   persist: true
