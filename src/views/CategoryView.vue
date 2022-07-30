@@ -26,7 +26,7 @@ import { ref } from 'vue';
 import { Dialog, Snackbar } from '@varlet/ui';
 const categoryStore = useCategoryStore();
 const { categoryList } = storeToRefs(categoryStore);
-const { addCategory } = categoryStore;
+const { addCategory, deleteCategory } = categoryStore;
 
 const title = ref('');
 const handleAdd = () => {
@@ -45,7 +45,7 @@ const handleEdit = (id: number) => {
 const handleDelete = (id: number) => {
   Dialog('确认删除').then((res) => {
     if (res === 'confirm') {
-      console.log(id);
+      deleteCategory(id);
     }
   });
 };

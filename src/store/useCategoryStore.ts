@@ -17,7 +17,22 @@ export const useCategoryStore = defineStore('category', {
       this.categoryList.push({ id: newId, title, desc: '共10条交易' });
     },
     deleteCategory(id: number) {
-      
+      let newCategoryList = [];
+      newCategoryList = this.categoryList.filter((category) => {
+        if (category.id !== id) {
+          return category;
+        }
+      });
+      this.categoryList = newCategoryList;
+    },
+    editCategory(id: number, title: string) {
+      let newCategoryList = [];
+      newCategoryList = this.categoryList.map((category) => {
+        if (category.id === id) {
+          category.title = title;
+        }
+        return category;
+      });
     }
   },
   persist: true
