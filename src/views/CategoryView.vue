@@ -2,7 +2,7 @@
   <Header title="分类" :back="true"></Header>
   <div class="main-content">
     <div class="add">
-      <input type="text" class="add__input" v-model="title" />
+      <input type="text" class="add__input" v-model="name" />
       <var-button type="primary" round class="add__btn" @click="handleAdd">
         <var-icon name="plus" />
       </var-button>
@@ -15,7 +15,7 @@
     </Card>
 
     <var-dialog v-model:show="editModel.status" @confirm="handleEdit">
-      <var-input placeholder="请输入新的分类名" v-model="editModel.title" />
+      <var-input placeholder="请输入新的分类名" v-model="editModel.name" />
     </var-dialog>
   </div>
 </template>
@@ -24,52 +24,8 @@
 import Header from '../components/Header.vue';
 import Card from '../components/Card.vue';
 import ListItem from '../components/ListItem.vue';
-import { useCategoryStore } from '../store/useCategoryStore';
-import { storeToRefs } from 'pinia';
-import { reactive, ref } from 'vue';
-import { Dialog, Snackbar } from '@varlet/ui';
-const categoryStore = useCategoryStore();
-const { categoryList } = storeToRefs(categoryStore);
-const { addCategory, deleteCategory, editCategory } = categoryStore;
-
-const title = ref('');
-const editModel = reactive({
-  id: 0,
-  title: '',
-  status: false
-});
-
-const handleAdd = () => {
-  if (!title.value) {
-    Snackbar('请输入分类名称');
-    return;
-  }
-  addCategory(title.value);
-  title.value = '';
-};
-
-const handleShow = (id: number) => {
-  editModel.status = true;
-  editModel.id = id;
-};
-
-const handleEdit = () => {
-  if (!editModel.title) {
-    Snackbar('请输入新的分类名称');
-    return;
-  }
-  editCategory(editModel.id, editModel.title);
-  editModel.title = '';
-  editModel.status = false;
-};
-
-const handleDelete = (id: number) => {
-  Dialog('确认删除').then((res) => {
-    if (res === 'confirm') {
-      deleteCategory(id);
-    }
-  });
-};
+import { useCategory } from '../composables/useCategory';
+const { categoryList, name, editModel, handleAdd, handleDelete, handleEdit, handleShow } = useCategory();
 </script>
 
 <style lang="less" scoped>

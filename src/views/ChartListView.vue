@@ -4,7 +4,7 @@
     <div class="card-list">
       <ChartCard title="分类"></ChartCard>
       <Card :header="false" class="padding-small">
-        <ListItem :item="{ id: 1, title: '购物', desc: '10笔', amount: -100 }"></ListItem>
+        <ListItem :item="{ id: 1, name: '购物', desc: '10笔', amount: -100 }"></ListItem>
       </Card>
     </div>
   </div>

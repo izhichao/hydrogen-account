@@ -49,8 +49,8 @@ const topModel = [
 ];
 
 const accountList: Item[] = [
-  { id: 0, title: '支付宝', amount: 5000 },
-  { id: 1, title: '微信', amount: 5000 }
+  { id: 0, name: '支付宝', amount: 5000 },
+  { id: 1, name: '微信', amount: 5000 }
 ];
 
 const isAccount = ref(false);
