@@ -9,10 +9,14 @@
     </div>
     <Card :header="false">
       <ListItem v-for="item in categoryList" :item="item" :button="true">
-        <var-icon name="cog " size="18" class="edit" color="#333" @click="handleEdit(item.id)" />
+        <var-icon name="cog " size="18" class="edit" color="#333" @click="handleShow(item.id)" />
         <var-icon name="delete" size="18" class="delete" color="#333" @click="handleDelete(item.id)" />
       </ListItem>
     </Card>
+
+    <var-dialog v-model:show="editModel.status" @confirm="handleEdit">
+      <var-input placeholder="请输入新的分类名" v-model="editModel.title" />
+    </var-dialog>
   </div>
 </template>
 
@@ -22,13 +26,19 @@ import Card from '../components/Card.vue';
 import ListItem from '../components/ListItem.vue';
 import { useCategoryStore } from '../store/useCategoryStore';
 import { storeToRefs } from 'pinia';
-import { ref } from 'vue';
+import { reactive, ref } from 'vue';
 import { Dialog, Snackbar } from '@varlet/ui';
 const categoryStore = useCategoryStore();
 const { categoryList } = storeToRefs(categoryStore);
-const { addCategory, deleteCategory } = categoryStore;
+const { addCategory, deleteCategory, editCategory } = categoryStore;
 
 const title = ref('');
+const editModel = reactive({
+  id: 0,
+  title: '',
+  status: false
+});
+
 const handleAdd = () => {
   if (!title.value) {
     Snackbar('请输入分类名称');
@@ -38,8 +48,19 @@ const handleAdd = () => {
   title.value = '';
 };
 
-const handleEdit = (id: number) => {
-  console.log(id);
+const handleShow = (id: number) => {
+  editModel.status = true;
+  editModel.id = id;
+};
+
+const handleEdit = () => {
+  if (!editModel.title) {
+    Snackbar('请输入新的分类名称');
+    return;
+  }
+  editCategory(editModel.id, editModel.title);
+  editModel.title = '';
+  editModel.status = false;
 };
 
 const handleDelete = (id: number) => {
