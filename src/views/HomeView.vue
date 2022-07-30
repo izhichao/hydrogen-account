@@ -38,14 +38,14 @@ import { useRouter } from 'vue-router';
 
 const router = useRouter();
 const recentDealList: Item[] = [
-  { id: 0, title: '购物', desc: '手机壳', amount: -4.58 },
-  { id: 1, title: '购物', desc: '手机壳', amount: -4.58 },
-  { id: 2, title: '购物', amount: -4.58 }
+  { id: 0, name: '购物', desc: '手机壳', amount: -4.58 },
+  { id: 1, name: '购物', desc: '手机壳', amount: -4.58 },
+  { id: 2, name: '购物', amount: -4.58 }
 ];
 
 const accountList: Item[] = [
-  { id: 0, title: '支付宝', amount: 5000 },
-  { id: 1, title: '微信', amount: 5000 }
+  { id: 0, name: '支付宝', amount: 5000 },
+  { id: 1, name: '微信', amount: 5000 }
 ];
 
 const calcStatus = ref(false);

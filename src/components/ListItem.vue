@@ -2,7 +2,7 @@
   <li class="item">
     <div>
       <div class="item__title">
-        <span>{{ item.title }}</span>
+        <span>{{ item.name }}</span>
         <span class="item__desc" v-if="item.desc">{{ item.desc }}</span>
       </div>
     </div>
@@ -17,7 +17,7 @@
 import { PropType } from 'vue';
 export interface Item {
   id: number;
-  title: string;
+  name: string;
   desc?: string;
   amount?: number;
 }
