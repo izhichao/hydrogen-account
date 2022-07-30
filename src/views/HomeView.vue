@@ -50,7 +50,8 @@ const accountList: Item[] = [
 
 const calcStatus = ref(false);
 const handlePop = () => {
-  calcStatus.value = true;
+  // calcStatus.value = true;
+  router.push({ name: 'Detail' });
 };
 
 const handleMore = () => {
