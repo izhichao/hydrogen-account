@@ -2,15 +2,15 @@
   <Header title="分类" :back="true"></Header>
   <div class="main-content">
     <div class="add">
-      <input type="text" class="add__input" />
-      <var-button type="primary" round class="add__btn">
+      <input type="text" class="add__input" v-model="title" />
+      <var-button type="primary" round class="add__btn" @click="handleAdd">
         <var-icon name="plus" />
       </var-button>
     </div>
     <Card :header="false">
       <ListItem v-for="item in categoryList" :item="item" :button="true">
-        <var-icon name="cog " size="18" class="edit" color="#333" />
-        <var-icon name="delete" size="18" class="delete" color="#333" />
+        <var-icon name="cog " size="18" class="edit" color="#333" @click="handleEdit(item.id)" />
+        <var-icon name="delete" size="18" class="delete" color="#333" @click="handleDelete(item.id)" />
       </ListItem>
     </Card>
   </div>
@@ -20,12 +20,35 @@
 import Header from '../components/Header.vue';
 import Card from '../components/Card.vue';
 import ListItem from '../components/ListItem.vue';
+import { useCategoryStore } from '../store/useCategoryStore';
+import { storeToRefs } from 'pinia';
+import { ref } from 'vue';
+import { Dialog, Snackbar } from '@varlet/ui';
+const categoryStore = useCategoryStore();
+const { categoryList } = storeToRefs(categoryStore);
+const { addCategory } = categoryStore;
 
-const categoryList = [
-  { id: 0, title: '购物', desc: '共10条交易' },
-  { id: 1, title: '水电费', desc: '共100条交易' },
-  { id: 2, title: '交通', desc: '共99条交易' }
-];
+const title = ref('');
+const handleAdd = () => {
+  if (!title.value) {
+    Snackbar('请输入分类名称');
+    return;
+  }
+  addCategory(title.value);
+  title.value = '';
+};
+
+const handleEdit = (id: number) => {
+  console.log(id);
+};
+
+const handleDelete = (id: number) => {
+  Dialog('确认删除').then((res) => {
+    if (res === 'confirm') {
+      console.log(id);
+    }
+  });
+};
 </script>
 
 <style lang="less" scoped>
