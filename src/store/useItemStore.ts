@@ -1,8 +1,45 @@
 import { defineStore } from 'pinia';
+
+interface Item {
+  id: number;
+  name: string;
+  desc?: string;
+  amount?: number;
+  date?: string;
+  time?: string;
+}
+
 export const useItemStore = defineStore('item', {
   state: () => {
-    return {};
+    return {
+      dealList: [
+        { id: 0, name: '购物', desc: '手机壳', amount: -4.58, date: '2022-07-25', time: '12:00' },
+        { id: 1, name: '购物', desc: '手机壳1', amount: -4.58, date: '2022-07-25', time: '12:00' },
+        { id: 2, name: '购物', desc: '手机壳2', amount: -4.58, date: '2022-07-25', time: '12:00' }
+      ] as Item[],
+      accountList: [
+        { id: 0, name: '支付宝', amount: 5000 },
+        { id: 1, name: '微信', amount: 5000 }
+      ] as Item[]
+    };
   },
-  getters: {},
-  actions: {}
+  getters: {
+    // 按时间分类
+    dealTimeList() {
+      return {
+        20220725: [{ id: 1, name: '购物', amount: -4.58 }],
+        20220726: [
+          { id: 0, name: '购物', desc: '手机壳', amount: -4.58 },
+          { id: 2, name: '购物', amount: -4.58 },
+          { id: 1, name: '购物', desc: '手机壳', amount: -4.58 }
+        ]
+      };
+    }
+  },
+  actions: {
+    addAccount(name: string, amount: number) {
+      const newId = this.accountList[this.accountList.length - 1].id + 1;
+      this.accountList.push({ id: newId, name, amount });
+    }
+  }
 });

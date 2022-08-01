@@ -13,15 +13,25 @@
 
       <!-- 账户统计 -->
       <Card :header="false" v-if="isAccount" class="padding-small">
-        <ListItem v-for="item in accountList" :item="item"></ListItem>
+        <ListItem v-for="item in accountList" :item="item" @click="handleShowEdit(item.id)"></ListItem>
 
-        <div class="add" v-ripple>
+        <div class="add" v-ripple @click="handleShowAdd">
           <var-icon name="plus" :size="24" />
         </div>
       </Card>
 
+      <var-dialog v-model:show="editModel.status" @confirm="handleAdd">
+        <var-input placeholder="请输入新的账户名" v-model="editModel.name" />
+        <var-input placeholder="请输入余额" v-model="editModel.amount" />
+      </var-dialog>
+
+      <var-dialog v-model:show="addModel.status" @confirm="handleAdd">
+        <var-input placeholder="请输入新的账户名" v-model="addModel.name" />
+        <var-input placeholder="请输入余额" v-model.number="addModel.amount" />
+      </var-dialog>
+
       <!-- 交易统计 -->
-      <template v-if="isAccount">
+      <template v-if="!isAccount">
         <div class="deal" v-for="(item, key) in dealList" :key="key">
           <div class="deal__day">
             <div class="deal__day__time">{{ key }}</div>
@@ -41,31 +51,55 @@
 import Header from '../components/Header.vue';
 import Card from '../components/Card.vue';
 import ListItem, { Item } from '../components/ListItem.vue';
-import { ref } from 'vue';
+import { reactive, ref } from 'vue';
+import { useItemStore } from '../store/useItemStore';
+import { storeToRefs } from 'pinia';
+import { Snackbar } from '@varlet/ui';
+
+const ItemStore = useItemStore();
+const { accountList } = storeToRefs(ItemStore);
+const { addAccount } = ItemStore;
+const editModel = reactive({
+  name: '',
+  amount: undefined,
+  status: false
+});
+
+const handleShowEdit = (id: number) => {
+  editModel.status = true;
+  console.log(id);
+};
+
+// 新增账户
+const addModel = reactive({
+  name: '',
+  amount: '',
+  status: false
+});
+
+const handleShowAdd = () => {
+  addModel.status = true;
+};
+
+const handleAdd = () => {
+  if (!addModel.name || !addModel.amount) {
+    Snackbar('请输入账户名与余额');
+    return;
+  }
+  addAccount(addModel.name, +addModel.amount);
+  addModel.name = '';
+  addModel.amount = '';
+};
 
 const topModel = [
   { title: '交易数', amount: '123' },
   { title: '总支出', amount: '-12333' }
 ];
 
-const accountList: Item[] = [
-  { id: 0, name: '支付宝', amount: 5000 },
-  { id: 1, name: '微信', amount: 5000 }
-];
-
 const isAccount = ref(false);
 if (accountList) {
   isAccount.value = true;
 }
-
-const dealList = {
-  20220725: [{ id: 1, title: '购物', amount: -4.58 }],
-  20220726: [
-    { id: 0, title: '购物', desc: '手机壳', amount: -4.58 },
-    { id: 2, title: '购物', amount: -4.58 },
-    { id: 1, title: '购物', desc: '手机壳', amount: -4.58 }
-  ]
-};
 </script>
 
 <style lang="less" scoped>
