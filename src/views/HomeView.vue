@@ -5,13 +5,13 @@
       <span class="header__search iconfont">&#xe623;</span>
     </Header>
     <div class="card-list">
-      <ChartCard title="日趋势" @more="handleMore"></ChartCard>
-      <Card title="最近交易" @more="handleMore">
+      <ChartCard title="日趋势" @more="router.push({ name: 'Chart', query: { type: 'day' } })"></ChartCard>
+      <Card title="最近交易" @more="router.push({ name: 'List', query: { type: 'deal' } })">
         <ul class="list">
           <ListItem v-for="item in recentDealList" :key="item.id" :item="item"></ListItem>
         </ul>
       </Card>
-      <Card title="所有账户" @more="handleMore">
+      <Card title="所有账户" @more="router.push({ name: 'List', query: { type: 'account' } })">
         <ul class="list">
           <ListItem v-for="item in accountList" :key="item.id" :item="item"></ListItem>
         </ul>
@@ -52,10 +52,6 @@ const calcStatus = ref(false);
 const handlePop = () => {
   // calcStatus.value = true;
   router.push({ name: 'Detail' });
-};
-
-const handleMore = () => {
-  router.push({ name: 'Chart' });
 };
 </script>
 

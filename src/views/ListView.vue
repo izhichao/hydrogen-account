@@ -32,7 +32,7 @@
 
       <!-- 交易统计 -->
       <template v-if="!isAccount">
-        <div class="deal" v-for="(item, key) in dealList" :key="key">
+        <div class="deal" v-for="(item, key) in dealTimeList" :key="key">
           <div class="deal__day">
             <div class="deal__day__time">{{ key }}</div>
             <div class="deal__day__total">-120</div>
@@ -55,10 +55,13 @@ import { reactive, ref } from 'vue';
 import { useItemStore } from '../store/useItemStore';
 import { storeToRefs } from 'pinia';
 import { Snackbar } from '@varlet/ui';
+import { useRoute } from 'vue-router';
+const route = useRoute();
+console.log(route.query);
 
 const ItemStore = useItemStore();
-const { accountList } = storeToRefs(ItemStore);
-const { addAccount } = ItemStore;
+const { accountList, dealList } = storeToRefs(ItemStore);
+const { addAccount, dealTimeList } = ItemStore;
 const editModel = reactive({
   name: '',
   amount: undefined,
