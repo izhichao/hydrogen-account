@@ -34,6 +34,18 @@ export const useItemStore = defineStore('item', {
           { id: 1, name: '购物', desc: '手机壳', amount: -4.58 }
         ]
       };
+    },
+    dealAmount(state) {
+      return state.dealList.length;
+    },
+    accountAmount(state) {
+      return state.accountList.length;
+    },
+    totalExpend(state) {
+      return state.dealList.reduce((total, currentValue) => total + (currentValue.amount as number), 0);
+    },
+    totalAsset(state) {
+      return state.accountList.reduce((total, currentValue) => total + (currentValue.amount as number), 0);
     }
   },
   actions: {

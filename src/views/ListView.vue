@@ -1,18 +1,22 @@
 <template>
-  <Header :title="title" :back="true"></Header>
+  <Header :title="route.query.type === 'deal' ? '所有交易' : '所有账户'" :back="true"></Header>
   <div class="main-content">
     <div class="card-list">
-      <Card :header="false">
-        <ul>
-          <li class="total" v-for="item in totalModel">
-            <div class="total__title">{{ item.title }}</div>
-            <div class="total__amount">{{ item.amount }}</div>
-          </li>
-        </ul>
-      </Card>
-
       <!-- 交易统计 -->
       <template v-if="route.query.type === 'deal'">
+        <Card :header="false">
+          <ul>
+            <li class="total">
+              <div class="total__title">交易数</div>
+              <div class="total__amount">{{ dealAmount }}</div>
+            </li>
+            <li class="total">
+              <div class="total__title">总支出</div>
+              <div class="total__amount">{{ totalExpend }}</div>
+            </li>
+          </ul>
+        </Card>
+
         <div class="deal" v-for="(item, key) in dealTimeList" :key="key">
           <div class="deal__day">
             <div class="deal__day__time">{{ key }}</div>
@@ -26,13 +30,28 @@
       </template>
 
       <!-- 账户统计 -->
-      <Card :header="false" v-else-if="route.query.type === 'account'" class="padding-small">
-        <ListItem v-for="item in accountList" :item="item" @click="handleShowEdit(item.id)"></ListItem>
+      <template v-else-if="route.query.type === 'account'">
+        <Card :header="false">
+          <ul>
+            <li class="total">
+              <div class="total__title">账户数</div>
+              <div class="total__amount">{{ accountAmount }}</div>
+            </li>
+            <li class="total">
+              <div class="total__title">总支出</div>
+              <div class="total__amount">{{ totalAsset }}</div>
+            </li>
+          </ul>
+        </Card>
 
-        <div class="add" v-ripple @click="handleShowAdd">
-          <var-icon name="plus" :size="24" />
-        </div>
-      </Card>
+        <Card :header="false" class="padding-small">
+          <ListItem v-for="item in accountList" :item="item" @click="handleShowEdit(item.id)"></ListItem>
+
+          <div class="add" v-ripple @click="handleShowAdd">
+            <var-icon name="plus" :size="24" />
+          </div>
+        </Card>
+      </template>
 
       <var-dialog v-model:show="editModel.status" @confirm="handleEdit">
         <var-input placeholder="请输入新的账户名" v-model="editModel.name" />
@@ -51,32 +70,15 @@
 import Header from '../components/Header.vue';
 import Card from '../components/Card.vue';
 import ListItem, { Item } from '../components/ListItem.vue';
-import { reactive, ref, watch } from 'vue';
+import { reactive, ref } from 'vue';
 import { useItemStore } from '../store/useItemStore';
 import { storeToRefs } from 'pinia';
 import { Snackbar } from '@varlet/ui';
 import { useRoute } from 'vue-router';
 const route = useRoute();
-const ItemStore = useItemStore();
-const { accountList, dealList } = storeToRefs(ItemStore);
-const { addAccount, findAccount, editAccount, deleteAccount, dealTimeList } = ItemStore;
-
-const title = ref('所有交易');
-const totalModel = reactive([
-  { title: '交易数', amount: 0 },
-  { title: '总支出', amount: 0 }
-]);
-
-if (route.query.type === 'deal') {
-  totalModel[0].amount = dealList.value.length;
-  totalModel[1].amount = dealList.value.reduce((total, currentValue) => total + (currentValue.amount as number), 0);
-} else if (route.query.type === 'account') {
-  title.value = '所有账户';
-
-  const sum = accountList.value.reduce((total, currentValue) => total + (currentValue.amount as number), 0);
-  totalModel[0] = { title: '账户数', amount: accountList.value.length };
-  totalModel[1] = { title: '总资产', amount: sum };
-}
+const itemStore = useItemStore();
+const { accountList, dealList, dealTimeList, dealAmount, accountAmount, totalExpend, totalAsset } = storeToRefs(itemStore);
+const { addAccount, findAccount, editAccount, deleteAccount } = itemStore;
 
 const editModel = reactive({
   id: 0,

@@ -6,7 +6,7 @@
       <Card :header="false">
         <div class="total">
           <div class="total__title">总资产</div>
-          <div class="total__amount">999</div>
+          <div class="total__amount">{{ totalAsset }}</div>
         </div>
         <div class="statistics">
           <div class="statistics__count">
@@ -14,11 +14,11 @@
             <div class="statistics__count__title">记账天数</div>
           </div>
           <div class="statistics__count">
-            <div class="statistics__count__amount">1548</div>
+            <div class="statistics__count__amount">{{ dealAmount }}</div>
             <div class="statistics__count__title">交易笔数</div>
           </div>
           <div class="statistics__count">
-            <div class="statistics__count__amount">681</div>
+            <div class="statistics__count__amount">{{ -totalExpend }}</div>
             <div class="statistics__count__title">总支出</div>
           </div>
         </div>
@@ -44,7 +44,9 @@ import Circle from '../components/Circle.vue';
 import Docker from '../components/Docker.vue';
 import Card from '../components/Card.vue';
 import { useRouter } from 'vue-router';
-
+import { useItemStore } from '../store/useItemStore';
+const itemStore = useItemStore();
+const { totalAsset, totalExpend, dealAmount } = itemStore;
 const router = useRouter();
 const selectList = [
   { icon: '&#xe65e;', text: '分类' },
