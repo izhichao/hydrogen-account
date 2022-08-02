@@ -6,7 +6,7 @@ import { storeToRefs } from 'pinia';
 export const useCategory = () => {
   const categoryStore = useCategoryStore();
   // 获取store中的数据及函数
-  const { categoryList } = storeToRefs(categoryStore);
+  const { categoryListWithDesc } = storeToRefs(categoryStore);
   const { addCategory, deleteCategory, editCategory } = categoryStore;
 
   // 新增分类
@@ -52,7 +52,7 @@ export const useCategory = () => {
   };
 
   return {
-    categoryList,
+    categoryListWithDesc,
     name,
     editModel,
     handleAdd,

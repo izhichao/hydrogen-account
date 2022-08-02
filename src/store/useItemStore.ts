@@ -13,10 +13,10 @@ export const useItemStore = defineStore('item', {
   state: () => {
     return {
       dealList: [
-        { id: 0, name: '购物', desc: '手机壳', amount: -4.58, date: '2022-07-25', time: '12:00' },
-        { id: 1, name: '购物', desc: '手机壳1', amount: -4.58, date: '2022-07-25', time: '12:00' },
-        { id: 2, name: '购物', desc: '手机壳2', amount: -4.58, date: '2022-07-25', time: '12:00' }
-      ] as Item[],
+        { id: 0, name: 0, desc: '手机壳', amount: -4.58, date: '2022-07-25', time: '12:00' },
+        { id: 1, name: 2, desc: '手机壳1', amount: -4.58, date: '2022-07-25', time: '12:00' },
+        { id: 2, name: 1, desc: '手机壳2', amount: -4.58, date: '2022-07-25', time: '12:00' }
+      ],
       accountList: [
         { id: 0, name: '支付宝', amount: 5000 },
         { id: 1, name: '微信', amount: 5000 }
@@ -74,6 +74,6 @@ export const useItemStore = defineStore('item', {
         return account;
       });
     }
-  },
-  persist: true
+  }
+  // persist: true
 });
