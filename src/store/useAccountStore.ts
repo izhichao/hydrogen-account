@@ -9,14 +9,9 @@ interface Item {
   time?: string;
 }
 
-export const useItemStore = defineStore('item', {
+export const useAccountStore = defineStore('account', {
   state: () => {
     return {
-      dealList: [
-        { id: 0, name: 0, desc: '手机壳', amount: -4.58, date: '2022-07-25', time: '12:00' },
-        { id: 1, name: 2, desc: '手机壳1', amount: -4.58, date: '2022-07-25', time: '12:00' },
-        { id: 2, name: 1, desc: '手机壳2', amount: -4.58, date: '2022-07-25', time: '12:00' }
-      ],
       accountList: [
         { id: 0, name: '支付宝', amount: 5000 },
         { id: 1, name: '微信', amount: 5000 }
@@ -24,26 +19,10 @@ export const useItemStore = defineStore('item', {
     };
   },
   getters: {
-    // 按时间分类
-    dealTimeList() {
-      return {
-        20220725: [{ id: 1, name: '购物', amount: -4.58 }],
-        20220726: [
-          { id: 0, name: '购物', desc: '手机壳', amount: -4.58 },
-          { id: 2, name: '购物', amount: -4.58 },
-          { id: 1, name: '购物', desc: '手机壳', amount: -4.58 }
-        ]
-      };
-    },
-    dealAmount(state) {
-      return state.dealList.length;
-    },
     accountAmount(state) {
       return state.accountList.length;
     },
-    totalExpend(state) {
-      return state.dealList.reduce((total, currentValue) => total + (currentValue.amount as number), 0);
-    },
+
     totalAsset(state) {
       return state.accountList.reduce((total, currentValue) => total + (currentValue.amount as number), 0);
     }

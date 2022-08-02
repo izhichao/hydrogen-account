@@ -44,9 +44,12 @@ import Circle from '../components/Circle.vue';
 import Docker from '../components/Docker.vue';
 import Card from '../components/Card.vue';
 import { useRouter } from 'vue-router';
-import { useItemStore } from '../store/useItemStore';
-const itemStore = useItemStore();
-const { totalAsset, totalExpend, dealAmount } = itemStore;
+import { useAccountStore } from '../store/useAccountStore';
+import { useDealStore } from '../store/useDealStore';
+const accountStore = useAccountStore();
+const dealStore = useDealStore();
+const { totalAsset } = accountStore;
+const { totalExpend, dealAmount} = dealStore;
 const router = useRouter();
 const selectList = [
   { icon: '&#xe65e;', text: '分类' },
