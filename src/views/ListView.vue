@@ -56,7 +56,7 @@
       <var-dialog v-model:show="editAccountModel.status" @confirm="handleEdit">
         <var-input placeholder="请输入新的账户名" v-model="editAccountModel.name" />
         <var-input placeholder="请输入余额" type="number" v-model.number="editAccountModel.amount" />
-        <var-button text outline type="primary" size="mini" @click="handleShowDelete">删除</var-button>
+        <var-button text outline type="primary" size="mini" @click="handleDelete">删除</var-button>
       </var-dialog>
 
       <var-dialog v-model:show="addAccountModel.status" @confirm="handleAdd">
@@ -70,73 +70,26 @@
 <script lang="ts" setup>
 import Header from '../components/Header.vue';
 import Card from '../components/Card.vue';
-import ListItem, { Item } from '../components/ListItem.vue';
-import { reactive, ref } from 'vue';
-import { useAccountStore } from '../store/useAccountStore';
+import ListItem from '../components/ListItem.vue';
 import { useDealStore } from '../store/useDealStore';
 import { storeToRefs } from 'pinia';
-import { Dialog, Snackbar } from '@varlet/ui';
 import { useRoute } from 'vue-router';
+import { useAccount } from '../composables/useAccount';
 const route = useRoute();
-const accountStore = useAccountStore();
 const dealStore = useDealStore();
-const { dealList, dealTimeList, dealAmount, totalExpend } = storeToRefs(dealStore);
-const { accountList, accountAmount, totalAsset } = storeToRefs(accountStore);
-const { addAccount, findAccount, editAccount, deleteAccount } = accountStore;
-
-const editAccountModel = reactive({
-  id: 0,
-  name: '',
-  amount: '',
-  status: false
-});
-
-const handleShowEdit = (id: number) => {
-  const account = findAccount(id);
-  editAccountModel.status = true;
-  editAccountModel.id = id;
-  editAccountModel.name = account?.name as string;
-  editAccountModel.amount = account?.amount?.toString() as string;
-};
-
-const handleEdit = () => {
-  editAccount(editAccountModel.id, editAccountModel.name, +editAccountModel.amount);
-};
-
-// 新增账户
-const addAccountModel = reactive({
-  name: '',
-  amount: '',
-  status: false
-});
-
-const handleShowAdd = () => {
-  addAccountModel.status = true;
-};
-
-const handleAdd = () => {
-  if (!addAccountModel.name || !addAccountModel.amount) {
-    Snackbar('请输入账户名与余额');
-    return;
-  }
-  addAccount(addAccountModel.name, +addAccountModel.amount);
-  addAccountModel.name = '';
-  addAccountModel.amount = '';
-};
-
-const handleShowDelete = () => {
-  Dialog('确认删除').then((res) => {
-    if (res === 'confirm') {
-      deleteAccount(editAccountModel.id);
-      editAccountModel.status = false;
-    }
-  });
-};
-
-const isAccount = ref(false);
-if (accountList) {
-  isAccount.value = true;
-}
+const { dealTimeList, dealAmount, totalExpend } = storeToRefs(dealStore);
+const {
+  addAccountModel,
+  editAccountModel,
+  accountList,
+  accountAmount,
+  totalAsset,
+  handleShowAdd,
+  handleAdd,
+  handleShowEdit,
+  handleEdit,
+  handleDelete
+} = useAccount();
 </script>
 
 <style lang="less" scoped>
