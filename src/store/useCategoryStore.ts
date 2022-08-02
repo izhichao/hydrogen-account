@@ -24,7 +24,7 @@ export const useCategoryStore = defineStore('category', {
       newCategoryList.forEach((category) => {
         let sum = 0;
         dealList.forEach((deal) => {
-          if (deal.name === category.id) {
+          if (deal.categoryId === category.id) {
             sum++;
           }
           category.desc = `共${sum}笔交易`;

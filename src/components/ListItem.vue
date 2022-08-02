@@ -20,10 +20,12 @@ export interface Item {
   name: string;
   desc?: string;
   amount?: number;
+  categoryId?: number;
 }
-const props = defineProps({
+
+defineProps({
   item: {
-    type: Object as PropType<Item>,
+    type: Object,
     required: true
   },
   button: {
@@ -31,7 +33,6 @@ const props = defineProps({
     default: false
   }
 });
-
 </script>
 
 <style lang="less" scoped>
