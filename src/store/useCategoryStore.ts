@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { useItemStore } from './useItemStore';
+import { useDealStore } from './useDealStore';
 
 export interface Category {
   id: number;
@@ -19,7 +19,7 @@ export const useCategoryStore = defineStore('category', {
   },
   getters: {
     categoryListWithDesc() {
-      const dealList = useItemStore().dealList;
+      const dealList = useDealStore().dealList;
       const newCategoryList: Category[] = JSON.parse(JSON.stringify(this.categoryList));
       newCategoryList.forEach((category) => {
         let sum = 0;

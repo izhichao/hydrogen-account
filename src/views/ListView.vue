@@ -72,14 +72,17 @@ import Header from '../components/Header.vue';
 import Card from '../components/Card.vue';
 import ListItem, { Item } from '../components/ListItem.vue';
 import { reactive, ref } from 'vue';
-import { useItemStore } from '../store/useItemStore';
+import { useAccountStore } from '../store/useAccountStore';
+import { useDealStore } from '../store/useDealStore';
 import { storeToRefs } from 'pinia';
 import { Dialog, Snackbar } from '@varlet/ui';
 import { useRoute } from 'vue-router';
 const route = useRoute();
-const itemStore = useItemStore();
-const { accountList, dealList, dealTimeList, dealAmount, accountAmount, totalExpend, totalAsset } = storeToRefs(itemStore);
-const { addAccount, findAccount, editAccount, deleteAccount } = itemStore;
+const accountStore = useAccountStore();
+const dealStore = useDealStore();
+const { dealList, dealTimeList, dealAmount, totalExpend } = storeToRefs(dealStore);
+const { accountList, accountAmount, totalAsset } = storeToRefs(accountStore);
+const { addAccount, findAccount, editAccount, deleteAccount } = accountStore;
 
 const editAccountModel = reactive({
   id: 0,
