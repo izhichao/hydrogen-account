@@ -34,14 +34,14 @@
         </div>
       </Card>
 
-      <var-dialog v-model:show="editModel.status" @confirm="handleAdd">
+      <var-dialog v-model:show="editModel.status" @confirm="handleEdit">
         <var-input placeholder="请输入新的账户名" v-model="editModel.name" />
-        <var-input placeholder="请输入余额" v-model="editModel.amount" />
+        <var-input placeholder="请输入余额" type="number" v-model.number="editModel.amount" />
       </var-dialog>
 
       <var-dialog v-model:show="addModel.status" @confirm="handleAdd">
         <var-input placeholder="请输入新的账户名" v-model="addModel.name" />
-        <var-input placeholder="请输入余额" v-model.number="addModel.amount" />
+        <var-input placeholder="请输入余额" type="number" v-model.number="addModel.amount" />
       </var-dialog>
     </div>
   </div>
@@ -51,15 +51,15 @@
 import Header from '../components/Header.vue';
 import Card from '../components/Card.vue';
 import ListItem, { Item } from '../components/ListItem.vue';
-import { reactive, ref } from 'vue';
+import { reactive, ref, watch } from 'vue';
 import { useItemStore } from '../store/useItemStore';
 import { storeToRefs } from 'pinia';
 import { Snackbar } from '@varlet/ui';
 import { useRoute } from 'vue-router';
 const route = useRoute();
 const ItemStore = useItemStore();
-const { addAccount, dealTimeList } = ItemStore;
 const { accountList, dealList } = storeToRefs(ItemStore);
+const { addAccount, findAccount, editAccount, deleteAccount, dealTimeList } = ItemStore;
 
 const title = ref('所有交易');
 const totalModel = reactive([
@@ -72,20 +72,29 @@ if (route.query.type === 'deal') {
   totalModel[1].amount = dealList.value.reduce((total, currentValue) => total + (currentValue.amount as number), 0);
 } else if (route.query.type === 'account') {
   title.value = '所有账户';
+
   const sum = accountList.value.reduce((total, currentValue) => total + (currentValue.amount as number), 0);
   totalModel[0] = { title: '账户数', amount: accountList.value.length };
   totalModel[1] = { title: '总资产', amount: sum };
 }
 
 const editModel = reactive({
+  id: 0,
   name: '',
-  amount: undefined,
+  amount: '',
   status: false
 });
 
 const handleShowEdit = (id: number) => {
+  const account = findAccount(id);
   editModel.status = true;
-  console.log(id);
+  editModel.id = id;
+  editModel.name = account?.name as string;
+  editModel.amount = account?.amount?.toString() as string;
+};
+
+const handleEdit = () => {
+  editAccount(editModel.id, editModel.name, +editModel.amount);
 };
 
 // 新增账户
