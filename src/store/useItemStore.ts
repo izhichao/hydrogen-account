@@ -40,6 +40,28 @@ export const useItemStore = defineStore('item', {
     addAccount(name: string, amount: number) {
       const newId = this.accountList[this.accountList.length - 1].id + 1;
       this.accountList.push({ id: newId, name, amount });
+    },
+    findAccount(id: number) {
+      return this.accountList.find((account) => account.id === id);
+    },
+    deleteAccount(id: number) {
+      let newAccountList = [];
+      newAccountList = this.accountList.filter((account) => {
+        if (account.id !== id) {
+          return account;
+        }
+      });
+      this.accountList = newAccountList;
+    },
+    editAccount(id: number, name: string, amount: number) {
+      this.accountList.forEach((account) => {
+        if (account.id === id) {
+          account.name = name;
+          account.amount = amount;
+        }
+        return account;
+      });
     }
-  }
+  },
+  persist: true
 });
