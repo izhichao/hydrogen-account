@@ -46,15 +46,25 @@ import Card from '../components/Card.vue';
 import { useRouter } from 'vue-router';
 import { useAccountStore } from '../store/useAccountStore';
 import { useDealStore } from '../store/useDealStore';
+import { Dialog } from '@varlet/ui';
 const accountStore = useAccountStore();
 const dealStore = useDealStore();
 const { totalAsset } = accountStore;
-const { totalExpend, dealAmount} = dealStore;
+const { totalExpend, dealAmount } = dealStore;
 const router = useRouter();
+
+const handleClear = () => {
+  Dialog('数据将无法恢复！确认清空？').then((res) => {
+    if (res === 'confirm') {
+      localStorage.clear();
+    }
+  });
+};
 const selectList = [
   { icon: '&#xe65e;', text: '分类' },
   { icon: '&#xe621;', text: '导入' },
   { icon: '&#xe622;', text: '导出' },
+  { icon: '&#xe615;', text: '清空' },
   { icon: '&#xe739;', text: '分享' }
 ];
 
@@ -70,6 +80,9 @@ const handleClick = (index: number) => {
       console.log('导出');
       break;
     case 3:
+      handleClear();
+      break;
+    case 4:
       console.log('分享');
       break;
   }
