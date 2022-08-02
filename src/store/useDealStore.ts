@@ -27,11 +27,11 @@ export const useDealStore = defineStore('deal', {
     // 按时间分类
     dealTimeList() {
       return {
-        20220725: [{ id: 1, categoryId: '购物', amount: -4.58 }],
+        20220725: [{ id: 1, name: '购物', amount: -4.58 }],
         20220726: [
-          { id: 0, categoryId: '购物', desc: '手机壳', amount: -4.58 },
-          { id: 2, categoryId: '购物', amount: -4.58 },
-          { id: 1, categoryId: '购物', desc: '手机壳', amount: -4.58 }
+          { id: 0, name: '购物', desc: '手机壳', amount: -4.58 },
+          { id: 2, name: '购物', amount: -4.58 },
+          { id: 1, name: '购物', desc: '手机壳', amount: -4.58 }
         ]
       };
     },
