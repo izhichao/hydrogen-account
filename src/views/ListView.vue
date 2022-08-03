@@ -24,7 +24,11 @@
           </div>
 
           <Card :header="false" :class="{ 'padding-small': item.value.length === 1 }">
-            <ListItem v-for="subItem in item.value" :item="subItem"></ListItem>
+            <ListItem
+              v-for="subItem in item.value"
+              :item="subItem"
+              @more="router.push({ name: 'Detail', query: { type: 'edit', id: subItem.id } })"
+            ></ListItem>
           </Card>
         </div>
       </template>
@@ -73,9 +77,10 @@ import Card from '../components/Card.vue';
 import ListItem from '../components/ListItem.vue';
 import { useDealStore } from '../store/useDealStore';
 import { storeToRefs } from 'pinia';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { useAccount } from '../composables/useAccount';
 const route = useRoute();
+const router = useRouter();
 const dealStore = useDealStore();
 const { dealTimeList, dealAmount, totalExpend } = storeToRefs(dealStore);
 const {

@@ -8,7 +8,12 @@
       <ChartCard title="日趋势" @more="router.push({ name: 'Chart', query: { type: 'day' } })"></ChartCard>
       <Card title="最近交易" @more="router.push({ name: 'List', query: { type: 'deal' } })">
         <ul class="list">
-          <ListItem v-for="item in recentDealList" :key="item.id" :item="item"></ListItem>
+          <ListItem
+            v-for="item in recentDealList"
+            :key="item.id"
+            :item="item"
+            @more="router.push({ name: 'Detail', query: { type: 'edit', id: item.id } })"
+          ></ListItem>
         </ul>
       </Card>
       <Card title="所有账户" @more="router.push({ name: 'List', query: { type: 'account' } })">
@@ -18,7 +23,7 @@
       </Card>
     </div>
   </div>
-  <var-button class="btn" type="primary" size="large" round @click="handlePop">
+  <var-button class="btn" type="primary" size="large" round @click="router.push({ name: 'Detail', query: { type: 'add' } })">
     <var-icon name="plus" :size="26" />
   </var-button>
   <Calculator v-model:show="calcStatus"></Calculator>

@@ -1,5 +1,5 @@
 <template>
-  <li class="item">
+  <li class="item" @click="$emit('more')">
     <div>
       <div class="item__title">
         <span>{{ item.name }}</span>
