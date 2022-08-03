@@ -36,8 +36,8 @@
               <var-input :hint="false" placeholder="轻敲添加备注" v-model="dealModel.desc" clearable />
             </div>
             <div>
-              <var-button type="primary" block class="form__btn" @click="handleAdd">新增</var-button>
-              <!-- <var-button type="primary" block class="form__btn">编辑</var-button> -->
+              <var-button type="primary" block class="form__btn" @click="handleEdit" v-if="type === 'edit'">编辑</var-button>
+              <var-button type="primary" block class="form__btn" @click="handleAdd" v-else>新增</var-button>
             </div>
           </var-space>
 
@@ -61,9 +61,11 @@ import Card from '../components/Card.vue';
 import { useCategoryStore } from '../store/useCategoryStore';
 import { storeToRefs } from 'pinia';
 import { useDealStore } from '../store/useDealStore';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { Snackbar } from '@varlet/ui';
 const router = useRouter();
+const route = useRoute();
+const { type, id } = route.query;
 const showDate = ref(false);
 const showTime = ref(false);
 
@@ -82,7 +84,7 @@ const dealModel = reactive({
 const categoryStore = useCategoryStore();
 const dealStore = useDealStore();
 const { categoryListWithDesc } = storeToRefs(categoryStore);
-const { addDeal } = dealStore;
+const { findDeal, addDeal, editDeal } = dealStore;
 
 const handleAdd = () => {
   if (+dealModel.amount <= 0) {
@@ -93,11 +95,29 @@ const handleAdd = () => {
   router.push({ name: 'Home' });
 };
 
+const handleEdit = () => {
+  if (+dealModel.amount <= 0) {
+    Snackbar('请输入正确的金额');
+    return;
+  }
+  editDeal(+(id as string), dealModel.categoryId, dealModel.desc, +dealModel.amount, dealModel.date, dealModel.time);
+  router.go(-1);
+};
+
 const handleDate = () => {
   setTimeout(() => {
     showDate.value = false;
   }, 50);
 };
+
+if (type === 'edit') {
+  const deal = findDeal(+(id as string));
+  dealModel.amount = (-(deal?.amount as number)).toString();
+  dealModel.categoryId = deal?.categoryId as number;
+  dealModel.date = deal?.date as string;
+  dealModel.time = deal?.time as string;
+  dealModel.desc = deal?.desc as string;
+}
 </script>
 
 <style lang="less" scoped>

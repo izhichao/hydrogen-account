@@ -17,7 +17,7 @@
           </ul>
         </Card>
 
-        <div class="deal" v-for="item in dealTimeList" :key="item.date">
+        <div class="deal" v-for="item in dealListGroupByTime" :key="item.date">
           <div class="deal__day">
             <div class="deal__day__time">{{ item.date }}</div>
             <div class="deal__day__total">{{ item.total }}</div>
@@ -82,7 +82,7 @@ import { useAccount } from '../composables/useAccount';
 const route = useRoute();
 const router = useRouter();
 const dealStore = useDealStore();
-const { dealTimeList, dealAmount, totalExpend } = storeToRefs(dealStore);
+const { dealListGroupByTime, dealAmount, totalExpend } = storeToRefs(dealStore);
 const {
   addAccountModel,
   editAccountModel,
