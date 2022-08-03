@@ -30,9 +30,9 @@ export const useDealStore = defineStore('deal', {
     };
   },
   getters: {
-    dealListOrderByTime(state) {
+    // 按日期与时间倒序排序
+    dealListOrderByTime: (state) => {
       const dealListOrderByTime: Deal[] = JSON.parse(JSON.stringify(state.dealList));
-      // 按日期与时间倒序排序
       dealListOrderByTime.sort((a, b) => {
         // 日期
         if (b.date > a.date) {
@@ -59,6 +59,7 @@ export const useDealStore = defineStore('deal', {
       });
       return dealListOrderByTime;
     },
+    // 将分类ID转换为分类名
     dealListWithName() {
       const categoryList = useCategoryStore().categoryList;
       const dealListWithName: Deal[] = JSON.parse(JSON.stringify(this.dealListOrderByTime));
@@ -92,14 +93,13 @@ export const useDealStore = defineStore('deal', {
 
       return dealListGroupByTime;
     },
-    recentDealList() {
-      const recentDealList: Deal[] = this.dealListWithName.slice(0, 3);
-      return recentDealList;
+    recentDealList(): Deal[] {
+      return this.dealListWithName.slice(0, 3);
     },
-    dealAmount(state) {
+    dealAmount: (state) => {
       return state.dealList.length;
     },
-    totalExpend(state) {
+    totalExpend: (state) => {
       return state.dealList.reduce((total, currentValue) => total + (currentValue.amount as number), 0);
     },
     timeDiff(): number {
