@@ -19,11 +19,11 @@ export const useAccountStore = defineStore('account', {
     };
   },
   getters: {
-    accountAmount(state) {
+    accountAmount: (state) => {
       return state.accountList.length;
     },
 
-    totalAsset(state) {
+    totalAsset: (state) =>  {
       return state.accountList.reduce((total, currentValue) => total + (currentValue.amount as number), 0);
     }
   },

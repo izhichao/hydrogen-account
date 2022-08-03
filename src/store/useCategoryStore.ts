@@ -18,9 +18,9 @@ export const useCategoryStore = defineStore('category', {
     };
   },
   getters: {
-    categoryListWithDesc() {
+    categoryListWithDesc: (state) =>  {
       const dealList = useDealStore().dealList;
-      const newCategoryList: Category[] = JSON.parse(JSON.stringify(this.categoryList));
+      const newCategoryList: Category[] = JSON.parse(JSON.stringify(state.categoryList));
       newCategoryList.forEach((category) => {
         let sum = 0;
         dealList.forEach((deal) => {
