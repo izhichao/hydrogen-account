@@ -17,14 +17,14 @@
           </ul>
         </Card>
 
-        <div class="deal" v-for="(item, key) in dealTimeList" :key="key">
+        <div class="deal" v-for="item in dealTimeList" :key="item.date">
           <div class="deal__day">
-            <div class="deal__day__time">{{ key }}</div>
-            <div class="deal__day__total">-120</div>
+            <div class="deal__day__time">{{ item.date }}</div>
+            <div class="deal__day__total">{{ item.total }}</div>
           </div>
 
-          <Card :header="false" :class="{ 'padding-small': item.length === 1 }">
-            <ListItem v-for="subItem in item" :item="subItem"></ListItem>
+          <Card :header="false" :class="{ 'padding-small': item.value.length === 1 }">
+            <ListItem v-for="subItem in item.value" :item="subItem"></ListItem>
           </Card>
         </div>
       </template>
