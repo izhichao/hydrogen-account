@@ -39,16 +39,27 @@ export const useDealStore = defineStore('deal', {
       });
       // 按日期与时间倒序排序
       newDealList.sort((a, b) => {
+        // 日期
         if (b.date > a.date) {
           return 1;
         } else if (b.date < a.date) {
           return -1;
-        } else if (b.time > a.time) {
-          return 1;
-        } else if (b.time < a.time) {
-          return -1;
         } else {
-          return 0;
+          // 时间
+          if (b.time > a.time) {
+            return 1;
+          } else if (b.time < a.time) {
+            return -1;
+          } else {
+            // id
+            if (b.id > a.id) {
+              return 1;
+            } else if (b.id < a.id) {
+              return -1;
+            } else {
+              return 0;
+            }
+          }
         }
       });
       return newDealList;
