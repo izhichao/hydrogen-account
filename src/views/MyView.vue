@@ -10,7 +10,7 @@
         </div>
         <div class="statistics">
           <div class="statistics__count">
-            <div class="statistics__count__amount">681</div>
+            <div class="statistics__count__amount">{{ timeDiff }}</div>
             <div class="statistics__count__title">记账天数</div>
           </div>
           <div class="statistics__count">
@@ -43,14 +43,15 @@ import Header from '../components/Header.vue';
 import Circle from '../components/Circle.vue';
 import Docker from '../components/Docker.vue';
 import Card from '../components/Card.vue';
+import { Dialog } from '@varlet/ui';
 import { useRouter } from 'vue-router';
 import { useAccountStore } from '../store/useAccountStore';
 import { useDealStore } from '../store/useDealStore';
-import { Dialog } from '@varlet/ui';
+import { storeToRefs } from 'pinia';
 const accountStore = useAccountStore();
 const dealStore = useDealStore();
-const { totalAsset } = accountStore;
-const { totalExpend, dealAmount } = dealStore;
+const { totalAsset } = storeToRefs(accountStore);
+const { totalExpend, dealAmount, timeDiff } = storeToRefs(dealStore);
 const router = useRouter();
 
 const handleClear = () => {
