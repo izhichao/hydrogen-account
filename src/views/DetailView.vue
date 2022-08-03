@@ -14,11 +14,11 @@
               <div class="form__category">
                 <label
                   v-for="item in categoryListWithDesc"
-                  :class="{ form__category__label: true, 'form__category__label--active': item.id === dealModel.category }"
+                  :class="{ form__category__label: true, 'form__category__label--active': item.id === dealModel.categoryId }"
                   :for="item.id.toString()"
                   :key="item.id"
                 >
-                  <input class="form__category__input" type="radio" :id="item.id.toString()" :value="item.id" v-model="dealModel.category" />
+                  <input class="form__category__input" type="radio" :id="item.id.toString()" :value="item.id" v-model="dealModel.categoryId" />
                   <span>{{ item.name }}</span>
                 </label>
               </div>
@@ -33,7 +33,7 @@
             </div>
             <div>
               <div class="form__title">备注</div>
-              <var-input :hint="false" autocomplete="off" placeholder="轻敲添加备注" v-model="dealModel.remark" clearable />
+              <var-input :hint="false" placeholder="轻敲添加备注" v-model="dealModel.desc" clearable />
             </div>
             <div>
               <var-button type="primary" block class="form__btn" @click="handleAdd">新增</var-button>
@@ -60,6 +60,10 @@ import Header from '../components/Header.vue';
 import Card from '../components/Card.vue';
 import { useCategoryStore } from '../store/useCategoryStore';
 import { storeToRefs } from 'pinia';
+import { useDealStore } from '../store/useDealStore';
+import { useRouter } from 'vue-router';
+import { Snackbar } from '@varlet/ui';
+const router = useRouter();
 const showDate = ref(false);
 const showTime = ref(false);
 
@@ -69,19 +73,25 @@ const time = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().t
 
 const dealModel = reactive({
   amount: '0',
-  category: 0,
+  categoryId: 0,
   date,
   time,
-  remark: ''
+  desc: ''
 });
 
 const categoryStore = useCategoryStore();
+const dealStore = useDealStore();
 const { categoryListWithDesc } = storeToRefs(categoryStore);
+const { addDeal } = dealStore;
 
 const handleAdd = () => {
-  console.log("新增");
-  
-}
+  if (+dealModel.amount <= 0) {
+    Snackbar('请输入正确的金额');
+    return;
+  }
+  addDeal(dealModel.categoryId, dealModel.desc, +dealModel.amount, dealModel.date, dealModel.time);
+  router.push({ name: 'Home' });
+};
 
 const handleDate = () => {
   setTimeout(() => {
