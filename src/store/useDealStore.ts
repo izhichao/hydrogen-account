@@ -87,5 +87,10 @@ export const useDealStore = defineStore('deal', {
       return state.dealList.reduce((total, currentValue) => total + (currentValue.amount as number), 0);
     }
   },
-  actions: {}
+  actions: {
+    addDeal(categoryId: number, desc: string, amount: number, date: string, time: string) {
+      const newId = this.dealList[this.dealList.length - 1].id + 1;
+      this.dealList.push({ id: newId, categoryId, desc, amount, date, time });
+    }
+  }
 });
