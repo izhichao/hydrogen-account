@@ -5,7 +5,7 @@
       <span class="header__search iconfont">&#xe623;</span>
     </Header>
     <div class="card-list">
-      <ChartCard title="日趋势" @more="router.push({ name: 'Chart', query: { type: 'day' } })"></ChartCard>
+      <ChartCard :title="`${month}月支出`" @more="router.push({ name: 'Chart', query: { type: 'day' } })"></ChartCard>
       <Card title="最近交易" @more="router.push({ name: 'List', query: { type: 'deal' } })">
         <ul class="list">
           <ListItem
@@ -47,6 +47,9 @@ const router = useRouter();
 
 const { accountList } = useAccountStore();
 const { recentDealList } = useDealStore();
+
+const date = new Date();
+const month = date.getMonth() + 1;
 
 const calcStatus = ref(false);
 const handlePop = () => {
