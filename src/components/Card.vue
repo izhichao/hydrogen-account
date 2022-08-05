@@ -2,7 +2,7 @@
   <div class="card">
     <div class="card__header" v-if="header">
       <div class="card__header__title">{{ title }}</div>
-      <div class="card__header__more iconfont" @click="$emit('more')">&#xe658;</div>
+      <div class="card__header__more iconfont" v-if="more" @click="$emit('more')">&#xe658;</div>
     </div>
     <div class="card__content">
       <slot></slot>
@@ -16,6 +16,10 @@ defineProps({
     type: String
   },
   header: {
+    type: Boolean,
+    default: true
+  },
+  more: {
     type: Boolean,
     default: true
   }

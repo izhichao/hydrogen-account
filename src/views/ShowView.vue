@@ -4,9 +4,9 @@
     <Header title="统计"></Header>
 
     <div class="card-list">
-      <ChartCard title="分类统计" @more="router.push({ name: 'Chart', query: { type: 'category' } })"></ChartCard>
-      <ChartCard :title="`${month}月支出`" @more="router.push({ name: 'Chart', query: { type: 'day' } })"></ChartCard>
-      <ChartCard :title="`${year}年支出`" @more="router.push({ name: 'Chart', query: { type: 'month' } })"></ChartCard>
+      <ChartCard title="分类统计" @more="router.push({ name: 'Chart', query: { type: 'category', month } })"></ChartCard>
+      <ChartCard :title="`${month}月支出`" @more="router.push({ name: 'Chart', query: { type: 'month', month } })"></ChartCard>
+      <ChartCard :title="`${year}年支出`" @more="router.push({ name: 'Chart', query: { type: 'year', year } })"></ChartCard>
     </div>
   </div>
   <Docker :currentIndex="1"></Docker>
