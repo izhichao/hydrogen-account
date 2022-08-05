@@ -1,5 +1,5 @@
 <template>
-  <Card :title="title" :header="header">
+  <Card>
     <div class="price">-123.01</div>
     <div class="chart"></div>
   </Card>
@@ -7,16 +7,7 @@
 
 <script lang="ts" setup>
 import Card from './Card.vue';
-defineProps({
-  title: {
-    type: String,
-    required: true
-  },
-  header: {
-    type: Boolean,
-    default: true
-  }
-});
+
 </script>
 
 <style lang="less" scoped>
