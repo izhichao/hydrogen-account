@@ -1,6 +1,7 @@
 import { Deal, DealGroup } from '../types/deal';
 
 export const useDeal = () => {
+  
   /**
    * 将数据进行分组(按日，按月，按分类)
    * @param list 待分组的数据

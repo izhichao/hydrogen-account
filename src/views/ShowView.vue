@@ -12,12 +12,12 @@
       <ChartCard
         :title="`${month}月支出`"
         :amount="monthExpend"
-        @more="router.push({ name: 'Chart', query: { type: 'month', time: `${year}-${monthPad}` } })"
+        @more="router.push({ name: 'Chart', query: { type: 'day', time: `${year}-${monthPad}` } })"
       ></ChartCard>
       <ChartCard
         :title="`${year}年支出`"
         :amount="yearExpend"
-        @more="router.push({ name: 'Chart', query: { type: 'year', time: `${year}` } })"
+        @more="router.push({ name: 'Chart', query: { type: 'month', time: `${year}` } })"
       ></ChartCard>
     </div>
   </div>
