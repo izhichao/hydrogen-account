@@ -1,13 +1,5 @@
 import { defineStore } from 'pinia';
-
-interface Item {
-  id: number;
-  name: string;
-  desc?: string;
-  amount?: number;
-  date?: string;
-  time?: string;
-}
+import { Account } from '../types/account';
 
 export const useAccountStore = defineStore('account', {
   state: () => {
@@ -15,7 +7,7 @@ export const useAccountStore = defineStore('account', {
       accountList: [
         { id: 0, name: '支付宝', amount: 5000 },
         { id: 1, name: '微信', amount: 5000 }
-      ] as Item[]
+      ] as Account[]
     };
   },
   getters: {
