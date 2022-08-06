@@ -99,6 +99,15 @@ export const useDealStore = defineStore('deal', {
         }
         return deal;
       });
+    },
+    deleteDeal(id: number) {
+      const newDealList = this.dealList.filter((deal) => {
+        if (deal.id !== id) {
+          return deal;
+        }
+      });
+      this.dealList = newDealList;
     }
   }
+  // persist: true
 });

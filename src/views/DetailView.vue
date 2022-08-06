@@ -39,6 +39,9 @@
               <var-button type="primary" block class="form__btn" @click="handleEdit" v-if="type === 'edit'">编辑</var-button>
               <var-button type="primary" block class="form__btn" @click="handleAdd" v-else>新增</var-button>
             </div>
+            <div>
+              <var-button type="primary" block class="form__btn" @click="handleDelete" text size="mini" v-if="type === 'edit'">删除</var-button>
+            </div>
           </var-space>
 
           <var-popup v-model:show="showDate">
@@ -62,7 +65,7 @@ import { useCategoryStore } from '../store/useCategoryStore';
 import { storeToRefs } from 'pinia';
 import { useDealStore } from '../store/useDealStore';
 import { useRoute, useRouter } from 'vue-router';
-import { Snackbar } from '@varlet/ui';
+import { Dialog, Snackbar } from '@varlet/ui';
 const router = useRouter();
 const route = useRoute();
 const { type, id } = route.query;
@@ -84,7 +87,7 @@ const dealModel = reactive({
 const categoryStore = useCategoryStore();
 const dealStore = useDealStore();
 const { categoryList } = storeToRefs(categoryStore);
-const { findDeal, addDeal, editDeal } = dealStore;
+const { findDeal, addDeal, editDeal, deleteDeal } = dealStore;
 
 const handleAdd = () => {
   if (+dealModel.amount <= 0) {
@@ -102,6 +105,15 @@ const handleEdit = () => {
   }
   editDeal(+(id as string), dealModel.categoryId, dealModel.desc, +dealModel.amount, dealModel.date, dealModel.time);
   router.go(-1);
+};
+
+const handleDelete = () => {
+  Dialog('确认删除').then((res) => {
+    if (res === 'confirm') {
+      deleteDeal(+(id as string));
+      router.push({ name: 'Home' });
+    }
+  });
 };
 
 const handleDate = () => {
