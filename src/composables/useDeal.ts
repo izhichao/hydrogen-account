@@ -2,7 +2,7 @@ import { Deal, DealGroup } from '../types/deal';
 
 export const useDeal = () => {
   // 将数据进行分组(按日，按月，按分类)
-  const converListToGroup = (list: Deal[], type: string) => {
+  const convertListToGroup = (list: Deal[], type: string) => {
     const dealObj: { [key: string]: Deal[] } = {};
     list.forEach((deal) => {
       switch (type) {
@@ -30,6 +30,7 @@ export const useDeal = () => {
           break;
       }
     });
+    return dealObj;
   };
   // 将分组的数据转换为数组形式，并添加统计
   const convertObjToArray = (obj: { [key: string]: Deal[] }) => {
@@ -42,4 +43,8 @@ export const useDeal = () => {
     }
     return dealList;
   };
+  return {
+    convertListToGroup,
+    convertObjToArray
+  }
 };
