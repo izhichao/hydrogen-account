@@ -17,9 +17,9 @@
           </ul>
         </Card>
 
-        <div class="deal" v-for="item in dealListGroupByTime" :key="item.date">
+        <div class="deal" v-for="item in dealListGroupByTime" :key="item.name">
           <div class="deal__day">
-            <div class="deal__day__time">{{ item.date }}</div>
+            <div class="deal__day__time">{{ item.name }}</div>
             <div class="deal__day__total">{{ item.total }}</div>
           </div>
 

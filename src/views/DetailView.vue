@@ -13,7 +13,7 @@
               <div class="form__title">分类</div>
               <div class="form__category">
                 <label
-                  v-for="item in categoryListWithDesc"
+                  v-for="item in categoryList"
                   :class="{ form__category__label: true, 'form__category__label--active': item.id === dealModel.categoryId }"
                   :for="item.id.toString()"
                   :key="item.id"
@@ -83,7 +83,7 @@ const dealModel = reactive({
 
 const categoryStore = useCategoryStore();
 const dealStore = useDealStore();
-const { categoryListWithDesc } = storeToRefs(categoryStore);
+const { categoryList } = storeToRefs(categoryStore);
 const { findDeal, addDeal, editDeal } = dealStore;
 
 const handleAdd = () => {

@@ -1,21 +1,7 @@
 import { defineStore } from 'pinia';
 import { useCategoryStore } from './useCategoryStore';
 
-export interface Deal {
-  id: number;
-  name: string;
-  categoryId: number;
-  desc: string;
-  amount: number;
-  date: string;
-  time: string;
-}
-
-interface DealGroup {
-  name: string;
-  total: number;
-  value: Deal[];
-}
+import { Deal, DealGroup } from '../types/deal';
 
 export const useDealStore = defineStore('deal', {
   state: () => {
@@ -25,15 +11,15 @@ export const useDealStore = defineStore('deal', {
         { id: 1, name: '未分类', categoryId: 2, desc: '手机壳23', amount: -2, date: '2022-07-23', time: '12:00' },
         { id: 2, name: '未分类', categoryId: 2, desc: '手机壳24', amount: -3, date: '2022-07-24', time: '12:00' },
         { id: 3, name: '未分类', categoryId: 1, desc: '手机壳23', amount: -4, date: '2022-07-22', time: '12:00' },
-        { id: 4, name: '未分类', categoryId: 1, desc: '手机壳25/13:00', amount: -5, date: '2022-07-25', time: '13:00' }
+        { id: 4, name: '未分类', categoryId: 1, desc: '手机壳25/13:00', amount: -5, date: '2022-07-25', time: '13:00' },
+        { id: 5, name: '未分类', categoryId: 1, desc: '手机壳08-01/13:00', amount: -5, date: '2022-08-01', time: '13:00' }
       ] as Deal[]
     };
   },
   getters: {
-    // 添加分类名（更改原数组）
+    // 添加分类名(更改原数组)
     dealListWithName: (state) => {
       const categoryList = useCategoryStore().categoryList;
-      // const dealListWithName: Deal[] = JSON.parse(JSON.stringify(this.dealListOrderByTime));
       state.dealList.forEach((deal) => {
         const category = categoryList.find((category) => category.id === deal.categoryId);
         deal.name = category?.name || '未分类';
@@ -41,8 +27,8 @@ export const useDealStore = defineStore('deal', {
       return state.dealList;
     },
     // 按日期与时间倒序排序
-    dealListOrderByTime: (state) => {
-      const dealListOrderByTime: Deal[] = JSON.parse(JSON.stringify(state.dealList));
+    dealListOrderByTime() {
+      const dealListOrderByTime: Deal[] = JSON.parse(JSON.stringify(this.dealListWithName));
       dealListOrderByTime.sort((a, b) => {
         // 日期
         if (b.date > a.date) {
@@ -116,7 +102,6 @@ export const useDealStore = defineStore('deal', {
       return dealListGroupByCategory;
     },
     // 按月
-    // 按分类
     dealListGroupByMonth() {
       // 将交易列表按日期归类
       const dealObj: { [key: string]: Deal[] } = {};
@@ -142,7 +127,7 @@ export const useDealStore = defineStore('deal', {
       return dealListGroupByMonth;
     },
     recentDealList(): Deal[] {
-      return this.dealListWithName.slice(0, 3);
+      return this.dealListOrderByTime.slice(0, 3);
     },
     dealAmount: (state) => {
       return state.dealList.length;
@@ -159,7 +144,7 @@ export const useDealStore = defineStore('deal', {
   },
   actions: {
     findDeal(id: number) {
-      return this.dealListWithName.find((deal) => deal.id === id);
+      return this.dealList.find((deal) => deal.id === id);
     },
     addDeal(categoryId: number, desc: string, amount: number, date: string, time: string) {
       const newId = this.dealList[this.dealList.length - 1].id + 1;

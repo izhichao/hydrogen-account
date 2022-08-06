@@ -1,18 +1,4 @@
-export interface Deal {
-  id: number;
-  name: string;
-  categoryId: number;
-  desc: string;
-  amount: number;
-  date: string;
-  time: string;
-}
-
-interface DealGroup {
-  name: string;
-  total: number;
-  value: Deal[];
-}
+import { Deal, DealGroup } from '../types/deal';
 
 export const useDeal = () => {
   // 将数据进行分组(按日，按月，按分类)
