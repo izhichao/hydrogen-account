@@ -8,7 +8,7 @@
       <ChartCard
         :title="`${month}月支出`"
         :amount="monthExpend"
-        @more="router.push({ name: 'Chart', query: { type: 'month', time: `${year}-${monthPad}` } })"
+        @more="router.push({ name: 'Chart', query: { type: 'day', time: `${year}-${monthPad}` } })"
       ></ChartCard>
       <Card title="最近交易" @more="router.push({ name: 'List', query: { type: 'deal' } })">
         <ul class="list">
