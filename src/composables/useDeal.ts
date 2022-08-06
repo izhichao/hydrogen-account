@@ -1,7 +1,12 @@
 import { Deal, DealGroup } from '../types/deal';
 
 export const useDeal = () => {
-  // 将数据进行分组(按日，按月，按分类)
+  /**
+   * 将数据进行分组(按日，按月，按分类)
+   * @param list 待分组的数据
+   * @param type day,month,category
+   * @returns 对象形式的数据，key为日期或分类，value为数据列表
+   */
   const convertListToGroup = (list: Deal[], type: string) => {
     const dealObj: { [key: string]: Deal[] } = {};
     list.forEach((deal) => {
@@ -32,7 +37,11 @@ export const useDeal = () => {
     });
     return dealObj;
   };
-  // 将分组的数据转换为数组形式，并添加统计
+  /**
+   * 将对象形式数据转换为数组形式，并添加统计
+   * @param obj 对象形式的数据
+   * @returns name: 日期或分类，value: 数据列表，total: 总金额
+   */
   const convertObjToArray = (obj: { [key: string]: Deal[] }) => {
     const dealList: DealGroup[] = [];
     for (const key in obj) {
@@ -46,5 +55,5 @@ export const useDeal = () => {
   return {
     convertListToGroup,
     convertObjToArray
-  }
+  };
 };

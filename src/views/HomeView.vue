@@ -46,10 +46,12 @@ import { useDealStore } from '../store/useDealStore';
 const router = useRouter();
 
 const { accountList } = useAccountStore();
-const { recentDealList } = useDealStore();
+const { dealListGroup, recentDealList } = useDealStore();
 
 const date = new Date();
-const month = date.getMonth() + 1;
+const year = date.getFullYear();
+const month = (date.getMonth() + 1).toString().padStart(2, '0');
+const monthExpend = dealListGroup('month', `${year}-${month}`)[0].total;
 
 const calcStatus = ref(false);
 const handlePop = () => {

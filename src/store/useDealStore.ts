@@ -28,7 +28,7 @@ export const useDealStore = defineStore('deal', {
       return state.dealList;
     },
     // 按日期与时间倒序排序
-    dealListOrderByTime() {
+    orderDealList() {
       const dealListOrderByTime: Deal[] = JSON.parse(JSON.stringify(this.dealListWithName));
       dealListOrderByTime.sort((a, b) => {
         // 日期
@@ -56,16 +56,27 @@ export const useDealStore = defineStore('deal', {
       });
       return dealListOrderByTime;
     },
+    filterDealList() {
+      return (time?: string) => {
+        if (!time) {
+          return this.orderDealList;
+        } else if (time.length === 7) {
+          return this.orderDealList.filter((deal) => deal.date.slice(0, 7) === time);
+        } else if (time.length === 4) {
+          return this.orderDealList.filter((deal) => deal.date.slice(0, 4) === time);
+        }
+      };
+    },
     // 按指定关键字分类
     dealListGroup() {
-      return (type: string) => {
-        const dealObj = convertListToGroup(this.dealListOrderByTime, type);
+      return (type: string, time?: string) => {
+        const dealObj = convertListToGroup(this.filterDealList(time) as Deal[], type);
         const dealList = convertObjToArray(dealObj);
         return dealList;
       };
     },
     recentDealList(): Deal[] {
-      return this.dealListOrderByTime.slice(0, 3);
+      return this.orderDealList.slice(0, 3);
     },
     dealAmount: (state) => {
       return state.dealList.length;
@@ -74,8 +85,8 @@ export const useDealStore = defineStore('deal', {
       return state.dealList.reduce((total, currentValue) => total + (currentValue.amount as number), 0);
     },
     timeDiff(): number {
-      const firstDay = this.dealListOrderByTime[this.dealListOrderByTime.length - 1].date;
-      const lastDay = this.dealListOrderByTime[0].date;
+      const firstDay = this.orderDealList[this.orderDealList.length - 1].date;
+      const lastDay = this.orderDealList[0].date;
       const days = (new Date(lastDay).getTime() - new Date(firstDay).getTime()) / (3600 * 24 * 1000);
       return days;
     }
