@@ -39,7 +39,7 @@ export const useCategoryStore = defineStore('category', {
       this.categoryList.push({ id: newId, name, desc: '共0笔交易' });
     },
     deleteCategory(id: number) {
-      let newCategoryList = this.categoryList.filter((category) => {
+      const newCategoryList = this.categoryList.filter((category) => {
         if (category.id !== id) {
           return category;
         }
@@ -54,6 +54,6 @@ export const useCategoryStore = defineStore('category', {
         return category;
       });
     }
-  },
-  persist: true
+  }
+  // persist: true
 });

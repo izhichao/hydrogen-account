@@ -23,7 +23,7 @@ export const useAccountStore = defineStore('account', {
       return state.accountList.length;
     },
 
-    totalAsset: (state) =>  {
+    totalAsset: (state) => {
       return state.accountList.reduce((total, currentValue) => total + (currentValue.amount as number), 0);
     }
   },
@@ -36,8 +36,7 @@ export const useAccountStore = defineStore('account', {
       return this.accountList.find((account) => account.id === id);
     },
     deleteAccount(id: number) {
-      let newAccountList = [];
-      newAccountList = this.accountList.filter((account) => {
+      const newAccountList = this.accountList.filter((account) => {
         if (account.id !== id) {
           return account;
         }
