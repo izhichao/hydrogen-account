@@ -4,7 +4,7 @@ export const useDeal = () => {
   /**
    * 将数据进行分组(按日，按月，按分类)
    * @param list 待分组的数据
-   * @param type day,month,category
+   * @param type day,month,year,category
    * @returns 对象形式的数据，key为日期或分类，value为数据列表
    */
   const convertListToGroup = (list: Deal[], type: string) => {
@@ -24,6 +24,14 @@ export const useDeal = () => {
             dealObj[month].push(deal);
           } else {
             dealObj[month] = [deal];
+          }
+          break;
+        case 'year':
+          const year = deal.date.slice(0, 4);
+          if (dealObj[year]) {
+            dealObj[year].push(deal);
+          } else {
+            dealObj[year] = [deal];
           }
           break;
         case 'category':
