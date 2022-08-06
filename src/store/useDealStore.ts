@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia';
 import { useCategoryStore } from './useCategoryStore';
-
 import { Deal, DealGroup } from '../types/deal';
+import { useDeal } from '../composables/useDeal';
+const { convertListToGroup, convertObjToArray } = useDeal();
 
 export const useDealStore = defineStore('deal', {
   state: () => {
@@ -55,76 +56,13 @@ export const useDealStore = defineStore('deal', {
       });
       return dealListOrderByTime;
     },
-    // 按时间分类
-    dealListGroupByTime() {
-      // 将交易列表按日期归类
-      const dealObj: { [key: string]: Deal[] } = {};
-      this.dealListOrderByTime.forEach((deal) => {
-        if (dealObj[deal.date]) {
-          dealObj[deal.date].push(deal);
-        } else {
-          dealObj[deal.date] = [deal];
-        }
-      });
-
-      // 将对象转换为数组并添加今日总支出
-      const dealListGroupByTime: DealGroup[] = [];
-      for (const key in dealObj) {
-        const total = dealObj[key].reduce((total, currentValue) => {
-          return total + currentValue.amount;
-        }, 0);
-        dealListGroupByTime.push({ name: key, total, value: dealObj[key] });
-      }
-
-      return dealListGroupByTime;
-    },
-    // 按分类
-    dealListGroupByCategory() {
-      // 将交易列表按日期归类
-      const dealObj: { [key: string]: Deal[] } = {};
-      this.dealListOrderByTime.forEach((deal) => {
-        if (dealObj[deal.name]) {
-          dealObj[deal.name].push(deal);
-        } else {
-          dealObj[deal.name] = [deal];
-        }
-      });
-
-      // 将对象转换为数组并添加今日总支出
-      const dealListGroupByCategory: DealGroup[] = [];
-      for (const key in dealObj) {
-        const total = dealObj[key].reduce((total, currentValue) => {
-          return total + currentValue.amount;
-        }, 0);
-        dealListGroupByCategory.push({ name: key, total, value: dealObj[key] });
-      }
-
-      return dealListGroupByCategory;
-    },
-    // 按月
-    dealListGroupByMonth() {
-      // 将交易列表按日期归类
-      const dealObj: { [key: string]: Deal[] } = {};
-      this.dealListOrderByTime.forEach((deal) => {
-        const month = deal.date.slice(0, 7);
-
-        if (dealObj[month]) {
-          dealObj[month].push(deal);
-        } else {
-          dealObj[month] = [deal];
-        }
-      });
-
-      // 将对象转换为数组并添加今日总支出
-      const dealListGroupByMonth: DealGroup[] = [];
-      for (const key in dealObj) {
-        const total = dealObj[key].reduce((total, currentValue) => {
-          return total + currentValue.amount;
-        }, 0);
-        dealListGroupByMonth.push({ name: key, total, value: dealObj[key] });
-      }
-
-      return dealListGroupByMonth;
+    // 按指定关键字分类
+    dealListGroup() {
+      return (type: string) => {
+        const dealObj = convertListToGroup(this.dealListOrderByTime, type);
+        const dealList = convertObjToArray(dealObj);
+        return dealList;
+      };
     },
     recentDealList(): Deal[] {
       return this.dealListOrderByTime.slice(0, 3);
