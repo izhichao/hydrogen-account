@@ -1,11 +1,6 @@
 import { defineStore } from 'pinia';
 import { useDealStore } from './useDealStore';
-
-export interface Category {
-  id: number;
-  name: string;
-  desc: string;
-}
+import { Category } from '../types/category';
 
 export const useCategoryStore = defineStore('category', {
   state: () => {

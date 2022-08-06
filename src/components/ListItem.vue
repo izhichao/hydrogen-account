@@ -3,10 +3,10 @@
     <div>
       <div class="item__title">
         <span>{{ item.name }}</span>
-        <span class="item__desc" v-if="item.desc">{{ item.desc }}</span>
+        <span class="item__desc" v-if="(item as Deal | Category).desc">{{ (item as Deal | Category).desc }}</span>
       </div>
     </div>
-    <div class="item__price" v-if="!button">{{ item.amount }}</div>
+    <div class="item__price" v-if="!button">{{ (item as Deal | Account).amount }}</div>
     <div class="item__btn" v-if="button">
       <slot></slot>
     </div>
@@ -15,17 +15,13 @@
 
 <script lang="ts" setup>
 import { PropType } from 'vue';
-export interface Item {
-  id: number;
-  name: string;
-  desc?: string;
-  amount?: number;
-  categoryId?: number;
-}
+import { Account } from '../types/account';
+import { Deal } from '../types/deal';
+import { Category } from '../types/category';
 
 defineProps({
   item: {
-    type: Object,
+    type: Object as PropType<Deal | Account | Category>,
     required: true
   },
   button: {
