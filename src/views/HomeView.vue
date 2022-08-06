@@ -5,7 +5,11 @@
       <span class="header__search iconfont">&#xe623;</span>
     </Header>
     <div class="card-list">
-      <ChartCard :title="`${month}月支出`" @more="router.push({ name: 'Chart', query: { type: 'month', month } })"></ChartCard>
+      <ChartCard
+        :title="`${month}月支出`"
+        :amount="monthExpend"
+        @more="router.push({ name: 'Chart', query: { type: 'month', time: `${year}-${monthPad}` } })"
+      ></ChartCard>
       <Card title="最近交易" @more="router.push({ name: 'List', query: { type: 'deal' } })">
         <ul class="list">
           <ListItem
@@ -23,7 +27,13 @@
       </Card>
     </div>
   </div>
-  <var-button class="btn" type="primary" size="large" round @click="router.push({ name: 'Detail', query: { type: 'add' } })">
+  <var-button
+    class="btn"
+    type="primary"
+    size="large"
+    round
+    @click="router.push({ name: 'Detail', query: { type: 'add' } })"
+  >
     <var-icon name="plus" :size="26" />
   </var-button>
   <Calculator v-model:show="calcStatus"></Calculator>
@@ -31,15 +41,15 @@
 </template>
 
 <script lang="ts" setup>
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 import Header from '../components/Header.vue';
 import Circle from '../components/Circle.vue';
 import Docker from '../components/Docker.vue';
 import ChartCard from '../components/ChartCard.vue';
 import Card from '../components/Card.vue';
-import ListItem, { Item } from '../components/ListItem.vue';
+import ListItem from '../components/ListItem.vue';
 import Calculator from '../components/Calculator.vue';
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
 import { useAccountStore } from '../store/useAccountStore';
 import { useDealStore } from '../store/useDealStore';
 
@@ -50,8 +60,9 @@ const { dealListGroup, recentDealList } = useDealStore();
 
 const date = new Date();
 const year = date.getFullYear();
-const month = (date.getMonth() + 1).toString().padStart(2, '0');
-const monthExpend = dealListGroup('month', `${year}-${month}`)[0].total;
+const month = date.getMonth() + 1;
+const monthPad = (date.getMonth() + 1).toString().padStart(2, '0');
+const monthExpend = dealListGroup('month', `${year}-${monthPad}`)[0].total;
 
 const calcStatus = ref(false);
 const handlePop = () => {
