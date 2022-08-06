@@ -21,7 +21,6 @@ export const useCategoryStore = defineStore('category', {
     // 添加交易笔数统计（更改原数组）
     categoryListWithDesc: (state) => {
       const dealList = useDealStore().dealList;
-      // const newCategoryList: Category[] = JSON.parse(JSON.stringify(state.categoryList));
       state.categoryList.forEach((category) => {
         let sum = 0;
         dealList.forEach((deal) => {
