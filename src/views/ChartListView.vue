@@ -4,10 +4,7 @@
     <div class="card-list">
       <ChartCard :title="title" :amount="expends" :more="false"></ChartCard>
       <Card :header="false" v-for="item in list" class="padding-small">
-        <ListItem
-          :item="item"
-          @click="router.push({ name: 'List', query: { type: 'deal', keyword: item.name } })"
-        ></ListItem>
+        <ListItem :item="item" @click="handlePush(item)"></ListItem>
       </Card>
     </div>
   </div>
@@ -43,6 +40,7 @@ const handleStatsList = () => {
     id++;
   });
 };
+
 const title = ref('分类统计');
 if (type === 'day') {
   let [year, month] = timeStr.split('-') as string[];
@@ -59,6 +57,14 @@ if (type === 'day') {
 } else {
   handleStatsList();
 }
+
+const handlePush = (item: DealStats) => {
+  if (type === 'category') {
+    router.push({ name: 'List', query: { type: 'deal', time: timeStr, name: item.name } });
+  } else {
+    router.push({ name: 'List', query: { type: 'deal', time: item.name } });
+  }
+};
 
 const expends = dealListGroup(time?.length === 4 ? 'year' : 'month', timeStr)[0]?.total || 0;
 </script>
