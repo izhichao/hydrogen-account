@@ -10,7 +10,7 @@
         :amount="monthExpend"
         @more="router.push({ name: 'Chart', query: { type: 'day', time: `${year}-${monthStr}` } })"
       ></ChartCard>
-      <Card title="最近交易" @more="router.push({ name: 'List', query: { type: 'deal' } })">
+      <Card title="最近交易" @more="router.push({ name: 'List', query: { list: 'deal' } })">
         <ul class="list">
           <ListItem
             v-for="item in recentDealList"
@@ -20,7 +20,7 @@
           ></ListItem>
         </ul>
       </Card>
-      <Card title="所有账户" @more="router.push({ name: 'List', query: { type: 'account' } })">
+      <Card title="所有账户" @more="router.push({ name: 'List', query: { list: 'account' } })">
         <ul class="list">
           <ListItem v-for="item in accountList" :key="item.id" :item="item"></ListItem>
         </ul>
@@ -61,7 +61,7 @@ const { dealListGroup, recentDealList } = useDealStore();
 const { now } = useTime();
 const { year, month, monthStr } = now();
 
-const monthExpend = dealListGroup('month', `${year}-${monthStr}`)[0].total;
+const monthExpend = dealListGroup('month', { time: `${year}-${monthStr}` })[0].total;
 
 const calcStatus = ref(false);
 const handlePop = () => {

@@ -13,7 +13,7 @@ export const useDealStore = defineStore('deal', {
         { id: 2, name: '未分类', categoryId: 2, desc: '手机壳24', amount: -3, date: '2022-07-24', time: '12:00' },
         { id: 3, name: '未分类', categoryId: 1, desc: '手机壳23', amount: -4, date: '2022-07-22', time: '12:00' },
         { id: 4, name: '未分类', categoryId: 1, desc: '手机壳25/13:00', amount: -5, date: '2022-07-25', time: '13:00' },
-        { id: 5, name: '未分类', categoryId: 1, desc: '手机壳08-01/13:00', amount: -5, date: '2022-08-01', time: '13:00' }
+        { id: 5, name: '未分类', categoryId: 1, desc: '手机壳08-01', amount: -5, date: '2022-08-01', time: '13:00' }
       ] as Deal[]
     };
   },
@@ -56,26 +56,6 @@ export const useDealStore = defineStore('deal', {
       });
       return dealListOrderByTime;
     },
-    // 过滤指定日期的交易数据
-    filterDealList() {
-      return (time?: string) => {
-        if (!time) {
-          return this.orderDealList;
-        } else if (time.length === 7) {
-          return this.orderDealList.filter((deal) => deal.date.slice(0, 7) === time);
-        } else if (time.length === 4) {
-          return this.orderDealList.filter((deal) => deal.date.slice(0, 4) === time);
-        }
-      };
-    },
-    // 按日、月、年、类别分类
-    dealListGroup() {
-      return (type: string, time?: string) => {
-        const dealObj = convertListToGroup(this.filterDealList(time) as Deal[], type);
-        const dealList = convertObjToArray(dealObj);
-        return dealList;
-      };
-    },
     recentDealList(): Deal[] {
       return this.orderDealList.slice(0, 3);
     },
@@ -93,6 +73,45 @@ export const useDealStore = defineStore('deal', {
     }
   },
   actions: {
+    // 根据日期过滤交易数据
+    filterDealList(list: Deal[], time: string) {
+      let dealList = list;
+      if (time.length === 10) {
+        dealList = list.filter((deal) => deal.date === time);
+      } else if (time.length === 7) {
+        dealList = list.filter((deal) => deal.date.slice(0, 7) === time);
+      } else if (time.length === 4) {
+        dealList = list.filter((deal) => deal.date.slice(0, 4) === time);
+      }
+      return dealList;
+    },
+    // 根据关键字过滤交易数据
+    searchDealList(list: Deal[], keyword: string) {
+      let dealList = list;
+      dealList = dealList.filter((deal) => {
+        return (
+          deal.desc.includes(keyword) ||
+          deal.name.includes(keyword) ||
+          deal.date.includes(keyword) ||
+          deal.time.includes(keyword)
+        );
+      });
+      return dealList;
+    },
+    // 按日、月、年、类别分类
+    dealListGroup(type: string, { time, keyword }: { time?: string; keyword?: string } = {}) {
+      let list = this.orderDealList;
+      if (time) {
+        list = this.filterDealList(list, time);
+      }
+      if (keyword) {
+        list = this.searchDealList(list, keyword);
+      }
+      const dealObj = convertListToGroup(list as Deal[], type);
+      const dealList = convertObjToArray(dealObj);
+      return dealList;
+    },
+
     findDeal(id: number) {
       return this.dealList.find((deal) => deal.id === id);
     },

@@ -31,7 +31,7 @@ const list: DealStats[] = [];
 
 const handleStatsList = () => {
   let id = 0;
-  dealListGroup(type as string, time as string).forEach((item) => {
+  dealListGroup(type as string, { time: time as string }).forEach((item) => {
     list.push({
       id,
       name: item.name,
@@ -63,13 +63,13 @@ if (type === 'day') {
 
 const handlePush = (item: DealStats) => {
   if (type === 'category') {
-    router.push({ name: 'List', query: { type: 'deal', time, name: item.name } });
+    router.push({ name: 'List', query: { list: 'deal', time, name: item.name } });
   } else {
-    router.push({ name: 'List', query: { type: 'deal', time: item.name } });
+    router.push({ name: 'List', query: { list: 'deal', time: item.name } });
   }
 };
 
-const expends = dealListGroup(time?.length === 4 ? 'year' : 'month', time as string)[0]?.total || 0;
+const expends = dealListGroup(time?.length === 4 ? 'year' : 'month', { time: time as string })[0]?.total || 0;
 </script>
 
 <style lang="less" scoped>

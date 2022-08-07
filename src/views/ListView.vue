@@ -3,7 +3,7 @@
   <div class="main-content">
     <div class="card-list">
       <!-- 交易统计 -->
-      <template v-if="route.query.type === 'deal'">
+      <template v-if="list === 'deal'">
         <Card :header="false">
           <ul>
             <li class="total">
@@ -17,9 +17,13 @@
           </ul>
         </Card>
 
-        <div class="deal" v-for="item in dealListGroup('day')" :key="item.name">
+        <div
+          class="deal"
+          v-for="item in dealListGroup('day', {time: time as string, keyword: name as string})"
+          :key="item.name"
+        >
           <div class="deal__day">
-            <div class="deal__day__time">{{ item.name }}</div>
+            <div class="deal__day__time">{{ item.name.replace('-', '年').replace('-', '月') + '日' }}</div>
             <div class="deal__day__total">{{ item.total }}</div>
           </div>
 
@@ -34,7 +38,7 @@
       </template>
 
       <!-- 账户统计 -->
-      <template v-else-if="route.query.type === 'account'">
+      <template v-else-if="list === 'account'">
         <Card :header="false">
           <ul>
             <li class="total">
@@ -83,7 +87,8 @@ import { ref } from 'vue';
 const route = useRoute();
 const router = useRouter();
 const dealStore = useDealStore();
-const { dealListGroup, dealAmount, totalExpend } = storeToRefs(dealStore);
+const { dealAmount, totalExpend } = storeToRefs(dealStore);
+const { dealListGroup } = dealStore;
 const {
   addAccountModel,
   editAccountModel,
@@ -97,12 +102,19 @@ const {
   handleDelete
 } = useAccount();
 
+const { list, type, time, name } = route.query;
+
 const title = ref('所有账户');
-if (route.query.name) {
-  title.value = route.query.name as string;
-} else if (route.query.time) {
-  title.value = route.query.time as string;
-} else if (route.query.type === 'deal') {
+
+if (name) {
+  title.value = name as string;
+} else if (time) {
+  if (time.length === 10) {
+    title.value = (time as string).replace('-', '年').replace('-', '月') + '日';
+  } else {
+    title.value =(time as string).replace('-', '年') + '月';
+  }
+} else if (list === 'deal') {
   title.value = '所有交易';
 }
 </script>
