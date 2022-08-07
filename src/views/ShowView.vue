@@ -37,8 +37,8 @@ const { now } = useTime();
 const { year, month, monthStr } = now();
 const router = useRouter();
 
-const monthExpend = dealListGroup('month', `${year}-${monthStr}`)[0].total;
-const yearExpend = dealListGroup('year', `${year}`)[0].total;
+const monthExpend = dealListGroup('month', { time: `${year}-${monthStr}` })[0]?.total || 0;
+const yearExpend = dealListGroup('year', { time: `${year}` })[0]?.total || 0;
 </script>
 
 <style lang="less" scoped>
