@@ -8,7 +8,7 @@
       <ChartCard
         :title="`${month}月支出`"
         :amount="monthExpend"
-        @more="router.push({ name: 'Chart', query: { type: 'day', time: `${year}-${monthPad}` } })"
+        @more="router.push({ name: 'Chart', query: { type: 'day', time: `${year}-${monthStr}` } })"
       ></ChartCard>
       <Card title="最近交易" @more="router.push({ name: 'List', query: { type: 'deal' } })">
         <ul class="list">
@@ -52,17 +52,17 @@ import ListItem from '../components/ListItem.vue';
 import Calculator from '../components/Calculator.vue';
 import { useAccountStore } from '../store/useAccountStore';
 import { useDealStore } from '../store/useDealStore';
+import { useTime } from '../composables/useTime';
 
 const router = useRouter();
-
 const { accountList } = useAccountStore();
 const { dealListGroup, recentDealList } = useDealStore();
 
-const date = new Date();
-const year = date.getFullYear();
-const month = date.getMonth() + 1;
-const monthPad = (date.getMonth() + 1).toString().padStart(2, '0');
-const monthExpend = dealListGroup('month', `${year}-${monthPad}`)[0].total;
+const { now, nowStr } = useTime();
+const { year, month } = now();
+const { monthStr } = nowStr();
+
+const monthExpend = dealListGroup('month', `${year}-${monthStr}`)[0].total;
 
 const calcStatus = ref(false);
 const handlePop = () => {
