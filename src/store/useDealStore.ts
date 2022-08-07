@@ -1,8 +1,8 @@
 import { defineStore } from 'pinia';
 import { useCategoryStore } from './useCategoryStore';
-import { Deal, DealGroup } from '../types/deal';
-import { useDeal } from '../composables/useDeal';
-const { convertListToGroup, convertObjToArray } = useDeal();
+import { Deal } from '../types/deal';
+import { useGroup } from '../composables/useGroup';
+const { convertListToGroup, convertObjToArray } = useGroup();
 
 export const useDealStore = defineStore('deal', {
   state: () => {
@@ -56,6 +56,7 @@ export const useDealStore = defineStore('deal', {
       });
       return dealListOrderByTime;
     },
+    // 过滤指定日期的交易数据
     filterDealList() {
       return (time?: string) => {
         if (!time) {
@@ -67,7 +68,7 @@ export const useDealStore = defineStore('deal', {
         }
       };
     },
-    // 按指定关键字分类
+    // 按日、月、年、类别分类
     dealListGroup() {
       return (type: string, time?: string) => {
         const dealObj = convertListToGroup(this.filterDealList(time) as Deal[], type);

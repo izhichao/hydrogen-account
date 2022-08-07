@@ -14,11 +14,20 @@
               <div class="form__category">
                 <label
                   v-for="item in categoryList"
-                  :class="{ form__category__label: true, 'form__category__label--active': item.id === dealModel.categoryId }"
+                  :class="{
+                    form__category__label: true,
+                    'form__category__label--active': item.id === dealModel.categoryId
+                  }"
                   :for="item.id.toString()"
                   :key="item.id"
                 >
-                  <input class="form__category__input" type="radio" :id="item.id.toString()" :value="item.id" v-model="dealModel.categoryId" />
+                  <input
+                    class="form__category__input"
+                    type="radio"
+                    :id="item.id.toString()"
+                    :value="item.id"
+                    v-model="dealModel.categoryId"
+                  />
                   <span>{{ item.name }}</span>
                 </label>
               </div>
@@ -36,11 +45,23 @@
               <var-input :hint="false" placeholder="轻敲添加备注" v-model="dealModel.desc" clearable />
             </div>
             <div>
-              <var-button type="primary" block class="form__btn" @click="handleEdit" v-if="type === 'edit'">编辑</var-button>
+              <var-button type="primary" block class="form__btn" @click="handleEdit" v-if="type === 'edit'">
+                编辑
+              </var-button>
               <var-button type="primary" block class="form__btn" @click="handleAdd" v-else>新增</var-button>
             </div>
             <div>
-              <var-button type="primary" block class="form__btn" @click="handleDelete" text size="mini" v-if="type === 'edit'">删除</var-button>
+              <var-button
+                type="primary"
+                block
+                class="form__btn"
+                @click="handleDelete"
+                text
+                size="mini"
+                v-if="type === 'edit'"
+              >
+                删除
+              </var-button>
             </div>
           </var-space>
 
@@ -58,78 +79,20 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from 'vue';
+import { ref } from 'vue';
 import Header from '../components/Header.vue';
 import Card from '../components/Card.vue';
-import { useCategoryStore } from '../store/useCategoryStore';
-import { storeToRefs } from 'pinia';
-import { useDealStore } from '../store/useDealStore';
-import { useRoute, useRouter } from 'vue-router';
-import { Dialog, Snackbar } from '@varlet/ui';
-const router = useRouter();
-const route = useRoute();
-const { type, id } = route.query;
+import { useDeal } from '../composables/useDeal';
+const { dealModel, categoryList, type, handleAdd, handleEdit, handleDelete } = useDeal();
+
 const showDate = ref(false);
 const showTime = ref(false);
-
-const now = new Date();
-const date = `${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getDay().toString().padStart(2, '0')}`;
-const time = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
-
-const dealModel = reactive({
-  amount: '0',
-  categoryId: 0,
-  date,
-  time,
-  desc: ''
-});
-
-const categoryStore = useCategoryStore();
-const dealStore = useDealStore();
-const { categoryList } = storeToRefs(categoryStore);
-const { findDeal, addDeal, editDeal, deleteDeal } = dealStore;
-
-const handleAdd = () => {
-  if (+dealModel.amount <= 0) {
-    Snackbar('请输入正确的金额');
-    return;
-  }
-  addDeal(dealModel.categoryId, dealModel.desc, +dealModel.amount, dealModel.date, dealModel.time);
-  router.push({ name: 'Home' });
-};
-
-const handleEdit = () => {
-  if (+dealModel.amount <= 0) {
-    Snackbar('请输入正确的金额');
-    return;
-  }
-  editDeal(+(id as string), dealModel.categoryId, dealModel.desc, +dealModel.amount, dealModel.date, dealModel.time);
-  router.go(-1);
-};
-
-const handleDelete = () => {
-  Dialog('确认删除').then((res) => {
-    if (res === 'confirm') {
-      deleteDeal(+(id as string));
-      router.push({ name: 'Home' });
-    }
-  });
-};
 
 const handleDate = () => {
   setTimeout(() => {
     showDate.value = false;
   }, 50);
 };
-
-if (type === 'edit') {
-  const deal = findDeal(+(id as string));
-  dealModel.amount = (-(deal?.amount as number)).toString();
-  dealModel.categoryId = deal?.categoryId as number;
-  dealModel.date = deal?.date as string;
-  dealModel.time = deal?.time as string;
-  dealModel.desc = deal?.desc as string;
-}
 </script>
 
 <style lang="less" scoped>
