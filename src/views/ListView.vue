@@ -8,20 +8,16 @@
           <ul>
             <li class="total">
               <div class="total__title">交易数</div>
-              <div class="total__amount">{{ dealAmount }}</div>
+              <div class="total__amount">{{ amount }}</div>
             </li>
             <li class="total">
               <div class="total__title">总支出</div>
-              <div class="total__amount">{{ totalExpend }}</div>
+              <div class="total__amount">{{ expend }}</div>
             </li>
           </ul>
         </Card>
 
-        <div
-          class="deal"
-          v-for="item in dealListGroup('day', {time: time as string, keyword: name as string})"
-          :key="item.name"
-        >
+        <div class="deal" v-for="item in dealList" :key="item.name">
           <div class="deal__day">
             <div class="deal__day__time">{{ item.name.replace('-', '年').replace('-', '月') + '日' }}</div>
             <div class="deal__day__total">{{ item.total }}</div>
@@ -80,14 +76,12 @@ import Header from '../components/Header.vue';
 import Card from '../components/Card.vue';
 import ListItem from '../components/ListItem.vue';
 import { useDealStore } from '../store/useDealStore';
-import { storeToRefs } from 'pinia';
 import { useRoute, useRouter } from 'vue-router';
 import { useAccount } from '../composables/useAccount';
 import { ref } from 'vue';
 const route = useRoute();
 const router = useRouter();
 const dealStore = useDealStore();
-const { dealAmount, totalExpend } = storeToRefs(dealStore);
 const { dealListGroup } = dealStore;
 const {
   addAccountModel,
@@ -102,7 +96,10 @@ const {
   handleDelete
 } = useAccount();
 
-const { list, type, time, name } = route.query;
+const { list, time, name } = route.query;
+const dealList = dealListGroup('day', { time: time as string, keyword: name as string });
+const amount = dealList.reduce((total, item) => total + item.value.length, 0);
+const expend = dealList.reduce((total, item) => total + item.total, 0);
 
 const title = ref('所有账户');
 
@@ -112,7 +109,7 @@ if (name) {
   if (time.length === 10) {
     title.value = (time as string).replace('-', '年').replace('-', '月') + '日';
   } else {
-    title.value =(time as string).replace('-', '年') + '月';
+    title.value = (time as string).replace('-', '年') + '月';
   }
 } else if (list === 'deal') {
   title.value = '所有交易';
