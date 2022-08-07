@@ -7,12 +7,12 @@
       <ChartCard
         title="分类统计"
         :amount="monthExpend"
-        @more="router.push({ name: 'Chart', query: { type: 'category', time: `${year}-${monthPad}` } })"
+        @more="router.push({ name: 'Chart', query: { type: 'category', time: `${year}-${monthStr}` } })"
       ></ChartCard>
       <ChartCard
         :title="`${month}月支出`"
         :amount="monthExpend"
-        @more="router.push({ name: 'Chart', query: { type: 'day', time: `${year}-${monthPad}` } })"
+        @more="router.push({ name: 'Chart', query: { type: 'day', time: `${year}-${monthStr}` } })"
       ></ChartCard>
       <ChartCard
         :title="`${year}年支出`"
@@ -31,15 +31,13 @@ import ChartCard from '../components/ChartCard.vue';
 import Docker from '../components/Docker.vue';
 import { useRouter } from 'vue-router';
 import { useDealStore } from '../store/useDealStore';
-
+import { useTime } from '../composables/useTime';
 const { dealListGroup } = useDealStore();
-
+const { now } = useTime();
+const { year, month, monthStr } = now();
 const router = useRouter();
-const date = new Date();
-const year = date.getFullYear();
-const month = date.getMonth() + 1;
-const monthPad = (date.getMonth() + 1).toString().padStart(2, '0');
-const monthExpend = dealListGroup('month', `${year}-${monthPad}`)[0].total;
+
+const monthExpend = dealListGroup('month', `${year}-${monthStr}`)[0].total;
 const yearExpend = dealListGroup('year', `${year}`)[0].total;
 </script>
 
