@@ -58,9 +58,8 @@ const router = useRouter();
 const { accountList } = useAccountStore();
 const { dealListGroup, recentDealList } = useDealStore();
 
-const { now, nowStr } = useTime();
-const { year, month } = now();
-const { monthStr } = nowStr();
+const { now } = useTime();
+const { year, month, monthStr } = now();
 
 const monthExpend = dealListGroup('month', `${year}-${monthStr}`)[0].total;
 

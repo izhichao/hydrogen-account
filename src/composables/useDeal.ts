@@ -16,8 +16,8 @@ export const useDeal = () => {
   const { type, id } = route.query;
 
   // 获取当前时间
-  const { nowStr } = useTime();
-  const { yearStr, monthStr, dayStr, hourStr, minuteStr } = nowStr();
+  const { now } = useTime();
+  const { yearStr, monthStr, dayStr, hourStr, minuteStr } = now();
 
   const dealModel = reactive({
     amount: '0',
