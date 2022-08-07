@@ -1,5 +1,5 @@
 <template>
-  <Header :title="route.query.type === 'deal' ? '所有交易' : '所有账户'" :back="true"></Header>
+  <Header :title="title" :back="true"></Header>
   <div class="main-content">
     <div class="card-list">
       <!-- 交易统计 -->
@@ -79,6 +79,7 @@ import { useDealStore } from '../store/useDealStore';
 import { storeToRefs } from 'pinia';
 import { useRoute, useRouter } from 'vue-router';
 import { useAccount } from '../composables/useAccount';
+import { ref } from 'vue';
 const route = useRoute();
 const router = useRouter();
 const dealStore = useDealStore();
@@ -95,6 +96,15 @@ const {
   handleEdit,
   handleDelete
 } = useAccount();
+
+const title = ref('所有账户');
+if (route.query.name) {
+  title.value = route.query.name as string;
+} else if (route.query.time) {
+  title.value = route.query.time as string;
+} else if (route.query.type === 'deal') {
+  title.value = '所有交易';
+}
 </script>
 
 <style lang="less" scoped>
