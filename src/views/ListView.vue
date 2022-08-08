@@ -52,7 +52,7 @@
           <ListItem v-for="item in accountList" :item="item" @click="handleShowEdit(item.id)"></ListItem>
 
           <div class="add" v-ripple @click="handleShowAdd">
-            <var-icon name="plus" :size="24" />
+            <var-icon name="plus" class="add__icon"/>
           </div>
         </Card>
       </template>
@@ -165,8 +165,9 @@ if (keyword) {
   color: @themeColor;
   border-radius: 15px;
   text-align: center;
-  i {
+  &__icon {
     vertical-align: middle;
+    font-size: 24px;
   }
 }
 </style>
