@@ -46,6 +46,10 @@ export const useAccount = () => {
   };
 
   const handleEdit = () => {
+    if (!editAccountModel.name) {
+      Snackbar('请输入账户名');
+      return;
+    }
     editAccount(editAccountModel.id, editAccountModel.name, +editAccountModel.amount);
   };
 

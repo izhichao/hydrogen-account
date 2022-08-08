@@ -27,11 +27,12 @@
       </Card>
       <Card title="所有账户" @more="router.push({ name: 'List', query: { list: 'account' } })">
         <ul class="list">
-          <ListItem v-for="item in accountList" :key="item.id" :item="item"></ListItem>
+          <ListItem v-for="item in accountList" :key="item.id" :item="item" @click="handleShowEdit(item.id)"></ListItem>
         </ul>
       </Card>
     </div>
   </div>
+
   <var-button
     class="btn"
     type="primary"
@@ -43,6 +44,12 @@
   </var-button>
   <Calculator v-model:show="calcStatus"></Calculator>
   <Docker :currentIndex="0"></Docker>
+
+  <var-dialog v-model:show="editAccountModel.status" @confirm="handleEdit">
+    <var-input placeholder="请输入新的账户名" v-model="editAccountModel.name" />
+    <var-input placeholder="请输入余额" type="number" v-model.number="editAccountModel.amount" />
+    <var-button text outline type="primary" size="mini" @click="handleDelete">删除</var-button>
+  </var-dialog>
 </template>
 
 <script lang="ts" setup>
@@ -58,11 +65,11 @@ import Calculator from '../components/Calculator.vue';
 import { useAccountStore } from '../store/useAccountStore';
 import { useDealStore } from '../store/useDealStore';
 import { useTime } from '../composables/useTime';
+import { useAccount } from '../composables/useAccount';
 
 const router = useRouter();
-const { accountList } = useAccountStore();
+const { accountList, editAccountModel, handleEdit, handleDelete, handleShowEdit } = useAccount();
 const { dealListGroup, recentDealList } = useDealStore();
-
 const { now } = useTime();
 const { year, month, monthStr } = now();
 
