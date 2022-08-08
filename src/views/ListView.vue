@@ -96,15 +96,15 @@ const {
   handleDelete
 } = useAccount();
 
-const { list, time, name } = route.query;
-const dealList = dealListGroup('day', { time: time as string, keyword: name as string });
+const { list, time, keyword } = route.query;
+const dealList = dealListGroup('day', { time: time as string, keyword: keyword as string });
 const amount = dealList.reduce((total, item) => total + item.value.length, 0);
 const expend = dealList.reduce((total, item) => total + item.total, 0);
 
 const title = ref('所有账户');
 
-if (name) {
-  title.value = name as string;
+if (keyword) {
+  title.value = keyword as string;
 } else if (time) {
   if (time.length === 10) {
     title.value = (time as string).replace('-', '年').replace('-', '月') + '日';

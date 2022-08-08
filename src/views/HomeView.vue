@@ -2,7 +2,12 @@
   <div class="main-content">
     <Circle></Circle>
     <Header title="首页">
-      <span class="header__search iconfont">&#xe623;</span>
+      <template #center>
+        <input type="text" class="header__input" v-model="keyword" ref="addInput" />
+      </template>
+      <template #right>
+        <span class="header__search iconfont" @click="handleSearch">&#xe623;</span>
+      </template>
     </Header>
     <div class="card-list">
       <ChartCard
@@ -64,9 +69,28 @@ const { year, month, monthStr } = now();
 const monthExpend = dealListGroup('month', { time: `${year}-${monthStr}` })[0].total;
 
 const calcStatus = ref(false);
+const searchStatus = ref(false);
+const keyword = ref('');
+const addInput = ref();
 const handlePop = () => {
   // calcStatus.value = true;
   router.push({ name: 'Detail' });
+};
+
+const handleSearch = () => {
+  if (searchStatus.value && keyword.value) {
+    router.push({ name: 'List', query: { list: 'deal', keyword: keyword.value } });
+  } else if (searchStatus.value) {
+    addInput.value.style.opacity = 0;
+    addInput.value.style.width = 0;
+    addInput.value.style.padding = 0;
+    searchStatus.value = false;
+  } else {
+    addInput.value.style.opacity = 0.9;
+    addInput.value.style.width = '90%';
+    addInput.value.style.padding = '0 15px';
+    searchStatus.value = true;
+  }
 };
 </script>
 
@@ -74,6 +98,23 @@ const handlePop = () => {
 @import '../style/variables.less';
 
 .header {
+  :deep(&__center) {
+    flex: 1;
+  }
+
+  &__input {
+    box-sizing: border-box;
+    display: block;
+    width: 0;
+    padding: 0;
+    margin: 0 auto;
+    height: 28px;
+    border-radius: 16px;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    transition: all 0.5s ease-out;
+  }
   &__search {
     font-size: 20px;
   }
