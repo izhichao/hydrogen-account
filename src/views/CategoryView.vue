@@ -9,8 +9,8 @@
     </div>
     <Card :header="false">
       <ListItem v-for="item in categoryListWithDesc" :item="item" :button="true">
-        <var-icon name="cog " size="18" class="edit" color="#333" @click="handleShow(item.id)" />
-        <var-icon name="delete" size="18" class="delete" color="#333" @click="handleDelete(item.id)" />
+        <var-icon name="cog" class="edit" color="#333" @click="handleShow(item.id)" />
+        <var-icon name="delete" class="delete" color="#333" @click="handleDelete(item.id)" />
       </ListItem>
     </Card>
 
@@ -40,7 +40,11 @@ const { categoryListWithDesc, name, editModel, handleAdd, handleDelete, handleEd
 }
 
 .edit {
+  font-size: 18px;
   margin-right: 15px;
+}
+.delete {
+  font-size: 18px;
 }
 
 .add {

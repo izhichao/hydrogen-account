@@ -40,7 +40,7 @@
     round
     @click="router.push({ name: 'Detail', query: { type: 'add' } })"
   >
-    <var-icon name="plus" :size="26" />
+    <var-icon name="plus" class="btn__icon" />
   </var-button>
   <Calculator v-model:show="calcStatus"></Calculator>
   <Docker :currentIndex="0"></Docker>
@@ -62,7 +62,6 @@ import ChartCard from '../components/ChartCard.vue';
 import Card from '../components/Card.vue';
 import ListItem from '../components/ListItem.vue';
 import Calculator from '../components/Calculator.vue';
-import { useAccountStore } from '../store/useAccountStore';
 import { useDealStore } from '../store/useDealStore';
 import { useTime } from '../composables/useTime';
 import { useAccount } from '../composables/useAccount';
@@ -134,5 +133,9 @@ const handleSearch = () => {
   width: 40px;
   right: 25px;
   bottom: 75px;
+
+  &__icon {
+    font-size: 26px;
+  }
 }
 </style>
