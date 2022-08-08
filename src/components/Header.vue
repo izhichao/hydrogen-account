@@ -4,8 +4,11 @@
       <span v-show="back" class="header__back iconfont">&#xe645;</span>
       <span class="header__title">{{ title }}</span>
     </div>
+    <div class="header__center">
+      <slot name="center"></slot>
+    </div>
     <div class="header__right">
-      <slot></slot>
+      <slot name="right"></slot>
     </div>
   </div>
 </template>

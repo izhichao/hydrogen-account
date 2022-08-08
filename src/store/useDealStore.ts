@@ -92,8 +92,7 @@ export const useDealStore = defineStore('deal', {
         return (
           deal.desc.includes(keyword) ||
           deal.name.includes(keyword) ||
-          deal.date.includes(keyword) ||
-          deal.time.includes(keyword)
+          deal.date.includes(keyword)
         );
       });
       return dealList;

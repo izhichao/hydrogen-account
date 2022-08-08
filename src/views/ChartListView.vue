@@ -63,7 +63,7 @@ if (type === 'day') {
 
 const handlePush = (item: DealStats) => {
   if (type === 'category') {
-    router.push({ name: 'List', query: { list: 'deal', time, name: item.name } });
+    router.push({ name: 'List', query: { list: 'deal', time, keyword: item.name } });
   } else {
     router.push({ name: 'List', query: { list: 'deal', time: item.name } });
   }
