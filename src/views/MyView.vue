@@ -66,6 +66,7 @@ const selectList = [
   { icon: '&#xe621;', text: '导入' },
   { icon: '&#xe622;', text: '导出' },
   { icon: '&#xe615;', text: '清空' },
+  { icon: '&#xe677;', text: '帮助' },
   { icon: '&#xe739;', text: '分享' }
 ];
 
@@ -84,6 +85,9 @@ const handleClick = (index: number) => {
       handleClear();
       break;
     case 4:
+      console.log('帮助');
+      break;
+    case 5:
       console.log('分享');
       break;
   }
