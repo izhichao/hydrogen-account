@@ -2,12 +2,22 @@
   <Header :title="title" :back="true"></Header>
   <div class="main-content">
     <div class="card-list">
+      <div class="switch">
+        <var-counter v-model="year" @change="handleYearChange" v-if="timeMode" />
+        <div class="switch__date" v-else @click="showDate = true">{{ date }}</div>
+        <var-button class="switch__btn" @click="handleSwitchTimeMode" size="mini" v-if="type === 'category'">
+          切换
+        </var-button>
+      </div>
       <ChartCard :title="title" :amount="expends" :more="false"></ChartCard>
       <Card :header="false" v-for="item in list" class="padding-small">
         <ListItem :item="item" @click="handlePush(item)"></ListItem>
       </Card>
     </div>
   </div>
+  <var-popup v-model:show="showDate">
+    <var-date-picker v-model="date" type="month" @change="handleDateChange" />
+  </var-popup>
 </template>
 
 <script lang="ts" setup>
@@ -25,14 +35,34 @@ const route = useRoute();
 const router = useRouter();
 const { dealListGroup } = useDealStore();
 const { now } = useTime();
+const list = ref<DealStats[]>([]);
 
 const { type, time } = route.query;
-const list: DealStats[] = [];
+let [defaultYear, defaultMonth] = (time as string)?.split('-');
 
-const handleStatsList = () => {
+const showDate = ref(false);
+const timeMode = ref(type === 'month');
+const year = ref<number>(+defaultYear); // 年
+const date = ref<string>(`${defaultYear}-${defaultMonth}`); // 年-月
+
+// 页面跳转
+const handlePush = (item: DealStats) => {
+  if (type === 'category') {
+    // 类型为分类时，根据年或月跳转到详情页
+    router.push({
+      name: 'List',
+      query: { list: 'deal', time: timeMode.value ? year.value : date.value, keyword: item.name }
+    });
+  } else {
+    router.push({ name: 'List', query: { list: 'deal', time: item.name } });
+  }
+};
+
+const handleStatsList = (time: string) => {
+  list.value = [];
   let id = 0;
-  dealListGroup(type as string, { time: time as string }).forEach((item) => {
-    list.push({
+  dealListGroup(type as string, { time }).forEach((item) => {
+    list.value.push({
       id,
       name: item.name,
       desc: `${item.value.length}笔`,
@@ -42,37 +72,93 @@ const handleStatsList = () => {
   });
 };
 
+// 首次进入页面时，初始化数据
 const title = ref('分类统计');
+const expends = dealListGroup(time?.length === 4 ? 'year' : 'month', { time: time as string })[0]?.total || 0;
+
 if (type === 'day') {
-  let [year, month] = (time as string).split('-');
-  handleStatsList();
-  month = (+month).toString();
-  if (year === now().yearStr) {
+  handleStatsList(time as string);
+  if (defaultYear === now().yearStr) {
     // 今年只显示月份
-    title.value = `${month}月支出`;
+    title.value = `${(+defaultMonth).toString()}月支出`;
   } else {
     // 不是今年显示年、月
-    title.value = `${year}年${month}月支出`;
+    title.value = `${defaultYear}年${defaultMonth}月支出`;
   }
 } else if (type === 'month') {
   title.value = `${time}年支出`;
-  handleStatsList();
+  handleStatsList(time as string);
 } else {
-  handleStatsList();
+  handleStatsList(time as string);
 }
 
-const handlePush = (item: DealStats) => {
-  if (type === 'category') {
-    router.push({ name: 'List', query: { list: 'deal', time, keyword: item.name } });
+// 修改时间，重新获取数据
+const handleSwitchTimeMode = () => {
+  timeMode.value = !timeMode.value;
+  if (timeMode.value) {
+    handleStatsList(year.value.toString());
   } else {
-    router.push({ name: 'List', query: { list: 'deal', time: item.name } });
+    handleStatsList(date.value);
   }
 };
 
-const expends = dealListGroup(time?.length === 4 ? 'year' : 'month', { time: time as string })[0]?.total || 0;
+const handleDateChange = () => {
+  if (type === 'day') {
+    if (date.value.slice(0, 4) === now().yearStr) {
+      // 今年只显示月份
+      title.value = `${+date.value.slice(5, 7).toString()}月支出`;
+    } else {
+      // 不是今年显示年、月
+      title.value = `${date.value.replace('-', '年')}月支出`;
+    }
+  }
+  handleStatsList(date.value);
+  setTimeout(() => {
+    showDate.value = false;
+  }, 30);
+};
+
+const handleYearChange = () => {
+  if (type === 'month') {
+    title.value = `${year.value}年支出`;
+  }
+  handleStatsList(year.value.toString());
+};
 </script>
 
 <style lang="less" scoped>
 @import '../style/variables.less';
 @import '../style/inner.less';
+:deep(.var-counter) {
+  &__input {
+    width: 40px;
+  }
+}
+
+.switch {
+  display: flex;
+  align-items: center;
+
+  &__date {
+    width: 112px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+    font-size: 14px;
+    color: #fff;
+    background-color: #4aaef8;
+    border-radius: 14px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px,
+      rgba(0, 0, 0, 0.12) 0px 1px 5px 0px;
+  }
+
+  &__btn {
+    margin-left: 8px;
+  }
+}
+
+.var-date-picker {
+  width: 290px;
+  border-radius: 0;
+}
 </style>
