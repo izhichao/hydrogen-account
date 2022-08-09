@@ -3,9 +3,11 @@
   <div class="main-content">
     <div class="card-list">
       <div class="switch">
-        <var-counter v-model="year" @change="handleYearChange" v-if="timeMode" />
-        <div class="switch__date" v-else @click="showDate = true">{{ date }}</div>
-        <var-button class="switch__btn" @click="handleSwitchTimeMode" size="mini" v-if="type === 'category'">
+        <var-counter v-model="year" v-if="timeMode" @change="handleYearChange" />
+        <div class="switch__date" v-else-if="!timeMode && route.query.time" @click="showDate = true">
+          {{ yearAndMonth }}
+        </div>
+        <var-button class="switch__btn" size="mini" v-if="type === 'category'" @click="handleSwitchTimeMode">
           切换
         </var-button>
       </div>
@@ -16,7 +18,7 @@
     </div>
   </div>
   <var-popup v-model:show="showDate">
-    <var-date-picker v-model="date" type="month" @change="handleMonthChange" />
+    <var-date-picker v-model="yearAndMonth" type="month" @change="handleMonthChange" />
   </var-popup>
 </template>
 
@@ -33,7 +35,7 @@ import { useTime } from '../composables/useTime';
 
 const route = useRoute();
 const router = useRouter();
-const { dealListGroup } = useDealStore();
+const { totalExpend, dealListGroup } = useDealStore();
 const { now } = useTime();
 const list = ref<DealStats[]>([]);
 
@@ -42,9 +44,9 @@ let { type, time } = route.query;
 if (!time) {
   time = `${now().yearStr}-${now().monthStr}`;
 }
-// 没有指定类型，默认为分类
+// 没有指定类型，默认为全部
 if (!type) {
-  type = 'category';
+  type = 'year';
 }
 
 let [defaultYear, defaultMonth] = (time as string).split('-');
@@ -52,7 +54,7 @@ let [defaultYear, defaultMonth] = (time as string).split('-');
 const showDate = ref(false);
 const timeMode = ref(type === 'month');
 const year = ref<number>(+defaultYear); // 年
-const date = ref<string>(`${defaultYear}-${defaultMonth}`); // 年-月
+const yearAndMonth = ref<string>(`${defaultYear}-${defaultMonth}`); // 年-月
 
 // 页面跳转
 const handlePush = (item: DealStats) => {
@@ -60,14 +62,15 @@ const handlePush = (item: DealStats) => {
     // 类型为分类时，根据年或月跳转到详情页
     router.push({
       name: 'List',
-      query: { list: 'deal', time: timeMode.value ? year.value : date.value, keyword: item.name }
+      query: { list: 'deal', time: timeMode.value ? year.value : yearAndMonth.value, keyword: item.name }
     });
   } else {
     router.push({ name: 'List', query: { list: 'deal', time: item.name } });
   }
 };
 
-const handleStatsList = (time: string) => {
+// 根据时间与类型获取对应的数据
+const handleStatsList = (time?: string) => {
   list.value = [];
   let id = 0;
   dealListGroup(type as string, { time }).forEach((item) => {
@@ -83,7 +86,10 @@ const handleStatsList = (time: string) => {
 
 // 首次进入页面时，初始化数据
 const title = ref('分类统计');
-const expends = dealListGroup(time?.length === 4 ? 'year' : 'month', { time: time as string })[0]?.total || 0;
+let expends = dealListGroup(time?.length === 4 ? 'year' : 'month', { time: time as string })[0]?.total || 0;
+if (!route.query.time) {
+  expends = totalExpend;
+}
 
 if (type === 'day') {
   // 月支出
@@ -97,6 +103,9 @@ if (type === 'day') {
   // 年支出
   title.value = `${time}年支出`;
   handleStatsList(time as string);
+} else if (type === 'year') {
+  title.value = `全部支出`;
+  handleStatsList();
 } else {
   // 分类统计
   handleStatsList(time as string);
@@ -108,21 +117,21 @@ const handleSwitchTimeMode = () => {
   if (timeMode.value) {
     handleStatsList(year.value.toString());
   } else {
-    handleStatsList(date.value);
+    handleStatsList(yearAndMonth.value);
   }
 };
 
 const handleMonthChange = () => {
   if (type === 'day') {
-    if (date.value.split('-')[0] === now().yearStr) {
+    if (yearAndMonth.value.split('-')[0] === now().yearStr) {
       // 今年只显示月份
-      title.value = `${+date.value.split('-')[1].toString()}月支出`;
+      title.value = `${+yearAndMonth.value.split('-')[1].toString()}月支出`;
     } else {
       // 不是今年显示年、月
-      title.value = `${date.value.replace('-', '年')}月支出`;
+      title.value = `${yearAndMonth.value.replace('-', '年')}月支出`;
     }
   }
-  handleStatsList(date.value);
+  handleStatsList(yearAndMonth.value);
   setTimeout(() => {
     showDate.value = false;
   }, 30);
