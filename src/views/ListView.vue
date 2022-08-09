@@ -52,7 +52,7 @@
           <ListItem v-for="item in accountList" :item="item" @click="handleShowEdit(item.id)"></ListItem>
 
           <div class="add" v-ripple @click="handleShowAdd">
-            <var-icon name="plus" class="add__icon"/>
+            <var-icon name="plus" class="add__icon" />
           </div>
         </Card>
       </template>
@@ -83,6 +83,7 @@ const route = useRoute();
 const router = useRouter();
 const dealStore = useDealStore();
 const { dealListGroup } = dealStore;
+
 const {
   addAccountModel,
   editAccountModel,
@@ -96,23 +97,30 @@ const {
   handleDelete
 } = useAccount();
 
-const { list, time, keyword } = route.query;
+let { list, time, keyword } = route.query;
 const dealList = dealListGroup('day', { time: time as string, keyword: keyword as string });
 const amount = dealList.reduce((total, item) => total + item.value.length, 0);
 const expend = dealList.reduce((total, item) => total + item.total, 0);
 
-const title = ref('所有账户');
+const title = ref('所有交易');
+if (!list) {
+  list = 'deal';
+} else if (list === 'account') {
+  title.value = '所有账户';
+}
 
 if (keyword) {
+  // 搜索或分类列表
   title.value = keyword as string;
 } else if (time) {
+  // 时间列表
   if (time.length === 10) {
     title.value = (time as string).replace('-', '年').replace('-', '月') + '日';
-  } else {
+  } else if (time.length === 7) {
     title.value = (time as string).replace('-', '年') + '月';
+  } else {
+    title.value = (time as string) + '年';
   }
-} else if (list === 'deal') {
-  title.value = '所有交易';
 }
 </script>
 
