@@ -16,7 +16,7 @@
     </div>
   </div>
   <var-popup v-model:show="showDate">
-    <var-date-picker v-model="date" type="month" @change="handleDateChange" />
+    <var-date-picker v-model="date" type="month" @change="handleMonthChange" />
   </var-popup>
 </template>
 
@@ -37,8 +37,17 @@ const { dealListGroup } = useDealStore();
 const { now } = useTime();
 const list = ref<DealStats[]>([]);
 
-const { type, time } = route.query;
-let [defaultYear, defaultMonth] = (time as string)?.split('-');
+let { type, time } = route.query;
+// 没有指定时间，默认为当前时间
+if (!time) {
+  time = `${now().yearStr}-${now().monthStr}`;
+}
+// 没有指定类型，默认为分类
+if (!type) {
+  type = 'category';
+}
+
+let [defaultYear, defaultMonth] = (time as string).split('-');
 
 const showDate = ref(false);
 const timeMode = ref(type === 'month');
@@ -77,18 +86,19 @@ const title = ref('分类统计');
 const expends = dealListGroup(time?.length === 4 ? 'year' : 'month', { time: time as string })[0]?.total || 0;
 
 if (type === 'day') {
+  // 月支出
   handleStatsList(time as string);
   if (defaultYear === now().yearStr) {
-    // 今年只显示月份
-    title.value = `${(+defaultMonth).toString()}月支出`;
+    title.value = `${(+defaultMonth).toString()}月支出`; // 今年只显示月份
   } else {
-    // 不是今年显示年、月
-    title.value = `${defaultYear}年${defaultMonth}月支出`;
+    title.value = `${defaultYear}年${defaultMonth}月支出`; // 不是今年显示年、月
   }
 } else if (type === 'month') {
+  // 年支出
   title.value = `${time}年支出`;
   handleStatsList(time as string);
 } else {
+  // 分类统计
   handleStatsList(time as string);
 }
 
@@ -102,11 +112,11 @@ const handleSwitchTimeMode = () => {
   }
 };
 
-const handleDateChange = () => {
+const handleMonthChange = () => {
   if (type === 'day') {
-    if (date.value.slice(0, 4) === now().yearStr) {
+    if (date.value.split('-')[0] === now().yearStr) {
       // 今年只显示月份
-      title.value = `${+date.value.slice(5, 7).toString()}月支出`;
+      title.value = `${+date.value.split('-')[1].toString()}月支出`;
     } else {
       // 不是今年显示年、月
       title.value = `${date.value.replace('-', '年')}月支出`;
