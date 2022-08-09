@@ -11,7 +11,7 @@
   width: 800px;
   height: 500px;
   border-radius: 50%;
-  background-image: linear-gradient(239deg, #3a6ff3 0%, #50c7fb 100%);
+  background-image: linear-gradient(239deg, #3a6ff3, #50c7fb);
   z-index: -1;
 }
 </style>
