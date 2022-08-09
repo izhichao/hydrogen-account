@@ -19,6 +19,11 @@
         :amount="yearExpend"
         @more="router.push({ name: 'Chart', query: { type: 'month', time: `${year}` } })"
       ></ChartCard>
+      <ChartCard
+        :title="`全部支出`"
+        :amount="totalExpend"
+        @more="router.push({ name: 'Chart', query: { type: 'year' } })"
+      ></ChartCard>
     </div>
   </div>
   <Docker :currentIndex="1"></Docker>
@@ -32,7 +37,7 @@ import Docker from '../components/Docker.vue';
 import { useRouter } from 'vue-router';
 import { useDealStore } from '../store/useDealStore';
 import { useTime } from '../composables/useTime';
-const { dealListGroup } = useDealStore();
+const { totalExpend, dealListGroup } = useDealStore();
 const { now } = useTime();
 const { year, month, monthStr } = now();
 const router = useRouter();
