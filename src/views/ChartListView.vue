@@ -11,7 +11,7 @@
           切换
         </var-button>
       </div>
-      <ChartCard :title="title" :amount="expends" :more="false"></ChartCard>
+      <ChartCard :title="title" :amount="expends" :option="options" :more="false"></ChartCard>
       <Card :header="false" v-for="item in list" class="padding-small">
         <ListItem :item="item" @click="handlePush(item)"></ListItem>
       </Card>
@@ -32,11 +32,14 @@ import ListItem from '../components/ListItem.vue';
 import { DealStats } from '../types/deal';
 import { useDealStore } from '../store/useDealStore';
 import { useTime } from '../composables/useTime';
+import { useChart } from '../composables/useChart';
 
 const route = useRoute();
 const router = useRouter();
 const { totalExpend, dealListGroup } = useDealStore();
 const { now } = useTime();
+const { categoryOptions, dayOptions, monthOptions, yearOptions } = useChart();
+const options = ref();
 const list = ref<DealStats[]>([]);
 
 let { type, time } = route.query;
@@ -93,6 +96,7 @@ if (!route.query.time) {
 
 if (type === 'day') {
   // 月支出
+  options.value = dayOptions(time as string);
   handleStatsList(time as string);
   if (defaultYear === now().yearStr) {
     title.value = `${(+defaultMonth).toString()}月支出`; // 今年只显示月份
@@ -102,27 +106,33 @@ if (type === 'day') {
 } else if (type === 'month') {
   // 年支出
   title.value = `${time}年支出`;
+  options.value = monthOptions(time as string);
   handleStatsList(time as string);
 } else if (type === 'year') {
   title.value = `全部支出`;
+  options.value = yearOptions();
   handleStatsList();
 } else {
   // 分类统计
+  options.value = categoryOptions(time as string);
   handleStatsList(time as string);
 }
 
-// 修改时间，重新获取数据
+// 修改时间模式，重新获取数据
 const handleSwitchTimeMode = () => {
   timeMode.value = !timeMode.value;
   if (timeMode.value) {
+    options.value = categoryOptions(year.value.toString());
     handleStatsList(year.value.toString());
   } else {
+    options.value = categoryOptions(yearAndMonth.value);
     handleStatsList(yearAndMonth.value);
   }
 };
 
 const handleMonthChange = () => {
   if (type === 'day') {
+    options.value = dayOptions(yearAndMonth.value);
     if (yearAndMonth.value.split('-')[0] === now().yearStr) {
       // 今年只显示月份
       title.value = `${+yearAndMonth.value.split('-')[1].toString()}月支出`;
@@ -130,6 +140,8 @@ const handleMonthChange = () => {
       // 不是今年显示年、月
       title.value = `${yearAndMonth.value.replace('-', '年')}月支出`;
     }
+  } else if (type === 'category') {
+    options.value = categoryOptions(yearAndMonth.value);
   }
   handleStatsList(yearAndMonth.value);
   setTimeout(() => {
@@ -139,7 +151,10 @@ const handleMonthChange = () => {
 
 const handleYearChange = () => {
   if (type === 'month') {
+    options.value = monthOptions(year.value.toString());
     title.value = `${year.value}年支出`;
+  } else if (type === 'category') {
+    options.value = categoryOptions(year.value.toString());
   }
   handleStatsList(year.value.toString());
 };
