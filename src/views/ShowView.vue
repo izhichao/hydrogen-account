@@ -17,6 +17,7 @@
       <ChartCard
         :title="`${year}年支出`"
         :amount="yearExpend"
+        :option="monthOption"
         @more="router.push({ name: 'Chart', query: { type: 'month', time: `${year}` } })"
       ></ChartCard>
       <ChartCard
@@ -44,6 +45,56 @@ const router = useRouter();
 
 const monthExpend = dealListGroup('month', { time: `${year}-${monthStr}` })[0]?.total || 0;
 const yearExpend = dealListGroup('year', { time: `${year}` })[0]?.total || 0;
+const monthOption = {
+  tooltip: {
+    trigger: 'axis',
+    axisPointer: {
+      type: 'shadow'
+    }
+  },
+  xAxis: {
+    type: 'category',
+    name: '月份',
+    data: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+    axisTick: {
+      show: false
+    },
+    axisLine: {
+      show: false,
+      lineStyle: {
+        color: '#999'
+      }
+    }
+  },
+  yAxis: {
+    type: 'value',
+    name: '支出',
+    splitLine: {
+      show: false
+    },
+    axisLine: {
+      lineStyle: {
+        color: '#999'
+      }
+    }
+  },
+  color: ['#0091ff'],
+  series: [
+    {
+      name: '支出',
+      type: 'bar',
+      barWidth: '60%',
+      data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    }
+  ],
+  grid: {
+    left: 0,
+    right: 0,
+    bottom: 0,
+    top: '5%',
+    containLabel: true
+  }
+};
 </script>
 
 <style lang="less" scoped>
