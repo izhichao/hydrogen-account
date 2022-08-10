@@ -13,6 +13,7 @@
       <ChartCard
         :title="`${month}月支出`"
         :amount="monthExpend"
+        :option="dayOptions(`${year}-${monthStr}`)"
         @more="router.push({ name: 'Chart', query: { type: 'day', time: `${year}-${monthStr}` } })"
       ></ChartCard>
       <Card title="最近交易" @more="router.push({ name: 'List', query: { list: 'deal' } })">
@@ -65,12 +66,14 @@ import Calculator from '../components/Calculator.vue';
 import { useDealStore } from '../store/useDealStore';
 import { useTime } from '../composables/useTime';
 import { useAccount } from '../composables/useAccount';
+import { useChart } from '../composables/useChart';
 
 const router = useRouter();
 const { accountList, editAccountModel, handleEdit, handleDelete, handleShowEdit } = useAccount();
 const { dealListGroup, recentDealList } = useDealStore();
 const { now } = useTime();
 const { year, month, monthStr } = now();
+const { dayOptions } = useChart();
 
 const monthExpend = dealListGroup('month', { time: `${year}-${monthStr}` })[0].total;
 
