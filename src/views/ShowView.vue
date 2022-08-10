@@ -13,6 +13,7 @@
       <ChartCard
         :title="`${month}月支出`"
         :amount="monthExpend"
+        :option="dayOption"
         @more="router.push({ name: 'Chart', query: { type: 'day', time: `${year}-${monthStr}` } })"
       ></ChartCard>
       <ChartCard
@@ -24,6 +25,7 @@
       <ChartCard
         :title="`全部支出`"
         :amount="totalExpend"
+        :option="yearOption"
         @more="router.push({ name: 'Chart', query: { type: 'year' } })"
       ></ChartCard>
     </div>
@@ -54,6 +56,23 @@ const categoryOption = {
       color: '#fff'
     }
   },
+  title: [
+    {
+      text: '交易笔数',
+      subtext: '320',
+      x: '48.5%',
+      y: '35%',
+      textAlign: 'center',
+      textStyle: {
+        fontSize: 12,
+        color: '#666'
+      },
+      subtextStyle: {
+        fontSize: 16,
+        color: '#333'
+      }
+    }
+  ],
   series: [
     {
       name: '分类统计',
@@ -61,19 +80,11 @@ const categoryOption = {
       radius: ['60%', '90%'],
       avoidLabelOverlap: false,
       label: {
-        show: false,
-        position: 'center'
+        show: false
       },
       itemStyle: {
         borderColor: '#fff',
         borderWidth: 2
-      },
-      emphasis: {
-        label: {
-          show: true,
-          fontSize: '12',
-          fontWeight: 'bold'
-        }
       },
       data: [
         { value: 50, name: '购物' },
@@ -82,6 +93,49 @@ const categoryOption = {
       ]
     }
   ]
+};
+
+const dayOption = {
+  tooltip: {
+    trigger: 'axis',
+    backgroundColor: 'rgba(50,50,50,0.7)',
+    textStyle: {
+      color: '#fff'
+    }
+  },
+  xAxis: {
+    type: 'category',
+    name: '日期',
+    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+    axisTick: {
+      show: false
+    },
+    axisLine: {
+      show: false,
+      lineStyle: {
+        color: '#999'
+      }
+    }
+  },
+  yAxis: { show: false },
+  color: ['#4aaef8'],
+  series: [
+    {
+      name: '支出',
+      data: [150, 230, 224, 218, 135, 147, 260],
+      type: 'line',
+      itemStyle: {
+        opacity: 0
+      },
+      smooth: true
+    }
+  ],
+  grid: {
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: '15%'
+  }
 };
 
 const monthOption = {
@@ -98,7 +152,7 @@ const monthOption = {
   xAxis: {
     type: 'category',
     name: '月份',
-    data: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+    data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
     axisTick: {
       show: false
     },
@@ -109,19 +163,8 @@ const monthOption = {
       }
     }
   },
-  yAxis: {
-    type: 'value',
-    name: '支出',
-    splitLine: {
-      show: false
-    },
-    axisLine: {
-      lineStyle: {
-        color: '#999'
-      }
-    }
-  },
-  color: ['#0091ff'],
+  yAxis: { show: false },
+  color: ['#4aaef8'],
   series: [
     {
       name: '支出',
@@ -133,10 +176,56 @@ const monthOption = {
   grid: {
     left: 0,
     right: 0,
-    bottom: 0,
-    top: '5%',
-    containLabel: true
+    top: 0,
+    bottom: '15%'
   }
+};
+
+const yearOption = {
+  tooltip: {
+    trigger: 'item',
+    backgroundColor: 'rgba(50,50,50,0.7)',
+    textStyle: {
+      color: '#fff'
+    }
+  },
+  title: [
+    {
+      text: '记账天数',
+      subtext: '320',
+      x: '48.5%',
+      y: '35%',
+      textAlign: 'center',
+      textStyle: {
+        fontSize: 12,
+        color: '#666'
+      },
+      subtextStyle: {
+        fontSize: 16,
+        color: '#333'
+      }
+    }
+  ],
+  series: [
+    {
+      name: '全部支出',
+      type: 'pie',
+      radius: ['60%', '90%'],
+      avoidLabelOverlap: false,
+      label: {
+        show: false
+      },
+      itemStyle: {
+        borderColor: '#fff',
+        borderWidth: 2
+      },
+      data: [
+        { value: 50, name: '2022' },
+        { value: 124, name: '2021' },
+        { value: 12, name: '2020' }
+      ]
+    }
+  ]
 };
 </script>
 
