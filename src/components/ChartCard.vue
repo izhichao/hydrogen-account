@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import Card from './Card.vue';
 import * as echarts from 'echarts';
 const props = defineProps({
@@ -20,9 +20,16 @@ const props = defineProps({
   }
 });
 const chartRef = ref();
+
 onMounted(() => {
   const chart = echarts.init(chartRef.value);
-  chart.setOption(props.option);
+  watch(
+    () => props.option,
+    () => {
+      chart.setOption(props.option, { notMerge: true });
+    },
+    { immediate: true }
+  );
 });
 </script>
 
