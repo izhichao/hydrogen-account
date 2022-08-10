@@ -3,7 +3,7 @@
     <Circle></Circle>
     <Header title="首页">
       <template #center>
-        <input type="text" class="header__input" v-model="keyword" ref="addInput" />
+        <input type="text" class="header__input" v-model="keyword" ref="inputRef" />
       </template>
       <template #right>
         <span class="header__search iconfont" @click="handleSearch">&#xe623;</span>
@@ -77,7 +77,7 @@ const monthExpend = dealListGroup('month', { time: `${year}-${monthStr}` })[0].t
 const calcStatus = ref(false);
 const searchStatus = ref(false);
 const keyword = ref('');
-const addInput = ref();
+const inputRef = ref();
 const handlePop = () => {
   // calcStatus.value = true;
   router.push({ name: 'Detail' });
@@ -87,14 +87,14 @@ const handleSearch = () => {
   if (searchStatus.value && keyword.value) {
     router.push({ name: 'List', query: { list: 'deal', keyword: keyword.value } });
   } else if (searchStatus.value) {
-    addInput.value.style.opacity = 0;
-    addInput.value.style.width = 0;
-    addInput.value.style.padding = 0;
+    inputRef.value.style.opacity = 0;
+    inputRef.value.style.width = 0;
+    inputRef.value.style.padding = 0;
     searchStatus.value = false;
   } else {
-    addInput.value.style.opacity = 0.9;
-    addInput.value.style.width = '90%';
-    addInput.value.style.padding = '0 15px';
+    inputRef.value.style.opacity = 0.9;
+    inputRef.value.style.width = '90%';
+    inputRef.value.style.padding = '0 15px';
     searchStatus.value = true;
   }
 };
