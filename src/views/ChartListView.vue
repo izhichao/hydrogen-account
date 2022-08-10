@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import Header from '../components/Header.vue';
 import ChartCard from '../components/ChartCard.vue';
@@ -56,6 +56,7 @@ let [defaultYear, defaultMonth] = (time as string).split('-');
 
 const showDate = ref(false);
 const timeMode = ref(type === 'month');
+const expends = ref(0);
 const year = ref<number>(+defaultYear); // 年
 const yearAndMonth = ref<string>(`${defaultYear}-${defaultMonth}`); // 年-月
 
@@ -87,24 +88,25 @@ const handleStatsList = (time?: string) => {
   });
 };
 
+// 当列表改变时，修改支出
+watch(
+  () => list.value,
+  () => {
+    expends.value = list.value.reduce((total, currentValue) => total + currentValue.amount, 0);
+  }
+);
+
 // 首次进入页面时，初始化数据
 const title = ref('分类统计');
-let expends = dealListGroup(time?.length === 4 ? 'year' : 'month', { time: time as string })[0]?.total || 0;
-if (!route.query.time) {
-  expends = totalExpend;
-}
-
 if (type === 'day') {
-  // 月支出
-  options.value = dayOptions(time as string);
-  handleStatsList(time as string);
   if (defaultYear === now().yearStr) {
     title.value = `${(+defaultMonth).toString()}月支出`; // 今年只显示月份
   } else {
     title.value = `${defaultYear}年${defaultMonth}月支出`; // 不是今年显示年、月
   }
+  options.value = dayOptions(time as string);
+  handleStatsList(time as string);
 } else if (type === 'month') {
-  // 年支出
   title.value = `${time}年支出`;
   options.value = monthOptions(time as string);
   handleStatsList(time as string);
@@ -112,13 +114,12 @@ if (type === 'day') {
   title.value = `全部支出`;
   options.value = yearOptions();
   handleStatsList();
-} else {
-  // 分类统计
+} else if (type === 'category') {
   options.value = categoryOptions(time as string);
   handleStatsList(time as string);
 }
 
-// 修改时间模式，重新获取数据
+// 分类页面：修改时间模式，重新获取数据
 const handleSwitchTimeMode = () => {
   timeMode.value = !timeMode.value;
   if (timeMode.value) {
@@ -130,6 +131,7 @@ const handleSwitchTimeMode = () => {
   }
 };
 
+// 修改月
 const handleMonthChange = () => {
   if (type === 'day') {
     options.value = dayOptions(yearAndMonth.value);
@@ -149,6 +151,7 @@ const handleMonthChange = () => {
   }, 30);
 };
 
+// 修改年
 const handleYearChange = () => {
   if (type === 'month') {
     options.value = monthOptions(year.value.toString());
