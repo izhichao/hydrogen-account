@@ -1,17 +1,28 @@
 <template>
   <Card>
     <div class="amount">{{ amount }}</div>
-    <div class="chart"></div>
+    <div class="chart" ref="chartRef"></div>
   </Card>
 </template>
 
 <script lang="ts" setup>
+import { onMounted, ref } from 'vue';
 import Card from './Card.vue';
-defineProps({
+import * as echarts from 'echarts';
+const props = defineProps({
   amount: {
     type: Number,
     required: true
+  },
+  option: {
+    type: Object,
+    default: () => ({})
   }
+});
+const chartRef = ref();
+onMounted(() => {
+  const chart = echarts.init(chartRef.value);
+  chart.setOption(props.option);
 });
 </script>
 
@@ -24,7 +35,7 @@ defineProps({
 }
 
 .chart {
+  width: 100%;
   height: 130px;
-  background-color: #ccc;
 }
 </style>
