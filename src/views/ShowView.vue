@@ -7,6 +7,7 @@
       <ChartCard
         title="分类统计"
         :amount="monthExpend"
+        :option="categoryOption"
         @more="router.push({ name: 'Chart', query: { type: 'category', time: `${year}-${monthStr}` } })"
       ></ChartCard>
       <ChartCard
@@ -45,9 +46,51 @@ const router = useRouter();
 
 const monthExpend = dealListGroup('month', { time: `${year}-${monthStr}` })[0]?.total || 0;
 const yearExpend = dealListGroup('year', { time: `${year}` })[0]?.total || 0;
+const categoryOption = {
+  tooltip: {
+    trigger: 'item',
+    backgroundColor: 'rgba(50,50,50,0.7)',
+    textStyle: {
+      color: '#fff'
+    }
+  },
+  series: [
+    {
+      name: '分类统计',
+      type: 'pie',
+      radius: ['60%', '90%'],
+      avoidLabelOverlap: false,
+      label: {
+        show: false,
+        position: 'center'
+      },
+      itemStyle: {
+        borderColor: '#fff',
+        borderWidth: 2
+      },
+      emphasis: {
+        label: {
+          show: true,
+          fontSize: '12',
+          fontWeight: 'bold'
+        }
+      },
+      data: [
+        { value: 50, name: '购物' },
+        { value: 124, name: '水电费' },
+        { value: 12, name: '交通' }
+      ]
+    }
+  ]
+};
+
 const monthOption = {
   tooltip: {
     trigger: 'axis',
+    backgroundColor: 'rgba(50,50,50,0.7)',
+    textStyle: {
+      color: '#fff'
+    },
     axisPointer: {
       type: 'shadow'
     }
