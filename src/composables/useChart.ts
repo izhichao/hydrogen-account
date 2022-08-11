@@ -54,7 +54,6 @@ export const useChart = () => {
         show: false
       },
       axisLine: {
-        show: false,
         lineStyle: {
           color: '#999'
         }
