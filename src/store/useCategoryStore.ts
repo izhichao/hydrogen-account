@@ -49,6 +49,6 @@ export const useCategoryStore = defineStore('category', {
         return category;
       });
     }
-  }
-  // persist: true
+  },
+  persist: true
 });

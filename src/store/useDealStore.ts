@@ -89,11 +89,7 @@ export const useDealStore = defineStore('deal', {
     searchDealList(list: Deal[], keyword: string) {
       let dealList = list;
       dealList = dealList.filter((deal) => {
-        return (
-          deal.desc.includes(keyword) ||
-          deal.name.includes(keyword) ||
-          deal.date.includes(keyword)
-        );
+        return deal.desc.includes(keyword) || deal.name.includes(keyword) || deal.date.includes(keyword);
       });
       return dealList;
     },
@@ -138,6 +134,6 @@ export const useDealStore = defineStore('deal', {
       });
       this.dealList = newDealList;
     }
-  }
-  // persist: true
+  },
+  persist: true
 });
