@@ -30,14 +30,7 @@ const { categoryListWithDesc, name, editModel, handleAdd, handleDelete, handleEd
 
 <style lang="less" scoped>
 @import '../style/variables.less';
-.main-content {
-  top: 50px;
-  bottom: 0;
-}
-.header {
-  padding: 0 20px;
-  background-image: @linearColor;
-}
+@import '../style/inner.less';
 
 .edit {
   font-size: 18px;
