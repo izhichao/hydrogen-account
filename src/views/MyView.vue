@@ -94,14 +94,14 @@ const handleClick = (index: number) => {
       break;
     case 6:
       if (!navigator.share) {
-				alert("您的浏览器不支持分享功能！");
-			} else {
-				navigator.share({
-					title: 'H2记账',
-					url: window.location.origin,
-					text: '轻量级记账神器，记录您的每一笔交易！'
-				});
-			}
+        alert('您的浏览器不支持分享功能！');
+      } else {
+        navigator.share({
+          title: 'H2记账',
+          url: window.location.href.replace(window.location.hash, ''),
+          text: '轻量级记账神器，记录您的每一笔交易！'
+        });
+      }
       break;
   }
 };
