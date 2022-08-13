@@ -48,6 +48,7 @@ import { useRouter } from 'vue-router';
 import { useAccountStore } from '../store/useAccountStore';
 import { useDealStore } from '../store/useDealStore';
 import { storeToRefs } from 'pinia';
+
 const accountStore = useAccountStore();
 const dealStore = useDealStore();
 const { totalAsset } = storeToRefs(accountStore);
@@ -92,7 +93,15 @@ const handleClick = (index: number) => {
       console.log('设置');
       break;
     case 6:
-      console.log('分享');
+      if (!navigator.share) {
+				alert("您的浏览器不支持分享功能！");
+			} else {
+				navigator.share({
+					title: 'H2记账',
+					url: window.location.origin,
+					text: '轻量级记账神器，记录您的每一笔交易！'
+				});
+			}
       break;
   }
 };
