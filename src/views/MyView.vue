@@ -68,7 +68,7 @@ const selectList = [
   { icon: '&#xe615;', text: '清空' },
   { icon: '&#xe677;', text: '帮助' },
   { icon: '&#xe600;', text: '设置' },
-  { icon: '&#xe739;', text: '分享' },
+  { icon: '&#xe739;', text: '分享' }
 ];
 
 const handleClick = (index: number) => {
@@ -86,7 +86,7 @@ const handleClick = (index: number) => {
       handleClear();
       break;
     case 4:
-      console.log('帮助');
+      router.push({ name: 'Help' });
       break;
     case 5:
       console.log('设置');
