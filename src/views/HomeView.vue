@@ -75,7 +75,7 @@ const { now } = useTime();
 const { year, month, monthStr } = now();
 const { dayOptions } = useChart();
 
-const monthExpend = dealListGroup('month', { time: `${year}-${monthStr}` })[0].total;
+const monthExpend = dealListGroup('month', { time: `${year}-${monthStr}` })[0]?.total || 0;
 
 const calcStatus = ref(false);
 const searchStatus = ref(false);

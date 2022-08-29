@@ -106,7 +106,6 @@ export const useDealStore = defineStore('deal', {
       const dealList = convertObjToArray(dealObj);
       return dealList;
     },
-
     findDeal(id: number) {
       return this.dealList.find((deal) => deal.id === id);
     },
