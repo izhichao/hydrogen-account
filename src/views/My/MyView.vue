@@ -62,6 +62,12 @@ import { useDealStore } from '../../store/useDealStore';
 import { storeToRefs } from 'pinia';
 import { ref } from 'vue';
 import { useConfigStore } from '../../store/useConfigStore';
+import { useTime } from '../../composables/useTime';
+import { Deal } from '../../types/deal';
+import { Category } from '../../types/category';
+import { Account } from '../../types/account';
+import { Show } from '../../types/config';
+
 const config = ref(false);
 const accountStore = useAccountStore();
 const dealStore = useDealStore();
@@ -71,6 +77,32 @@ const { show } = storeToRefs(configStore);
 const { totalAsset } = storeToRefs(accountStore);
 const { totalExpend, dealAmount, timeDiff } = storeToRefs(dealStore);
 const router = useRouter();
+
+const handleOut = () => {
+  const { yearStr, monthStr, dayStr } = useTime().now();
+  // 创建一个对象用于存储数据
+  let obj: {
+    config?: Show;
+    category?: Category[];
+    account?: Account[];
+    deal?: Deal[];
+  } = {};
+  obj.config = JSON.parse(localStorage.getItem('config') || '');
+  obj.category = JSON.parse(localStorage.getItem('category') || '');
+  obj.account = JSON.parse(localStorage.getItem('account') || '');
+  obj.deal = JSON.parse(localStorage.getItem('deal') || '');
+
+  // 创建一个a标签用于下载
+  const data = JSON.stringify(obj);
+  const blob = new Blob([data], { type: 'text/json' });
+  const link = document.createElement('a');
+  link.href = window.URL.createObjectURL(blob);
+  link.download = `H2记账_${yearStr}年${monthStr}月${dayStr}日.json`;
+
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
 
 const handleClear = () => {
   Dialog('数据将无法恢复！确认清空？').then((res) => {
@@ -99,7 +131,7 @@ const handleClick = (index: number) => {
       console.log('导入');
       break;
     case 2:
-      console.log('导出');
+      handleOut();
       break;
     case 3:
       handleClear();
