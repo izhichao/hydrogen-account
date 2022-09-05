@@ -72,12 +72,12 @@
 </template>
 
 <script lang="ts" setup>
-import Header from '../components/Header.vue';
-import Card from '../components/Card.vue';
-import ListItem from '../components/ListItem.vue';
-import { useDealStore } from '../store/useDealStore';
+import Header from '../../components/Header.vue';
+import Card from '../../components/Card.vue';
+import ListItem from '../../components/ListItem.vue';
+import { useDealStore } from '../../store/useDealStore';
 import { useRoute, useRouter } from 'vue-router';
-import { useAccount } from '../composables/useAccount';
+import { useAccount } from '../../composables/useAccount';
 import { ref } from 'vue';
 const route = useRoute();
 const router = useRouter();
@@ -125,8 +125,8 @@ if (keyword) {
 </script>
 
 <style lang="less" scoped>
-@import '../style/variables.less';
-@import '../style/inner.less';
+@import '../../style/variables.less';
+@import '../../style/inner.less';
 
 .total {
   display: flex;

@@ -34,14 +34,14 @@
 </template>
 
 <script lang="ts" setup>
-import Circle from '../components/Circle.vue';
-import Header from '../components/Header.vue';
-import ChartCard from '../components/ChartCard.vue';
-import Docker from '../components/Docker.vue';
+import Circle from '../../components/Circle.vue';
+import Header from '../../components/Header.vue';
+import ChartCard from '../../components/ChartCard.vue';
+import Docker from '../../components/Docker.vue';
 import { useRouter } from 'vue-router';
-import { useDealStore } from '../store/useDealStore';
-import { useTime } from '../composables/useTime';
-import { useChart } from '../composables/useChart';
+import { useDealStore } from '../../store/useDealStore';
+import { useTime } from '../../composables/useTime';
+import { useChart } from '../../composables/useChart';
 const { totalExpend, dealListGroup } = useDealStore();
 const { now } = useTime();
 const { year, month, monthStr } = now();

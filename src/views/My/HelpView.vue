@@ -26,8 +26,8 @@ const helpList = [
 </script>
 
 <style lang="less" scoped>
-@import '../style/variables.less';
-@import '../style/inner.less';
+@import '../../style/variables.less';
+@import '../../style/inner.less';
 
 .help {
   --collapse-text-color: #333;

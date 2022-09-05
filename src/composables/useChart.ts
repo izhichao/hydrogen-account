@@ -90,7 +90,7 @@ export const useChart = () => {
       title: [
         {
           text: '交易笔数',
-          subtext: amount,
+          subtext: amount || '0',
           ...pieCommonSettings.title
         }
       ],
