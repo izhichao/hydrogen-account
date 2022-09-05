@@ -4,25 +4,32 @@
     <Header title="统计"></Header>
 
     <div class="card-list">
+      <Card v-if="![show.category, show.day, show.month, show.year].includes(true)" :header="false" class="none">
+        还没有图表，赶快去添加吧！
+      </Card>
       <ChartCard
+        v-if="show.category"
         title="分类统计"
         :amount="monthExpend"
         :option="categoryOptions(`${year}-${monthStr}`)"
         @more="router.push({ name: 'Chart', query: { type: 'category', time: `${year}-${monthStr}` } })"
       ></ChartCard>
       <ChartCard
+        v-if="show.day"
         :title="`${month}月支出`"
         :amount="monthExpend"
         :option="dayOptions(`${year}-${monthStr}`)"
         @more="router.push({ name: 'Chart', query: { type: 'day', time: `${year}-${monthStr}` } })"
       ></ChartCard>
       <ChartCard
+        v-if="show.month"
         :title="`${year}年支出`"
         :amount="yearExpend"
         :option="monthOptions(`${year}`)"
         @more="router.push({ name: 'Chart', query: { type: 'month', time: `${year}` } })"
       ></ChartCard>
       <ChartCard
+        v-if="show.year"
         :title="`全部支出`"
         :amount="totalExpend"
         :option="yearOptions()"
@@ -37,12 +44,20 @@
 import Circle from '../../components/Circle.vue';
 import Header from '../../components/Header.vue';
 import ChartCard from '../../components/ChartCard.vue';
+import Card from '../../components/Card.vue';
 import Docker from '../../components/Docker.vue';
 import { useRouter } from 'vue-router';
-import { useDealStore } from '../../store/useDealStore';
 import { useTime } from '../../composables/useTime';
 import { useChart } from '../../composables/useChart';
+import { useDealStore } from '../../store/useDealStore';
+import { useConfigStore } from '../../store/useConfigStore';
+import { storeToRefs } from 'pinia';
 const { totalExpend, dealListGroup } = useDealStore();
+
+// 设置是否显示图表
+const configStore = useConfigStore();
+const { show } = storeToRefs(configStore);
+
 const { now } = useTime();
 const { year, month, monthStr } = now();
 const { categoryOptions, dayOptions, monthOptions, yearOptions } = useChart();
@@ -55,5 +70,13 @@ const yearExpend = dealListGroup('year', { time: `${year}` })[0]?.total || 0;
 <style lang="less" scoped>
 .header {
   height: 50px;
+}
+
+.none {
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
 }
 </style>

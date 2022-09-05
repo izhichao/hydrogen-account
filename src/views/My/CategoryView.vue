@@ -21,9 +21,9 @@
 </template>
 
 <script lang="ts" setup>
-import Header from '../components/Header.vue';
-import Card from '../components/Card.vue';
-import ListItem from '../components/ListItem.vue';
+import Header from '../../components/Header.vue';
+import Card from '../../components/Card.vue';
+import ListItem from '../../components/ListItem.vue';
 import { useCategory } from '../../composables/useCategory';
 const { categoryListWithDesc, name, editModel, handleAdd, handleDelete, handleEdit, handleShow } = useCategory();
 </script>

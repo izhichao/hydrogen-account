@@ -33,6 +33,18 @@
           </div>
         </div>
       </Card>
+
+      <var-popup v-model:show="config">
+        <div class="config">
+          <div class="config__show">
+            <div class="config__show__title">统计图表</div>
+            <var-checkbox v-model="show.category">分类</var-checkbox>
+            <var-checkbox v-model="show.day">月支出</var-checkbox>
+            <var-checkbox v-model="show.month">年支出</var-checkbox>
+            <var-checkbox v-model="show.year">总支出</var-checkbox>
+          </div>
+        </div>
+      </var-popup>
     </div>
   </div>
   <Docker :currentIndex="2"></Docker>
@@ -48,9 +60,14 @@ import { useRouter } from 'vue-router';
 import { useAccountStore } from '../../store/useAccountStore';
 import { useDealStore } from '../../store/useDealStore';
 import { storeToRefs } from 'pinia';
-
+import { ref } from 'vue';
+import { useConfigStore } from '../../store/useConfigStore';
+const config = ref(false);
 const accountStore = useAccountStore();
 const dealStore = useDealStore();
+const configStore = useConfigStore();
+const { show } = storeToRefs(configStore);
+
 const { totalAsset } = storeToRefs(accountStore);
 const { totalExpend, dealAmount, timeDiff } = storeToRefs(dealStore);
 const router = useRouter();
@@ -62,6 +79,7 @@ const handleClear = () => {
     }
   });
 };
+
 const selectList = [
   { icon: '&#xe65e;', text: '分类' },
   { icon: '&#xe621;', text: '导入' },
@@ -90,7 +108,7 @@ const handleClick = (index: number) => {
       router.push({ name: 'Help' });
       break;
     case 5:
-      console.log('设置');
+      config.value = true;
       break;
     case 6:
       if (!navigator.share) {
@@ -178,6 +196,28 @@ const handleClick = (index: number) => {
       transform: rotate(180deg);
       line-height: 22px;
       font-size: 14px;
+    }
+  }
+}
+
+:deep(.var-popup__content) {
+  border-radius: 15px;
+}
+.config {
+  padding: 20px 24px;
+  width: 250px;
+
+  &__show {
+    display: flex;
+    flex-direction: column;
+
+    :deep(.var-icon) {
+      font-size: 20px;
+    }
+
+    &__title {
+      font-weight: 700;
+      margin-bottom: 10px;
     }
   }
 }
