@@ -39,14 +39,14 @@
 </template>
 
 <script lang="ts" setup>
-import Header from '../components/Header.vue';
-import Circle from '../components/Circle.vue';
-import Docker from '../components/Docker.vue';
-import Card from '../components/Card.vue';
+import Header from '../../components/Header.vue';
+import Circle from '../../components/Circle.vue';
+import Docker from '../../components/Docker.vue';
+import Card from '../../components/Card.vue';
 import { Dialog } from '@varlet/ui';
 import { useRouter } from 'vue-router';
-import { useAccountStore } from '../store/useAccountStore';
-import { useDealStore } from '../store/useDealStore';
+import { useAccountStore } from '../../store/useAccountStore';
+import { useDealStore } from '../../store/useDealStore';
 import { storeToRefs } from 'pinia';
 
 const accountStore = useAccountStore();
@@ -108,7 +108,7 @@ const handleClick = (index: number) => {
 </script>
 
 <style lang="less" scoped>
-@import '../style/variables.less';
+@import '../../style/variables.less';
 
 .total {
   display: flex;

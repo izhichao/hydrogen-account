@@ -80,9 +80,9 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import Header from '../components/Header.vue';
-import Card from '../components/Card.vue';
-import { useDeal } from '../composables/useDeal';
+import Header from '../../components/Header.vue';
+import Card from '../../components/Card.vue';
+import { useDeal } from '../../composables/useDeal';
 const { dealModel, categoryList, type, handleAdd, handleEdit, handleDelete } = useDeal();
 
 const showDate = ref(false);
@@ -96,8 +96,8 @@ const handleDate = () => {
 </script>
 
 <style lang="less" scoped>
-@import '../style/variables.less';
-@import '../style/inner.less';
+@import '../../style/variables.less';
+@import '../../style/inner.less';
 
 .form {
   &__title {

@@ -56,17 +56,17 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import Header from '../components/Header.vue';
-import Circle from '../components/Circle.vue';
-import Docker from '../components/Docker.vue';
-import ChartCard from '../components/ChartCard.vue';
-import Card from '../components/Card.vue';
-import ListItem from '../components/ListItem.vue';
-import Calculator from '../components/Calculator.vue';
-import { useDealStore } from '../store/useDealStore';
-import { useTime } from '../composables/useTime';
-import { useAccount } from '../composables/useAccount';
-import { useChart } from '../composables/useChart';
+import Header from '../../components/Header.vue';
+import Circle from '../../components/Circle.vue';
+import Docker from '../../components/Docker.vue';
+import ChartCard from '../../components/ChartCard.vue';
+import Card from '../../components/Card.vue';
+import ListItem from '../../components/ListItem.vue';
+import Calculator from '../../components/Calculator.vue';
+import { useDealStore } from '../../store/useDealStore';
+import { useTime } from '../../composables/useTime';
+import { useAccount } from '../../composables/useAccount';
+import { useChart } from '../../composables/useChart';
 
 const router = useRouter();
 const { accountList, editAccountModel, handleEdit, handleDelete, handleShowEdit } = useAccount();
@@ -104,7 +104,7 @@ const handleSearch = () => {
 </script>
 
 <style lang="less" scoped>
-@import '../style/variables.less';
+@import '../../style/variables.less';
 
 .header {
   :deep(&__center) {

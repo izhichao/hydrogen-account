@@ -23,16 +23,16 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref, watch } from 'vue';
+import { ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import Header from '../components/Header.vue';
-import ChartCard from '../components/ChartCard.vue';
-import Card from '../components/Card.vue';
-import ListItem from '../components/ListItem.vue';
-import { DealStats } from '../types/deal';
-import { useDealStore } from '../store/useDealStore';
-import { useTime } from '../composables/useTime';
-import { useChart } from '../composables/useChart';
+import Header from '../../components/Header.vue';
+import ChartCard from '../../components/ChartCard.vue';
+import Card from '../../components/Card.vue';
+import ListItem from '../../components/ListItem.vue';
+import { DealStats } from '../../types/deal';
+import { useDealStore } from '../../store/useDealStore';
+import { useTime } from '../../composables/useTime';
+import { useChart } from '../../composables/useChart';
 
 const route = useRoute();
 const router = useRouter();
@@ -164,8 +164,8 @@ const handleYearChange = () => {
 </script>
 
 <style lang="less" scoped>
-@import '../style/variables.less';
-@import '../style/inner.less';
+@import '../../style/variables.less';
+@import '../../style/inner.less';
 :deep(.var-counter) {
   &__input {
     width: 40px;

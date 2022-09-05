@@ -24,13 +24,13 @@
 import Header from '../components/Header.vue';
 import Card from '../components/Card.vue';
 import ListItem from '../components/ListItem.vue';
-import { useCategory } from '../composables/useCategory';
+import { useCategory } from '../../composables/useCategory';
 const { categoryListWithDesc, name, editModel, handleAdd, handleDelete, handleEdit, handleShow } = useCategory();
 </script>
 
 <style lang="less" scoped>
-@import '../style/variables.less';
-@import '../style/inner.less';
+@import '../../style/variables.less';
+@import '../../style/inner.less';
 
 .edit {
   font-size: 18px;
