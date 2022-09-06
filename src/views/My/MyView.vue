@@ -26,7 +26,7 @@
 
       <Card :header="false">
         <div class="select">
-          <div class="select__item" v-for="(item, index) in selectList" :key="item.text" @click="handleClick(index)">
+          <div class="select__item" v-for="item in selectList" :key="item.text" @click="handleClick(item.text)">
             <div class="select__item__icon iconfont" v-html="item.icon"></div>
             <div class="select__item__title">{{ item.text }}</div>
             <div class="select__item__enter iconfont">&#xe645;</div>
@@ -53,114 +53,34 @@
 </template>
 
 <script lang="ts" setup>
+import { ref } from 'vue';
+import { storeToRefs } from 'pinia';
+import { useRouter } from 'vue-router';
 import Header from '../../components/Header.vue';
 import Circle from '../../components/Circle.vue';
 import Docker from '../../components/Docker.vue';
 import Card from '../../components/Card.vue';
-import { Dialog, Snackbar } from '@varlet/ui';
-import { useRouter } from 'vue-router';
+import { useSelect } from '../../composables/useSelect';
 import { useAccountStore } from '../../store/useAccountStore';
 import { useDealStore } from '../../store/useDealStore';
-import { storeToRefs } from 'pinia';
-import { ref } from 'vue';
 import { useConfigStore } from '../../store/useConfigStore';
-import { useTime } from '../../composables/useTime';
-import { Deal } from '../../types/deal';
-import { Category } from '../../types/category';
-import { Account } from '../../types/account';
-import { Show } from '../../types/config';
-import { useCategoryStore } from '../../store/useCategoryStore';
-import reloadTimer from '../../utils/reloadTimer';
+const { inRef, handleClear, handleIn, handleOut, handleShare } = useSelect();
 
-const config = ref(false);
-const inRef = ref();
-const accountStore = useAccountStore();
+// 获取总支出 交易数 记账天数
 const dealStore = useDealStore();
-const categoryStore = useCategoryStore();
+const { totalExpend, dealAmount, timeDiff } = storeToRefs(dealStore);
+
+// 获取总资产
+const accountStore = useAccountStore();
+const { totalAsset } = storeToRefs(accountStore);
+
+// 统计图表显示设置
+const config = ref(false);
 const configStore = useConfigStore();
 const { show } = storeToRefs(configStore);
-const { totalAsset } = storeToRefs(accountStore);
-const { totalExpend, dealAmount, timeDiff } = storeToRefs(dealStore);
+
+
 const router = useRouter();
-
-const handleIn = () => {
-  // 点击导入
-  inRef.value.click();
-  // 上传文件后，获取文件内容
-  inRef.value.onchange = () => {
-    const file = inRef.value.files[0];
-    // 若文件不为JSON格式，则提示错误
-    if (file.type !== 'application/json') {
-      Snackbar.error({
-        content: '请上传JSON文件',
-        duration: 2000
-      });
-      return;
-    }
-    // 获取文件内容
-    const reader = new FileReader();
-    reader.readAsText(file, 'utf-8');
-    reader.onload = (res) => {
-      try {
-        const json = JSON.parse(res.target?.result as string);
-        const { account, category, config, deal } = json;
-        localStorage.setItem('account', JSON.stringify(account));
-        localStorage.setItem('category', JSON.stringify(category));
-        localStorage.setItem('config', JSON.stringify(config));
-        localStorage.setItem('deal', JSON.stringify(deal));
-        Snackbar.success({
-          content: '导入成功',
-          duration: 1500
-        });
-        reloadTimer(1500);
-      } catch (e) {
-        Snackbar.error({
-          content: 'JSON文件格式错误',
-          duration: 2000
-        });
-      }
-    };
-  };
-};
-
-const handleOut = () => {
-  const { yearStr, monthStr, dayStr } = useTime().now();
-  // 创建一个对象用于存储数据
-  let obj: {
-    config?: Show;
-    category?: Category[];
-    account?: Account[];
-    deal?: Deal[];
-  } = {};
-  obj.config = JSON.parse(localStorage.getItem('config') || '');
-  obj.category = JSON.parse(localStorage.getItem('category') || '');
-  obj.account = JSON.parse(localStorage.getItem('account') || '');
-  obj.deal = JSON.parse(localStorage.getItem('deal') || '');
-
-  // 创建一个a标签用于下载
-  const data = JSON.stringify(obj);
-  const blob = new Blob([data], { type: 'text/json' });
-  const link = document.createElement('a');
-  link.href = window.URL.createObjectURL(blob);
-  link.download = `H2记账_${yearStr}年${monthStr}月${dayStr}日.json`;
-
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-};
-
-const handleClear = () => {
-  Dialog('数据将无法恢复！确认清空？').then((res) => {
-    if (res === 'confirm') {
-      localStorage.clear();
-      Snackbar.success({
-          content: '清空成功',
-          duration: 1500
-        });
-      reloadTimer(1500);
-    }
-  });
-};
 
 const selectList = [
   { icon: '&#xe65e;', text: '分类' },
@@ -172,36 +92,29 @@ const selectList = [
   { icon: '&#xe739;', text: '分享' }
 ];
 
-const handleClick = (index: number) => {
-  switch (index) {
-    case 0:
+// 处理各个按钮的跳转
+const handleClick = (type: string) => {
+  switch (type) {
+    case '分类':
       router.push({ name: 'Category' });
       break;
-    case 1:
+    case '导入':
       handleIn();
       break;
-    case 2:
+    case '导出':
       handleOut();
       break;
-    case 3:
+    case '清空':
       handleClear();
       break;
-    case 4:
+    case '帮助':
       router.push({ name: 'Help' });
       break;
-    case 5:
+    case '设置':
       config.value = true;
       break;
-    case 6:
-      if (!navigator.share) {
-        alert('您的浏览器不支持分享功能！');
-      } else {
-        navigator.share({
-          title: 'H2记账',
-          url: window.location.href.replace(window.location.hash, ''),
-          text: '轻量级记账神器，记录您的每一笔交易！'
-        });
-      }
+    case '分享':
+      handleShare();
       break;
   }
 };
