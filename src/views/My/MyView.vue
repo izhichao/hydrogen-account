@@ -70,6 +70,7 @@ import { Category } from '../../types/category';
 import { Account } from '../../types/account';
 import { Show } from '../../types/config';
 import { useCategoryStore } from '../../store/useCategoryStore';
+import reloadTimer from '../../utils/reloadTimer';
 
 const config = ref(false);
 const inRef = ref();
@@ -78,7 +79,6 @@ const dealStore = useDealStore();
 const categoryStore = useCategoryStore();
 const configStore = useConfigStore();
 const { show } = storeToRefs(configStore);
-const { replaceCategory } = categoryStore;
 const { totalAsset } = storeToRefs(accountStore);
 const { totalExpend, dealAmount, timeDiff } = storeToRefs(dealStore);
 const router = useRouter();
@@ -112,9 +112,7 @@ const handleIn = () => {
           content: '导入成功',
           duration: 1500
         });
-        setTimeout(() => {
-          window.location.reload();
-        }, 1500);
+        reloadTimer(1500);
       } catch (e) {
         Snackbar.error({
           content: 'JSON文件格式错误',
@@ -155,6 +153,11 @@ const handleClear = () => {
   Dialog('数据将无法恢复！确认清空？').then((res) => {
     if (res === 'confirm') {
       localStorage.clear();
+      Snackbar.success({
+          content: '清空成功',
+          duration: 1500
+        });
+      reloadTimer(1500);
     }
   });
 };
