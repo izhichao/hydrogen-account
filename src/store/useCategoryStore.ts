@@ -48,9 +48,6 @@ export const useCategoryStore = defineStore('category', {
         }
         return category;
       });
-    },
-    replaceCategory(categoryList: Category[]) {
-      this.categoryList = categoryList;
     }
   },
   persist: true
