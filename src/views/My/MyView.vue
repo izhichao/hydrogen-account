@@ -46,6 +46,8 @@
         </div>
       </var-popup>
     </div>
+
+    <input type="file" ref="inRef" style="display: none" />
   </div>
   <Docker :currentIndex="2"></Docker>
 </template>
@@ -55,7 +57,7 @@ import Header from '../../components/Header.vue';
 import Circle from '../../components/Circle.vue';
 import Docker from '../../components/Docker.vue';
 import Card from '../../components/Card.vue';
-import { Dialog } from '@varlet/ui';
+import { Dialog, Snackbar } from '@varlet/ui';
 import { useRouter } from 'vue-router';
 import { useAccountStore } from '../../store/useAccountStore';
 import { useDealStore } from '../../store/useDealStore';
@@ -67,16 +69,61 @@ import { Deal } from '../../types/deal';
 import { Category } from '../../types/category';
 import { Account } from '../../types/account';
 import { Show } from '../../types/config';
+import { useCategoryStore } from '../../store/useCategoryStore';
 
 const config = ref(false);
+const inRef = ref();
 const accountStore = useAccountStore();
 const dealStore = useDealStore();
+const categoryStore = useCategoryStore();
 const configStore = useConfigStore();
 const { show } = storeToRefs(configStore);
-
+const { replaceCategory } = categoryStore;
 const { totalAsset } = storeToRefs(accountStore);
 const { totalExpend, dealAmount, timeDiff } = storeToRefs(dealStore);
 const router = useRouter();
+
+const handleIn = () => {
+  // 点击导入
+  inRef.value.click();
+  // 上传文件后，获取文件内容
+  inRef.value.onchange = () => {
+    const file = inRef.value.files[0];
+    // 若文件不为JSON格式，则提示错误
+    if (file.type !== 'application/json') {
+      Snackbar.error({
+        content: '请上传JSON文件',
+        duration: 2000
+      });
+      return;
+    }
+    // 获取文件内容
+    const reader = new FileReader();
+    reader.readAsText(file, 'utf-8');
+    reader.onload = (res) => {
+      try {
+        const json = JSON.parse(res.target?.result as string);
+        const { account, category, config, deal } = json;
+        localStorage.setItem('account', JSON.stringify(account));
+        localStorage.setItem('category', JSON.stringify(category));
+        localStorage.setItem('config', JSON.stringify(config));
+        localStorage.setItem('deal', JSON.stringify(deal));
+        Snackbar.success({
+          content: '导入成功',
+          duration: 1500
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 1500);
+      } catch (e) {
+        Snackbar.error({
+          content: 'JSON文件格式错误',
+          duration: 2000
+        });
+      }
+    };
+  };
+};
 
 const handleOut = () => {
   const { yearStr, monthStr, dayStr } = useTime().now();
@@ -128,7 +175,7 @@ const handleClick = (index: number) => {
       router.push({ name: 'Category' });
       break;
     case 1:
-      console.log('导入');
+      handleIn();
       break;
     case 2:
       handleOut();
