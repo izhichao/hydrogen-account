@@ -64,15 +64,14 @@ import Card from '../../components/Card.vue';
 import ListItem from '../../components/ListItem.vue';
 import Calculator from '../../components/Calculator.vue';
 import { useDealStore } from '../../store/useDealStore';
-import { useTime } from '../../composables/useTime';
 import { useAccount } from '../../composables/useAccount';
 import { useChart } from '../../composables/useChart';
+import getNow from '../../utils/getNow';
 
 const router = useRouter();
 const { accountList, editAccountModel, handleEdit, handleDelete, handleShowEdit } = useAccount();
 const { dealListGroup, recentDealList } = useDealStore();
-const { now } = useTime();
-const { year, month, monthStr } = now();
+const { year, month, monthStr } = getNow();
 const { dayOptions } = useChart();
 
 const monthExpend = dealListGroup('month', { time: `${year}-${monthStr}` })[0]?.total || 0;

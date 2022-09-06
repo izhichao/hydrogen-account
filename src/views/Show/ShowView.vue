@@ -41,25 +41,24 @@
 </template>
 
 <script lang="ts" setup>
+import { useRouter } from 'vue-router';
+import { storeToRefs } from 'pinia';
 import Circle from '../../components/Circle.vue';
 import Header from '../../components/Header.vue';
 import ChartCard from '../../components/ChartCard.vue';
 import Card from '../../components/Card.vue';
 import Docker from '../../components/Docker.vue';
-import { useRouter } from 'vue-router';
-import { useTime } from '../../composables/useTime';
 import { useChart } from '../../composables/useChart';
 import { useDealStore } from '../../store/useDealStore';
 import { useConfigStore } from '../../store/useConfigStore';
-import { storeToRefs } from 'pinia';
+import getNow from '../../utils/getNow';
 const { totalExpend, dealListGroup } = useDealStore();
 
 // 设置是否显示图表
 const configStore = useConfigStore();
 const { show } = storeToRefs(configStore);
 
-const { now } = useTime();
-const { year, month, monthStr } = now();
+const { year, month, monthStr } = getNow();
 const { categoryOptions, dayOptions, monthOptions, yearOptions } = useChart();
 const router = useRouter();
 

@@ -31,13 +31,13 @@ import Card from '../../components/Card.vue';
 import ListItem from '../../components/ListItem.vue';
 import { DealStats } from '../../types/deal';
 import { useDealStore } from '../../store/useDealStore';
-import { useTime } from '../../composables/useTime';
+import getNow from '../../utils/getNow';
+
 import { useChart } from '../../composables/useChart';
 
 const route = useRoute();
 const router = useRouter();
 const { totalExpend, dealListGroup } = useDealStore();
-const { now } = useTime();
 const { categoryOptions, dayOptions, monthOptions, yearOptions } = useChart();
 const options = ref();
 const list = ref<DealStats[]>([]);
@@ -45,7 +45,7 @@ const list = ref<DealStats[]>([]);
 let { type, time } = route.query;
 // 没有指定时间，默认为当前时间
 if (!time) {
-  time = `${now().yearStr}-${now().monthStr}`;
+  time = `${getNow().yearStr}-${getNow().monthStr}`;
 }
 // 没有指定类型，默认为全部
 if (!type) {
@@ -99,7 +99,7 @@ watch(
 // 首次进入页面时，初始化数据
 const title = ref('分类统计');
 if (type === 'day') {
-  if (defaultYear === now().yearStr) {
+  if (defaultYear === getNow().yearStr) {
     title.value = `${(+defaultMonth).toString()}月支出`; // 今年只显示月份
   } else {
     title.value = `${defaultYear}年${defaultMonth}月支出`; // 不是今年显示年、月
@@ -135,7 +135,7 @@ const handleSwitchTimeMode = () => {
 const handleMonthChange = () => {
   if (type === 'day') {
     options.value = dayOptions(yearAndMonth.value);
-    if (yearAndMonth.value.split('-')[0] === now().yearStr) {
+    if (yearAndMonth.value.split('-')[0] === getNow().yearStr) {
       // 今年只显示月份
       title.value = `${+yearAndMonth.value.split('-')[1].toString()}月支出`;
     } else {

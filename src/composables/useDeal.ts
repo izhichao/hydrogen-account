@@ -4,7 +4,8 @@ import { storeToRefs } from 'pinia';
 import { Snackbar, Dialog } from '@varlet/ui';
 import { useCategoryStore } from '../store/useCategoryStore';
 import { useDealStore } from '../store/useDealStore';
-import { useTime } from './useTime';
+import getNow from '../utils/getNow';
+
 
 export const useDeal = () => {
   const route = useRoute();
@@ -16,8 +17,7 @@ export const useDeal = () => {
   const { type, id } = route.query;
 
   // 获取当前时间
-  const { now } = useTime();
-  const { yearStr, monthStr, dayStr, hourStr, minuteStr } = now();
+  const { yearStr, monthStr, dayStr, hourStr, minuteStr } = getNow();
 
   const dealModel = reactive({
     amount: '0',
