@@ -1,11 +1,11 @@
 import { ref } from 'vue';
 import { Dialog, Snackbar } from '@varlet/ui';
-import { useTime } from '../composables/useTime';
 import { Deal } from '../types/deal';
 import { Category } from '../types/category';
 import { Account } from '../types/account';
 import { Show } from '../types/config';
 import reloadTimer from '../utils/reloadTimer';
+import getNow from '../utils/getNow';
 
 export const useSelect = () => {
   const inRef = ref();
@@ -51,7 +51,7 @@ export const useSelect = () => {
   };
 
   const handleOut = () => {
-    const { yearStr, monthStr, dayStr } = useTime().now();
+    const { yearStr, monthStr, dayStr } = getNow();
     // 创建一个对象用于存储数据
     let obj: {
       config?: Show;
