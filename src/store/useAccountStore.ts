@@ -16,11 +16,12 @@ export const useAccountStore = defineStore('account', {
       return state.accountList.length;
     },
     totalAsset: (state) => {
-      // return state.accountList.reduce((total, currentValue) => total + (currentValue.amount as number), 0);
-      return (state.accountList.reduce(
-        (total, currentValue) => math.add(math.bignumber(total), math.bignumber(currentValue.amount)),
-        math.bignumber(0)
-      )).toFixed(2);
+      return math.number(
+        state.accountList.reduce(
+          (total, currentValue) => math.add(math.bignumber(total), math.bignumber(currentValue.amount)),
+          math.bignumber(0)
+        )
+      );
     }
   },
   actions: {
