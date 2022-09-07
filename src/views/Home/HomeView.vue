@@ -39,7 +39,7 @@
     type="primary"
     size="large"
     round
-    @click="router.push({ name: 'Detail', query: { type: 'add' } })"
+    @click="handlePop"
   >
     <var-icon name="plus" class="btn__icon" />
   </var-button>
@@ -82,7 +82,7 @@ const keyword = ref('');
 const inputRef = ref();
 const handlePop = () => {
   // calcStatus.value = true;
-  router.push({ name: 'Detail' });
+  router.push({ name: 'Detail', query: { type: 'add' } })
 };
 
 const handleSearch = () => {

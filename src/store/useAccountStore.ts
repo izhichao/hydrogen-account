@@ -1,12 +1,13 @@
 import { defineStore } from 'pinia';
 import { Account } from '../types/account';
+import * as math from 'mathjs';
 
 export const useAccountStore = defineStore('account', {
   state: () => {
     return {
       accountList: [
-        { id: 0, name: '支付宝', amount: 5000 },
-        { id: 1, name: '微信', amount: 5000 }
+        { id: 0, name: '支付宝', amount: 0.1 },
+        { id: 1, name: '微信', amount: 0.2 }
       ] as Account[]
     };
   },
@@ -14,9 +15,12 @@ export const useAccountStore = defineStore('account', {
     accountAmount: (state) => {
       return state.accountList.length;
     },
-
     totalAsset: (state) => {
-      return state.accountList.reduce((total, currentValue) => total + (currentValue.amount as number), 0);
+      // return state.accountList.reduce((total, currentValue) => total + (currentValue.amount as number), 0);
+      return (state.accountList.reduce(
+        (total, currentValue) => math.add(math.bignumber(total), math.bignumber(currentValue.amount)),
+        math.bignumber(0)
+      )).toFixed(2);
     }
   },
   actions: {
