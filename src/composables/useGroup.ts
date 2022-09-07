@@ -1,5 +1,5 @@
 import { Deal, DealGroup } from '../types/deal';
-
+import * as math from 'mathjs';
 export const useGroup = () => {
   /**
    * 将数据进行分组(按日，按月，按分类)
@@ -52,10 +52,14 @@ export const useGroup = () => {
    */
   const convertObjToArray = (obj: { [key: string]: Deal[] }) => {
     const dealList: DealGroup[] = [];
+    // 遍历对象的key(日期或者分类)
     for (const key in obj) {
-      const total = obj[key].reduce((total, currentValue) => {
-        return total + currentValue.amount;
-      }, 0);
+      // 计算该日期或分类下的总金额
+      const total = math.number(
+        obj[key].reduce((total, currentValue) => {
+          return math.add(math.bignumber(total), math.bignumber(currentValue.amount));
+        }, math.bignumber(0))
+      );
       dealList.push({ name: key, total, value: obj[key] });
     }
     return dealList;

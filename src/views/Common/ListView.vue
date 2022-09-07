@@ -79,6 +79,7 @@ import { useDealStore } from '../../store/useDealStore';
 import { useRoute, useRouter } from 'vue-router';
 import { useAccount } from '../../composables/useAccount';
 import { ref } from 'vue';
+import * as math from 'mathjs';
 const route = useRoute();
 const router = useRouter();
 const dealStore = useDealStore();
@@ -100,7 +101,10 @@ const {
 let { list, time, keyword } = route.query;
 const dealList = dealListGroup('day', { time: time as string, keyword: keyword as string });
 const amount = dealList.reduce((total, item) => total + item.value.length, 0);
-const expend = dealList.reduce((total, item) => total + item.total, 0);
+const expend = dealList.reduce(
+  (total, item) => math.add(math.bignumber(total), math.bignumber(item.total)),
+  math.bignumber(0)
+);
 
 const title = ref('所有交易');
 if (!list) {

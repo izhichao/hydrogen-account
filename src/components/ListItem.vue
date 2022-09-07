@@ -8,7 +8,7 @@
         </span>
       </div>
     </div>
-    <div class="item__price" v-if="!button">{{ (item as Deal | DealStats | Account).amount.toFixed(2) }}</div>
+    <div class="item__price" v-if="!button">{{ (item as Deal | DealStats | Account).amount }}</div>
     <div class="item__btn" v-if="button">
       <slot></slot>
     </div>
