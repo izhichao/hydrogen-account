@@ -34,6 +34,7 @@ import { useDealStore } from '../../store/useDealStore';
 import getNow from '../../utils/getNow';
 
 import { useChart } from '../../composables/useChart';
+import * as math from 'mathjs';
 
 const route = useRoute();
 const router = useRouter();
@@ -92,7 +93,12 @@ const handleStatsList = (time?: string) => {
 watch(
   () => list.value,
   () => {
-    expends.value = list.value.reduce((total, currentValue) => total + currentValue.amount, 0);
+    expends.value = math.number(
+      list.value.reduce(
+        (total, currentValue) => math.add(math.bignumber(total), math.bignumber(currentValue.amount)),
+        math.bignumber(0)
+      )
+    );
   }
 );
 
