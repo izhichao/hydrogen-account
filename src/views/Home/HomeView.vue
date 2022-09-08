@@ -76,13 +76,13 @@ const { dayOptions } = useChart();
 
 const monthExpend = dealListGroup('month', { time: `${year}-${monthStr}` })[0]?.total || 0;
 
-const calcStatus = ref(false);
+const calcStatus = ref(true);
 const searchStatus = ref(false);
 const keyword = ref('');
 const inputRef = ref();
 const handlePop = () => {
-  // calcStatus.value = true;
-  router.push({ name: 'Detail', query: { type: 'add' } })
+  calcStatus.value = true;
+  // router.push({ name: 'Detail', query: { type: 'add' } })
 };
 
 const handleSearch = () => {
