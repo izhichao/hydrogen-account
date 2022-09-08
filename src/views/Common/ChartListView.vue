@@ -38,7 +38,7 @@ import * as math from 'mathjs';
 
 const route = useRoute();
 const router = useRouter();
-const { totalExpend, dealListGroup } = useDealStore();
+const { dealListGroup } = useDealStore();
 const { categoryOptions, dayOptions, monthOptions, yearOptions } = useChart();
 const options = ref();
 const list = ref<DealStats[]>([]);
