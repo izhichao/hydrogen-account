@@ -34,16 +34,10 @@
     </div>
   </div>
 
-  <var-button
-    class="btn"
-    type="primary"
-    size="large"
-    round
-    @click="handlePop"
-  >
+  <var-button class="btn" type="primary" size="large" round @click="handlePop">
     <var-icon name="plus" class="btn__icon" />
   </var-button>
-  <Calculator v-model:show="calcStatus"></Calculator>
+  <Calculator ref="calculatorRef"></Calculator>
   <Docker :currentIndex="0"></Docker>
 
   <var-dialog v-model:show="editAccountModel.status" @confirm="handleEdit">
@@ -76,12 +70,12 @@ const { dayOptions } = useChart();
 
 const monthExpend = dealListGroup('month', { time: `${year}-${monthStr}` })[0]?.total || 0;
 
-const calcStatus = ref(true);
 const searchStatus = ref(false);
 const keyword = ref('');
 const inputRef = ref();
+const calculatorRef = ref();
 const handlePop = () => {
-  calcStatus.value = true;
+  calculatorRef.value.handleShow();
   // router.push({ name: 'Detail', query: { type: 'add' } })
 };
 

@@ -29,22 +29,17 @@
 </template>
 
 <script lang="ts" setup>
-import { watch } from 'vue';
-const props = defineProps({
-  show: {
-    type: Boolean,
-    default: false
-  }
-});
+import { ref } from 'vue';
 
-// 双向绑定状态
-const emits = defineEmits(['update:show']);
-watch(
-  () => props.show,
-  (newVal) => {
-    emits('update:show', newVal);
-  }
-);
+const show = ref(false);
+
+const handleShow = () => {
+  show.value = true;
+};
+
+defineExpose({
+  handleShow
+});
 </script>
 
 <style lang="less" scoped>
