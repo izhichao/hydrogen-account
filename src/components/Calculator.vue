@@ -46,6 +46,10 @@ const result = ref(props.amount);
 
 const handleClickBtn = (str: string) => {
   const lastOne = result.value[result.value.length - 1];
+  if (['-Infinity', 'Infinity'].includes(result.value)) {
+    result.value = '';
+  }
+
   if (['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'].includes(str)) {
     result.value += str;
   } else if (['+', '-', '*', '/'].includes(str)) {
@@ -81,9 +85,9 @@ const handleClickBtn = (str: string) => {
       result.value = (+(eval(result.value) as number).toFixed(2)).toString();
     } else {
       if (route.name === 'Home') {
-        router.push({ name: 'Detail', query: { type: 'add', result: result.value } });
+        router.push({ name: 'Detail', query: { type: 'add', result: result.value || '0' } });
       } else if (route.name === 'Detail') {
-        emits('result', result.value);
+        emits('result', result.value || '0');
         show.value = false;
       }
     }
