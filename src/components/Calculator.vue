@@ -2,27 +2,21 @@
   <var-popup position="bottom" v-model:show="show">
     <div class="calculator">
       <div class="calculator__result">
-        <input type="text" />
+        <input type="text" v-model="result" />
       </div>
       <div class="calculator__btns">
-        <span class="calculator__btn" v-ripple>C</span>
-        <span class="calculator__btn" v-ripple>/</span>
-        <span class="calculator__btn" v-ripple>*</span>
-        <span class="calculator__btn" v-ripple>DEL</span>
-        <span class="calculator__btn" v-ripple>7</span>
-        <span class="calculator__btn" v-ripple>8</span>
-        <span class="calculator__btn" v-ripple>9</span>
-        <span class="calculator__btn" v-ripple>-</span>
-        <span class="calculator__btn" v-ripple>4</span>
-        <span class="calculator__btn" v-ripple>5</span>
-        <span class="calculator__btn" v-ripple>6</span>
-        <span class="calculator__btn" v-ripple>+</span>
-        <span class="calculator__btn" v-ripple>1</span>
-        <span class="calculator__btn" v-ripple>2</span>
-        <span class="calculator__btn" v-ripple>3</span>
-        <span class="calculator__btn calculator__btn__ok" v-ripple>OK</span>
-        <span class="calculator__btn calculator__btn__zero" v-ripple>0</span>
-        <span class="calculator__btn" v-ripple>.</span>
+        <span
+          v-for="item in btns"
+          v-ripple
+          :class="{
+            calculator__btn: true,
+            calculator__btn__ok: item === 'OK' ? true : false,
+            calculator__btn__zero: item === '0' ? true : false
+          }"
+          @click="handleClickBtn(item)"
+        >
+          {{ item }}
+        </span>
       </div>
     </div>
   </var-popup>
@@ -31,10 +25,55 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 
+const btns = ['C', '/', '*', 'DEL', '1', '2', '3', '-', '4', '5', '6', '+', '7', '8', '9', 'OK', '0', '.'];
+
 const show = ref(false);
 
 const handleShow = () => {
   show.value = true;
+};
+
+const result = ref('');
+
+const handleClickBtn = (str: string) => {
+  const lastOne = result.value[result.value.length - 1];
+  if (['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'].includes(str)) {
+    result.value += str;
+  } else if (['+', '-', '*', '/'].includes(str)) {
+    // 运算符
+    if (!result.value.length) {
+      return;
+    } else if (['.', '+', '-', '*', '/'].includes(lastOne)) {
+      result.value = result.value.slice(0, -1) + str;
+    } else {
+      result.value += str;
+    }
+  } else if (str === 'DEL') {
+    result.value = result.value.slice(0, -1);
+  } else if (str === 'C') {
+    result.value = '';
+  } else if (str === '.') {
+    if (!result.value.length || ['+', '-', '*', '/'].includes(lastOne)) {
+      // 如果最后一位是运算符，自动补0
+      result.value += '0.';
+    } else if (lastOne === '.') {
+      // 如果最后一位是小数点，不做处理
+      return;
+    } else {
+      result.value += str;
+    }
+  } else {
+    if (
+      result.value.includes('+') ||
+      result.value.includes('-') ||
+      result.value.includes('*') ||
+      result.value.includes('/')
+    ) {
+      result.value = (+(eval(result.value) as number).toFixed(2)).toString();
+    } else {
+      console.log('push');
+    }
+  }
 };
 
 defineExpose({
