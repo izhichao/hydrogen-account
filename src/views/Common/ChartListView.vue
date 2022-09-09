@@ -181,6 +181,7 @@ const handleYearChange = () => {
 .switch {
   display: flex;
   align-items: center;
+  --counter-background: #4aaef8;
 
   &__date {
     width: 112px;

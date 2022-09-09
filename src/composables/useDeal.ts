@@ -19,7 +19,7 @@ export const useDeal = () => {
   const { yearStr, monthStr, dayStr, hourStr, minuteStr } = getNow();
 
   const dealModel = reactive({
-    amount: result || '0',
+    amount: result as string || '0',
     categoryId: 0,
     date: `${yearStr}-${monthStr}-${dayStr}`,
     time: `${hourStr}:${minuteStr}`,
@@ -38,6 +38,10 @@ export const useDeal = () => {
     dealModel.time = deal?.time as string;
     dealModel.desc = deal?.desc as string;
   }
+
+  const handleUpdateAmount = (result: string) => {
+    dealModel.amount = result;
+  };
 
   const handleAdd = () => {
     if (+dealModel.amount <= 0) {
@@ -70,6 +74,7 @@ export const useDeal = () => {
     dealModel,
     categoryList,
     type,
+    handleUpdateAmount,
     handleAdd,
     handleEdit,
     handleDelete
