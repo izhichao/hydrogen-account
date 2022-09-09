@@ -26,16 +26,23 @@
 import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
+const props = defineProps({
+  amount: {
+    type: String,
+    default: ''
+  }
+});
+
 const btns = ['C', '/', '*', 'DEL', '1', '2', '3', '-', '4', '5', '6', '+', '7', '8', '9', 'OK', '0', '.'];
 const route = useRoute();
 const router = useRouter();
 const show = ref(false);
-
+const emits = defineEmits(['result']);
 const handleShow = () => {
   show.value = true;
 };
 
-const result = ref('');
+const result = ref(props.amount);
 
 const handleClickBtn = (str: string) => {
   const lastOne = result.value[result.value.length - 1];
@@ -65,18 +72,20 @@ const handleClickBtn = (str: string) => {
       result.value += str;
     }
   } else {
-    if (route.name === 'Home') {
-      if (
-        result.value.includes('+') ||
-        result.value.includes('-') ||
-        result.value.includes('*') ||
-        result.value.includes('/')
-      ) {
-        result.value = (+(eval(result.value) as number).toFixed(2)).toString();
-      } else {
+    if (
+      result.value.includes('+') ||
+      result.value.includes('-') ||
+      result.value.includes('*') ||
+      result.value.includes('/')
+    ) {
+      result.value = (+(eval(result.value) as number).toFixed(2)).toString();
+    } else {
+      if (route.name === 'Home') {
         router.push({ name: 'Detail', query: { type: 'add', result: result.value } });
+      } else if (route.name === 'Detail') {
+        emits('result', result.value);
+        show.value = false;
       }
-    } else if (route.name === 'Detail') {
     }
   }
 };

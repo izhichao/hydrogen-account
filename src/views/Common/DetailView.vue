@@ -5,9 +5,10 @@
       <Card :header="false">
         <var-form ref="form">
           <var-space direction="column" :size="[15, 0]">
-            <div>
+            <div @click="calculatorRef.handleShow()">
               <div class="form__title">支出</div>
-              <var-input :hint="false" v-model="dealModel.amount" type="number" />
+              <div class="form__content">{{ dealModel.amount }}</div>
+              <!-- <var-input :hint="false" v-model="dealModel.amount" type="number"  readonly/> -->
             </div>
             <div>
               <div class="form__title">分类</div>
@@ -76,17 +77,20 @@
       </Card>
     </div>
   </div>
+  <Calculator ref="calculatorRef" :amount="dealModel.amount" @result="handleUpdateAmount"></Calculator>
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue';
 import Header from '../../components/Header.vue';
 import Card from '../../components/Card.vue';
+import Calculator from '../../components/Calculator.vue';
 import { useDeal } from '../../composables/useDeal';
-const { dealModel, categoryList, type, handleAdd, handleEdit, handleDelete } = useDeal();
+const { dealModel, categoryList, type, handleUpdateAmount, handleAdd, handleEdit, handleDelete } = useDeal();
 
 const showDate = ref(false);
 const showTime = ref(false);
+const calculatorRef = ref();
 
 const handleDate = () => {
   setTimeout(() => {
