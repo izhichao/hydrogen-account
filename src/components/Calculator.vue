@@ -24,9 +24,11 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 
 const btns = ['C', '/', '*', 'DEL', '1', '2', '3', '-', '4', '5', '6', '+', '7', '8', '9', 'OK', '0', '.'];
-
+const route = useRoute();
+const router = useRouter();
 const show = ref(false);
 
 const handleShow = () => {
@@ -63,15 +65,18 @@ const handleClickBtn = (str: string) => {
       result.value += str;
     }
   } else {
-    if (
-      result.value.includes('+') ||
-      result.value.includes('-') ||
-      result.value.includes('*') ||
-      result.value.includes('/')
-    ) {
-      result.value = (+(eval(result.value) as number).toFixed(2)).toString();
-    } else {
-      console.log('push');
+    if (route.name === 'Home') {
+      if (
+        result.value.includes('+') ||
+        result.value.includes('-') ||
+        result.value.includes('*') ||
+        result.value.includes('/')
+      ) {
+        result.value = (+(eval(result.value) as number).toFixed(2)).toString();
+      } else {
+        router.push({ name: 'Detail', query: { type: 'add', result: result.value } });
+      }
+    } else if (route.name === 'Detail') {
     }
   }
 };

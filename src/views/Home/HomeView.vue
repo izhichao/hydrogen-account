@@ -76,7 +76,6 @@ const inputRef = ref();
 const calculatorRef = ref();
 const handlePop = () => {
   calculatorRef.value.handleShow();
-  // router.push({ name: 'Detail', query: { type: 'add' } })
 };
 
 const handleSearch = () => {
