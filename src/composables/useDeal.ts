@@ -6,7 +6,6 @@ import { useCategoryStore } from '../store/useCategoryStore';
 import { useDealStore } from '../store/useDealStore';
 import getNow from '../utils/getNow';
 
-
 export const useDeal = () => {
   const route = useRoute();
   const router = useRouter();
@@ -14,13 +13,13 @@ export const useDeal = () => {
   const categoryStore = useCategoryStore();
   const { categoryList } = storeToRefs(categoryStore);
 
-  const { type, id } = route.query;
+  const { type, id, result } = route.query;
 
   // 获取当前时间
   const { yearStr, monthStr, dayStr, hourStr, minuteStr } = getNow();
 
   const dealModel = reactive({
-    amount: '0',
+    amount: result || '0',
     categoryId: 0,
     date: `${yearStr}-${monthStr}-${dayStr}`,
     time: `${hourStr}:${minuteStr}`,
