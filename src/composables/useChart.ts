@@ -1,73 +1,9 @@
 import { useDealStore } from '../store/useDealStore';
 import { PieChart } from '../types/chart';
+import convertPx from '../utils/convertPx';
 const { timeDiff, dealListGroup } = useDealStore();
 
 export const useChart = () => {
-  // 饼图通用设置
-  const pieCommonSettings = {
-    tooltip: {
-      trigger: 'item',
-      // backgroundColor: 'rgba(50,50,50,0.7)',
-      // textStyle: {
-      //   color: '#fff'
-      // }
-    },
-    title: {
-      x: '48.5%',
-      y: '35%',
-      textAlign: 'center',
-      textStyle: {
-        fontSize: 12,
-        color: '#666'
-      },
-      subtextStyle: {
-        fontSize: 16,
-        color: '#333'
-      }
-    },
-    series: {
-      type: 'pie',
-      radius: ['60%', '90%'],
-      avoidLabelOverlap: false,
-      label: {
-        show: false
-      },
-      itemStyle: {
-        borderColor: '#fff',
-        borderWidth: 2
-      }
-    }
-  };
-
-  // 折线图与条形图通用设置
-  const lineAndBarCommonSettings = {
-    tooltip: {
-      trigger: 'axis',
-      // backgroundColor: 'rgba(50,50,50,0.7)',
-      // textStyle: {
-      //   color: '#fff'
-      // }
-    },
-    xAxis: {
-      type: 'category',
-      axisTick: {
-        show: false
-      },
-      axisLine: {
-        lineStyle: {
-          color: '#999'
-        }
-      }
-    },
-    color: ['#4aaef8'],
-    grid: {
-      left: 0,
-      right: 0,
-      top: 0,
-      bottom: '15%'
-    }
-  };
-
   /**
    * 分类统计
    * @param time time 时间，格式：yyyy或yyyy-MM
@@ -86,19 +22,39 @@ export const useChart = () => {
     });
 
     return {
-      tooltip: { ...pieCommonSettings.tooltip },
+      tooltip: { trigger: 'item' },
       title: [
         {
+          x: convertPx(153),
+          y: convertPx(40),
+          textAlign: 'center',
+          textStyle: {
+            fontSize: convertPx(12),
+            color: '#666'
+          },
+          subtextStyle: {
+            fontSize: convertPx(16),
+            align: 'center',
+            color: '#333'
+          },
           text: '交易笔数',
-          subtext: amount || '0',
-          ...pieCommonSettings.title
+          subtext: amount || '0'
         }
       ],
       series: [
         {
           name: '分类统计',
-          data,
-          ...pieCommonSettings.series
+          type: 'pie',
+          radius: ['60%', '90%'],
+          avoidLabelOverlap: false,
+          label: {
+            show: false
+          },
+          itemStyle: {
+            borderColor: '#fff',
+            borderWidth: 2
+          },
+          data
         }
       ]
     };
@@ -127,11 +83,20 @@ export const useChart = () => {
       data[day - 1] = -item.total;
     });
     return {
-      tooltip: { ...lineAndBarCommonSettings.tooltip },
+      type: 'category',
+      tooltip: { trigger: 'axis' },
       xAxis: {
         name: '日期',
+        boundaryGap: false,
         data: days,
-        ...lineAndBarCommonSettings.xAxis
+        axisTick: {
+          show: false
+        },
+        axisLine: {
+          lineStyle: {
+            color: '#999'
+          }
+        }
       },
       yAxis: { show: false },
       series: [
@@ -145,8 +110,13 @@ export const useChart = () => {
           smooth: true
         }
       ],
-      color: lineAndBarCommonSettings.color,
-      grid: lineAndBarCommonSettings.grid
+      color: ['#4aaef8'],
+      grid: {
+        left: '2%',
+        right: '2%',
+        top: 0,
+        bottom: '15%'
+      }
     };
   };
 
@@ -163,15 +133,23 @@ export const useChart = () => {
     });
     return {
       tooltip: {
+        trigger: 'axis',
         axisPointer: {
           type: 'shadow'
-        },
-        ...lineAndBarCommonSettings.tooltip
+        }
       },
       xAxis: {
+        type: 'category',
         name: '月份',
         data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
-        ...lineAndBarCommonSettings.xAxis
+        axisTick: {
+          show: false
+        },
+        axisLine: {
+          lineStyle: {
+            color: '#999'
+          }
+        }
       },
       yAxis: { show: false },
       series: [
@@ -182,8 +160,13 @@ export const useChart = () => {
           data
         }
       ],
-      color: lineAndBarCommonSettings.color,
-      grid: lineAndBarCommonSettings.grid
+      color: ['#4aaef8'],
+      grid: {
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: '15%'
+      }
     };
   };
 
@@ -200,19 +183,38 @@ export const useChart = () => {
       });
     });
     return {
-      tooltip: { ...pieCommonSettings.tooltip },
+      tooltip: { trigger: 'item' },
       title: [
         {
+          x: convertPx(153),
+          y: convertPx(40),
+          textAlign: 'center',
+          textStyle: {
+            fontSize: convertPx(12),
+            color: '#666'
+          },
+          subtextStyle: {
+            fontSize: convertPx(16),
+            color: '#333'
+          },
           text: '记账天数',
-          subtext: timeDiff,
-          ...pieCommonSettings.title
+          subtext: timeDiff
         }
       ],
       series: [
         {
           name: '全部支出',
-          data,
-          ...pieCommonSettings.series
+          type: 'pie',
+          radius: ['60%', '90%'],
+          avoidLabelOverlap: false,
+          label: {
+            show: false
+          },
+          itemStyle: {
+            borderColor: '#fff',
+            borderWidth: 2
+          },
+          data
         }
       ]
     };

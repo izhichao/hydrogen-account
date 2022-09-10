@@ -23,6 +23,7 @@ const chartRef = ref();
 
 onMounted(() => {
   const chart = echarts.init(chartRef.value);
+
   watch(
     () => props.option,
     () => {
@@ -30,6 +31,11 @@ onMounted(() => {
     },
     { immediate: true }
   );
+
+  const resizeChart = () => {
+    chart.resize();
+  };
+  window.addEventListener('resize', resizeChart);
 });
 </script>
 
@@ -44,7 +50,7 @@ onMounted(() => {
 }
 
 .chart {
-  width: 100%;
+  width: 315px;
   height: 120px;
 }
 </style>
