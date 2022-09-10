@@ -8,7 +8,6 @@
             <div @click="calculatorRef.handleShow()">
               <div class="form__title">支出</div>
               <div class="form__content">{{ dealModel.amount }}</div>
-              <!-- <var-input :hint="false" v-model="dealModel.amount" type="number"  readonly/> -->
             </div>
             <div>
               <div class="form__title">分类</div>

@@ -99,6 +99,8 @@ const {
 } = useAccount();
 
 let { list, time, keyword } = route.query;
+
+// 获取交易数与总支出
 const dealList = dealListGroup('day', { time: time as string, keyword: keyword as string });
 const amount = dealList.reduce((total, item) => total + item.value.length, 0);
 const expend = dealList.reduce(
@@ -106,6 +108,7 @@ const expend = dealList.reduce(
   math.bignumber(0)
 );
 
+// 根据页面类型动态显示标题
 const title = ref('所有交易');
 if (!list) {
   list = 'deal';
