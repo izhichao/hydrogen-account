@@ -6,9 +6,10 @@ export const useCategoryStore = defineStore('category', {
   state: () => {
     return {
       categoryList: [
-        { id: 0, name: '购物', desc: '共0笔交易' },
-        { id: 1, name: '水电费', desc: '共0笔交易' },
-        { id: 2, name: '交通', desc: '共0笔交易' }
+        { id: 0, name: '餐饮', desc: '共0笔交易' },
+        { id: 1, name: '购物', desc: '共0笔交易' },
+        { id: 2, name: '水电费', desc: '共0笔交易' },
+        { id: 3, name: '交通', desc: '共0笔交易' }
       ] as Category[]
     };
   },

@@ -10,20 +10,12 @@ export const useDealStore = defineStore('deal', {
   state: () => {
     return {
       dealList: [
-        {
-          id: 0,
-          name: '未分类',
-          categoryId: 0,
-          desc: '手机壳25/12:00',
-          amount: -0.1,
-          date: '2022-07-25',
-          time: '12:00'
-        },
-        { id: 1, name: '未分类', categoryId: 2, desc: '手机壳23', amount: -0.2, date: '2022-07-23', time: '12:00' }
-        // { id: 2, name: '未分类', categoryId: 2, desc: '手机壳24', amount: -3, date: '2022-07-24', time: '12:00' },
-        // { id: 3, name: '未分类', categoryId: 1, desc: '手机壳23', amount: -4, date: '2022-07-22', time: '12:00' },
-        // { id: 4, name: '未分类', categoryId: 1, desc: '手机壳25/13:00', amount: -5, date: '2022-07-25', time: '13:00' },
-        // { id: 5, name: '未分类', categoryId: 1, desc: '手机壳08-01', amount: -5, date: '2022-08-01', time: '13:00' }
+        { id: 0, name: '未分类', categoryId: 1, desc: '手机壳', amount: -0.1, date: '2022-07-22', time: '12:00' },
+        { id: 1, name: '未分类', categoryId: 1, desc: '钢化膜', amount: -0.2, date: '2022-07-23', time: '12:00' },
+        { id: 2, name: '未分类', categoryId: 0, desc: '', amount: -23, date: '2022-08-24', time: '12:00' },
+        { id: 3, name: '未分类', categoryId: 0, desc: '', amount: -12, date: '2022-08-22', time: '12:00' },
+        { id: 4, name: '未分类', categoryId: 0, desc: '', amount: -13.1, date: '2022-09-10', time: '13:00' },
+        { id: 5, name: '未分类', categoryId: 0, desc: '', amount: -12.5, date: '2022-09-10', time: '13:00' }
       ] as Deal[]
     };
   },
@@ -73,10 +65,12 @@ export const useDealStore = defineStore('deal', {
       return state.dealList.length;
     },
     totalExpend: (state) => {
-      return math.number(state.dealList.reduce(
-        (total, currentValue) => math.add(math.bignumber(total), math.bignumber(currentValue.amount)),
-        math.bignumber(0)
-      ));
+      return math.number(
+        state.dealList.reduce(
+          (total, currentValue) => math.add(math.bignumber(total), math.bignumber(currentValue.amount)),
+          math.bignumber(0)
+        )
+      );
     },
     timeDiff(): number {
       const firstDay = this.orderDealList[this.orderDealList.length - 1].date;

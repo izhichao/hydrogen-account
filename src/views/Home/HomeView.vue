@@ -62,22 +62,24 @@ import { useAccount } from '../../composables/useAccount';
 import { useChart } from '../../composables/useChart';
 import getNow from '../../utils/getNow';
 
-const router = useRouter();
 const { accountList, editAccountModel, handleEdit, handleDelete, handleShowEdit } = useAccount();
 const { dealListGroup, recentDealList } = useDealStore();
-const { year, month, monthStr } = getNow();
 const { dayOptions } = useChart();
+const { year, month, monthStr } = getNow();
 
+const router = useRouter();
 const monthExpend = dealListGroup('month', { time: `${year}-${monthStr}` })[0]?.total || 0;
 
-const searchStatus = ref(false);
-const keyword = ref('');
-const inputRef = ref();
+// 显示计算器
 const calculatorRef = ref();
 const handlePop = () => {
   calculatorRef.value.handleShow();
 };
 
+// 搜索功能
+const searchStatus = ref(false);
+const keyword = ref('');
+const inputRef = ref();
 const handleSearch = () => {
   if (searchStatus.value && keyword.value) {
     router.push({ name: 'List', query: { list: 'deal', keyword: keyword.value } });

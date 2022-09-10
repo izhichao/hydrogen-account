@@ -32,7 +32,6 @@ import ListItem from '../../components/ListItem.vue';
 import { DealStats } from '../../types/deal';
 import { useDealStore } from '../../store/useDealStore';
 import getNow from '../../utils/getNow';
-
 import { useChart } from '../../composables/useChart';
 import * as math from 'mathjs';
 

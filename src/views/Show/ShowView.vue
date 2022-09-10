@@ -52,16 +52,18 @@ import { useChart } from '../../composables/useChart';
 import { useDealStore } from '../../store/useDealStore';
 import { useConfigStore } from '../../store/useConfigStore';
 import getNow from '../../utils/getNow';
-const { totalExpend, dealListGroup } = useDealStore();
+const router = useRouter();
 
 // 设置是否显示图表
 const configStore = useConfigStore();
 const { show } = storeToRefs(configStore);
 
-const { year, month, monthStr } = getNow();
+// 获取图表options
 const { categoryOptions, dayOptions, monthOptions, yearOptions } = useChart();
-const router = useRouter();
 
+// 获取各时间支出
+const { year, month, monthStr } = getNow();
+const { totalExpend, dealListGroup } = useDealStore();
 const monthExpend = dealListGroup('month', { time: `${year}-${monthStr}` })[0]?.total || 0;
 const yearExpend = dealListGroup('year', { time: `${year}` })[0]?.total || 0;
 </script>

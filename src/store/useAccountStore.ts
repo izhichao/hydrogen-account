@@ -6,8 +6,8 @@ export const useAccountStore = defineStore('account', {
   state: () => {
     return {
       accountList: [
-        { id: 0, name: '支付宝', amount: 0.1 },
-        { id: 1, name: '微信', amount: 0.2 }
+        { id: 0, name: '支付宝', amount: 300 },
+        { id: 1, name: '微信', amount: 200 }
       ] as Account[]
     };
   },

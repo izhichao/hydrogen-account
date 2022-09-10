@@ -32,10 +32,9 @@ onMounted(() => {
     { immediate: true }
   );
 
-  const resizeChart = () => {
+  window.addEventListener('resize', () => {
     chart.resize();
-  };
-  window.addEventListener('resize', resizeChart);
+  });
 });
 </script>
 
