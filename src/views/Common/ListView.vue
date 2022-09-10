@@ -153,7 +153,7 @@ if (keyword) {
 
   &__amount {
     font-size: 14px;
-    color: #ff5a5f;
+    color: @themeRedColor;
   }
 }
 
@@ -166,7 +166,7 @@ if (keyword) {
     &__time,
     &__total {
       font-size: 13px;
-      color: #999;
+      color: @fontLightColor;
     }
   }
 }

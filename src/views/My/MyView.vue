@@ -79,7 +79,6 @@ const config = ref(false);
 const configStore = useConfigStore();
 const { show } = storeToRefs(configStore);
 
-
 const router = useRouter();
 
 const selectList = [
@@ -136,7 +135,7 @@ const handleClick = (type: string) => {
   &__amount {
     font-size: 22px;
     font-weight: 700;
-    color: #ff6c7a;
+    color: @themeRedColor;
   }
 }
 
@@ -151,14 +150,13 @@ const handleClick = (type: string) => {
     align-items: center;
 
     &__title {
-      color: #999;
+      color: @fontLightColor;
       font-size: 10px;
       margin-top: 5px;
     }
 
     &__amount {
       font-weight: 700;
-      color: #333;
     }
   }
 }
@@ -179,7 +177,6 @@ const handleClick = (type: string) => {
     }
 
     &__title {
-      color: @fontColor;
       line-height: 22px;
       font-size: 14px;
     }
@@ -187,7 +184,6 @@ const handleClick = (type: string) => {
     &__enter {
       position: absolute;
       right: 8px;
-      // color: #c2c4ca;
       transform: rotate(180deg);
       line-height: 22px;
       font-size: 14px;

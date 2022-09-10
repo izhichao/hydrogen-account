@@ -43,7 +43,7 @@
             </div>
             <div>
               <div class="form__title">备注</div>
-              <var-input :hint="false" placeholder="轻敲添加备注" v-model="dealModel.desc" clearable />
+              <var-input class="form__content__input" :hint="false" :line="false" placeholder="轻敲添加备注" v-model="dealModel.desc" clearable />
             </div>
             <div>
               <var-button type="primary" block class="form__btn" @click="handleEdit" v-if="type === 'edit'">
@@ -106,19 +106,17 @@ const handleDate = () => {
 .form {
   &__title {
     font-size: 12px;
-    color: #999;
+    color: @fontLightColor;
   }
 
   &__content {
     height: 32px;
     line-height: 32px;
-    color: #555;
-    border-bottom: 1px solid #888;
-  }
+    border-bottom: 1px solid @borderColor;
 
-  &__btn {
-    // margin: 0 ;
-    text-align: center;
+    &__input {
+      border-bottom: 1px solid @borderColor;
+    }
   }
 
   &__category {
@@ -135,14 +133,13 @@ const handleDate = () => {
       height: 30px;
       line-height: 30px;
       font-size: 14px;
-      color: #555;
       text-align: center;
       border: 1px solid @borderColor;
       border-radius: 15px;
 
       &--active {
-        color: #ff6c7a;
-        border: 1px solid #ff6c7a;
+        color: @themeRedColor;
+        border: 1px solid @themeRedColor;
       }
     }
   }

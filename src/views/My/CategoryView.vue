@@ -9,8 +9,8 @@
     </div>
     <Card :header="false">
       <ListItem v-for="item in categoryListWithDesc" :item="item" :button="true">
-        <var-icon name="cog" class="edit" color="#333" @click="handleShow(item.id)" />
-        <var-icon name="delete" class="delete" color="#333" @click="handleDelete(item.id)" />
+        <var-icon name="cog" class="btn" @click="handleShow(item.id)" />
+        <var-icon name="delete" class="delete" @click="handleDelete(item.id)" />
       </ListItem>
     </Card>
 
@@ -32,11 +32,10 @@ const { categoryListWithDesc, name, editModel, handleAdd, handleDelete, handleEd
 @import '../../style/variables.less';
 @import '../../style/inner.less';
 
-.edit {
-  font-size: 18px;
-  margin-right: 15px;
-}
-.delete {
+.btn {
+  &:first-child {
+    margin-right: 15px;
+  }
   font-size: 18px;
 }
 

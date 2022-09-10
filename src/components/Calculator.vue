@@ -105,7 +105,7 @@ defineExpose({
 .calculator {
   &__result {
     height: 60px;
-    border-bottom: 0.5px solid #eee;
+    border-bottom: 0.5px solid @borderColor;
 
     input {
       width: 100%;
@@ -115,6 +115,7 @@ defineExpose({
       outline: none;
       font-size: 20px;
       padding: 0 20px;
+      color: @themeRedColor;
     }
   }
   &__btns {
@@ -129,14 +130,14 @@ defineExpose({
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 0.5px solid #eee;
+    border: 0.5px solid @borderColor;
     user-select: none; // 禁止选中文字
 
     &__ok {
       grid-column: 4 / 5;
       grid-row: 4 / 6;
       background-color: @themeColor;
-      color: #eee;
+      color: @themeLightBgColor;
       border: 0.5px solid @themeColor;
     }
 
