@@ -1,6 +1,11 @@
 <template>
   <div class="docker">
-    <router-link v-for="(item, index) in dockerList" :key="item.to" :to="item.to" :class="{ docker__item: true, 'docker__item--active': currentIndex == index }">
+    <router-link
+      v-for="(item, index) in dockerList"
+      :key="item.to"
+      :to="item.to"
+      :class="{ docker__item: true, 'docker__item--active': currentIndex == index }"
+    >
       <i class="iconfont" v-html="item.icon"></i>
       <p>{{ item.text }}</p>
     </router-link>
@@ -29,8 +34,8 @@ const dockerList = [
   left: 0;
   right: 0;
   bottom: 0;
-  background: @cardBgColor;
-  // border-top: 1px solid @borderColor;
+  background: @themeLightBgColor;
+  border-top: 0.5px solid @borderColor;
   padding: 0 20px;
   box-sizing: border-box;
 

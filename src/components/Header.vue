@@ -31,12 +31,13 @@ const handleBack = () => {
 </script>
 
 <style lang="less" scoped>
+@import '../style/variables.less';
 .header {
   height: 50px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: #fff;
+  color: @themeLightBgColor;
   padding: 0 10px;
 
   &__back {

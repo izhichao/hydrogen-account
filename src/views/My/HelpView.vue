@@ -73,7 +73,7 @@ const helpList = [
 @import '../../style/inner.less';
 
 .help {
-  --collapse-text-color: #333;
+  --collapse-text-color: @fontColor;
   --collapse-header-font-size: 14px;
 
   :deep(.var-collapse-item__header-title) {

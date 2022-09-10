@@ -31,7 +31,7 @@ defineProps({
 .card {
   padding: 15px;
   border-radius: 20px;
-  background: #fff;
+  background: @themeLightBgColor;
 
   &:not(:nth-of-type(1)) {
     margin-top: 10px;

@@ -123,7 +123,6 @@ const handleSearch = () => {
 
 .btn {
   position: absolute;
-  background-color: @themeColor;
   height: 40px;
   width: 40px;
   right: 25px;
