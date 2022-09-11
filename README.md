@@ -1,16 +1,32 @@
-# Vue 3 + TypeScript + Vite
+# H2记账
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+基于 Vue3 的极简记账 Web [在线预览](https://lbviic.com/account)
 
-## Recommended IDE Setup
+## 特点
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+- 无需登录，没有账号系统，不会收集任何个人信息
 
-## Type Support For `.vue` Imports in TS
+- 本地化存储，通过浏览器的localStorage进行存储，不会上传到服务器
 
-Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can enable Volar's Take Over mode by following these steps:
+- 交易系统与账户系统相互独立，降低记账的复杂度
 
-1. Run `Extensions: Show Built-in Extensions` from VS Code's command palette, look for `TypeScript and JavaScript Language Features`, then right click and select `Disable (Workspace)`. By default, Take Over mode will enable itself if the default TypeScript extension is disabled.
-2. Reload the VS Code window by running `Developer: Reload Window` from the command palette.
+- 支持数据的导出与导入，随时备份数据
 
-You can learn more about Take Over mode [here](https://github.com/johnsoncodehk/volar/discussions/471).
+- 可以按照分类、月份、年份、总支出进行统计，生成对应的图表
+
+## 预览
+
+<img src="./images/home.jpg" width="270"/><img src="./images/show.jpg" width="270"/><img src="./images/my.jpg" width="270"/>
+
+## 内部页面
+
+<img src="./images/calc.jpg" width="270"/><img src="./images/list.jpg" width="270"/><img src="./images/category.jpg" width="270"/><img src="./images/categoryChart.jpg" width="270"/><img src="./images/timeChart.jpg" width="270"/>
+
+## 技术栈
+
+- Vue 3
+- Pinia
+- Varlet
+- Echarts
+- MathJS
+
