@@ -1,5 +1,5 @@
 <template>
-  <Transition name="slide-left">
+  <Transition name="slide-right">
     <slot></slot>
   </Transition>
 </template>
