@@ -49,7 +49,6 @@
 
     <input type="file" ref="inRef" style="display: none" />
   </div>
-  <Docker :currentIndex="2"></Docker>
 </template>
 
 <script lang="ts" setup>
@@ -58,7 +57,6 @@ import { storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
 import Header from '../../components/Header.vue';
 import Circle from '../../components/Circle.vue';
-import Docker from '../../components/Docker.vue';
 import Card from '../../components/Card.vue';
 import { useSelect } from '../../composables/useSelect';
 import { useAccountStore } from '../../store/useAccountStore';

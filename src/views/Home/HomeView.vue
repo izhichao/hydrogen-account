@@ -38,7 +38,6 @@
     <var-icon name="plus" class="btn__icon" />
   </var-button>
   <Calculator ref="calculatorRef"></Calculator>
-  <Docker :currentIndex="0"></Docker>
 
   <var-dialog v-model:show="editAccountModel.status" @confirm="handleEdit">
     <var-input placeholder="请输入新的账户名" v-model="editAccountModel.name" />
@@ -52,7 +51,6 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import Header from '../../components/Header.vue';
 import Circle from '../../components/Circle.vue';
-import Docker from '../../components/Docker.vue';
 import ChartCard from '../../components/ChartCard.vue';
 import Card from '../../components/Card.vue';
 import ListItem from '../../components/ListItem.vue';
