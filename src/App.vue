@@ -20,6 +20,7 @@ router.afterEach((to, from) => {
     transition.value = '';
     return;
   }
+  
   if (['Home', 'Show', 'My'].includes(from.name as string) && ['Home', 'Show', 'My'].includes(to.name as string)) {
     transition.value = '';
     return;

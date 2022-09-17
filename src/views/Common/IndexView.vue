@@ -21,7 +21,4 @@ switch (route.name) {
     index.value = 2;
     break;
 }
-
 </script>
-
-<style lang="less" scoped></style>
