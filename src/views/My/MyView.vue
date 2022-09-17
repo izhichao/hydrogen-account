@@ -33,22 +33,21 @@
           </div>
         </div>
       </Card>
-
-      <var-popup v-model:show="config">
-        <div class="config">
-          <div class="config__show">
-            <div class="config__show__title">统计图表</div>
-            <var-checkbox v-model="show.category">分类</var-checkbox>
-            <var-checkbox v-model="show.day">月支出</var-checkbox>
-            <var-checkbox v-model="show.month">年支出</var-checkbox>
-            <var-checkbox v-model="show.year">总支出</var-checkbox>
-          </div>
-        </div>
-      </var-popup>
     </div>
-
     <input type="file" ref="inRef" style="display: none" />
   </div>
+
+  <var-popup v-model:show="config">
+    <div class="config">
+      <div class="config__show">
+        <div class="config__show__title">统计图表</div>
+        <var-checkbox v-model="show.category">分类</var-checkbox>
+        <var-checkbox v-model="show.day">月支出</var-checkbox>
+        <var-checkbox v-model="show.month">年支出</var-checkbox>
+        <var-checkbox v-model="show.year">总支出</var-checkbox>
+      </div>
+    </div>
+  </var-popup>
 </template>
 
 <script lang="ts" setup>
