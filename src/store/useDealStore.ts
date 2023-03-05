@@ -48,9 +48,6 @@ export const useDealStore = defineStore('deal', {
       });
       return orderDealList;
     },
-    recentDealList(): Deal[] {
-      return this.orderDealList.slice(0, 3);
-    },
     dealAmount: (state) => {
       return state.dealList.length;
     },

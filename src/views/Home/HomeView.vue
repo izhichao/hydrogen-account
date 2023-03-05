@@ -19,7 +19,7 @@
       <Card title="最近交易" @more="router.push({ name: 'List', query: { list: 'deal' } })">
         <ul class="list">
           <ListItem
-            v-for="item in recentDealList"
+            v-for="item in orderDealList.slice(0, 3)"
             :key="item.id"
             :item="item"
             @more="router.push({ name: 'Detail', query: { type: 'edit', id: item.id } })"
@@ -61,7 +61,7 @@ import { useChart } from '../../composables/useChart';
 import getNow from '../../utils/getNow';
 
 const { accountList, editAccountModel, handleEdit, handleDelete, handleShowEdit } = useAccount();
-const { dealListGroup, recentDealList } = useDealStore();
+const { dealListGroup, orderDealList } = useDealStore();
 const { dayOptions } = useChart();
 const { year, month, monthStr } = getNow();
 
