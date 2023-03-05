@@ -1,4 +1,4 @@
-export default () => {
+export const getNow = () => {
   const date = new Date();
 
   const year = date.getFullYear();
@@ -12,6 +12,8 @@ export default () => {
   const dayStr = day.toString().padStart(2, '0');
   const hourStr = hour.toString().padStart(2, '0');
   const minuteStr = minute.toString().padStart(2, '0');
-  
+
   return { year, month, day, hour, minute, yearStr, monthStr, dayStr, hourStr, minuteStr };
 };
+
+export default getNow;
