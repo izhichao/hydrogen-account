@@ -7,6 +7,7 @@
       <div class="calculator__btns">
         <span
           v-for="item in btns"
+          :key="item"
           v-ripple
           :class="{
             calculator__btn: true,
