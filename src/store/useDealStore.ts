@@ -33,31 +33,20 @@ export const useDealStore = defineStore('deal', {
     },
     // 按日期与时间倒序排序
     orderDealList() {
-      const dealListOrderByTime: Deal[] = deepClone(this.dealListWithName);
-      dealListOrderByTime.sort((a, b) => {
-        if (b.date > a.date) {
+      const orderDealList: Deal[] = deepClone(this.dealListWithName);
+      orderDealList.sort((a, b) => {
+        const aDate = new Date(`${a.date} ${a.time}`);
+        const bDate = new Date(`${b.date} ${b.time}`);
+        if (bDate > aDate) {
           return 1;
-        } else if (b.date < a.date) {
+        } else if (bDate < aDate) {
           return -1;
         } else {
-          // 时间
-          if (b.time > a.time) {
-            return 1;
-          } else if (b.time < a.time) {
-            return -1;
-          } else {
-            // id
-            if (b.id > a.id) {
-              return 1;
-            } else if (b.id < a.id) {
-              return -1;
-            } else {
-              return 0;
-            }
-          }
+          // 时间相同则比较id
+          return b.id > a.id ? 1 : -1;
         }
       });
-      return dealListOrderByTime;
+      return orderDealList;
     },
     recentDealList(): Deal[] {
       return this.orderDealList.slice(0, 3);
