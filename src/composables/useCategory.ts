@@ -2,6 +2,7 @@ import { useCategoryStore } from '../store/useCategoryStore';
 import { reactive, ref } from 'vue';
 import { Dialog, Snackbar } from '@varlet/ui';
 import { storeToRefs } from 'pinia';
+import { useRouter } from 'vue-router';
 
 export const useCategory = () => {
   const categoryStore = useCategoryStore();
@@ -51,6 +52,12 @@ export const useCategory = () => {
     });
   };
 
+  // 展示该分类下的所有交易
+  const router = useRouter();
+  const handlePush = (name: string) => {
+    router.push({ name: 'List', query: { list: 'deal', keyword: name } });
+  };
+
   return {
     categoryListWithDesc,
     name,
@@ -58,6 +65,7 @@ export const useCategory = () => {
     handleAdd,
     handleDelete,
     handleEdit,
-    handleShow
+    handleShow,
+    handlePush
   };
 };
