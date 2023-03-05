@@ -1,11 +1,9 @@
 import { defineStore } from 'pinia';
 import { useCategoryStore } from './useCategoryStore';
 import { OriginDeal, Deal } from '../types/deal';
-import { useGroup } from '../composables/useGroup';
+import { convertListToGroup, convertObjToArray } from '../utils/getGroup';
 import deepClone from '../utils/deepClone';
 import * as math from 'mathjs';
-
-const { convertListToGroup, convertObjToArray } = useGroup();
 
 export const useDealStore = defineStore('deal', {
   state: () => {

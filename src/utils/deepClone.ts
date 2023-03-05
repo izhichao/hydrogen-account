@@ -1,4 +1,4 @@
-const deepClone = (obj: any) => {
+export const deepClone = (obj: any) => {
   // 简单数据类型直接返回
   if (typeof obj !== 'object' || obj == null) {
     return obj;
