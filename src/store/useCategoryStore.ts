@@ -1,23 +1,24 @@
 import { defineStore } from 'pinia';
 import { useDealStore } from './useDealStore';
-import { Category } from '../types/category';
-
+import { OriginCategory, Category } from '../types/category';
+import deepClone from '../utils/deepClone';
 export const useCategoryStore = defineStore('category', {
   state: () => {
     return {
       categoryList: [
-        { id: 0, name: '餐饮', desc: '共0笔交易' },
-        { id: 1, name: '购物', desc: '共0笔交易' },
-        { id: 2, name: '水电费', desc: '共0笔交易' },
-        { id: 3, name: '交通', desc: '共0笔交易' }
-      ] as Category[]
+        { id: 0, name: '餐饮' },
+        { id: 1, name: '购物' },
+        { id: 2, name: '水电费' },
+        { id: 3, name: '交通' }
+      ] as OriginCategory[]
     };
   },
   getters: {
-    // 添加交易笔数统计（更改原数组）
+    // 添加交易笔数统计
     categoryListWithDesc: (state) => {
+      const categoryListWithDesc: Category[] = deepClone(state.categoryList);
       const dealList = useDealStore().dealList;
-      state.categoryList.forEach((category) => {
+      categoryListWithDesc.forEach((category) => {
         let sum = 0;
         dealList.forEach((deal) => {
           if (deal.categoryId === category.id) {
@@ -26,13 +27,13 @@ export const useCategoryStore = defineStore('category', {
         });
         category.desc = `共${sum}笔交易`;
       });
-      return state.categoryList;
+      return categoryListWithDesc;
     }
   },
   actions: {
     addCategory(name: string) {
       const newId = this.categoryList[this.categoryList.length - 1].id + 1;
-      this.categoryList.push({ id: newId, name, desc: '共0笔交易' });
+      this.categoryList.push({ id: newId, name });
     },
     deleteCategory(id: number) {
       const newCategoryList = this.categoryList.filter((category) => {

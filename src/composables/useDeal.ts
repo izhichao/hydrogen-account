@@ -11,7 +11,7 @@ export const useDeal = () => {
   const router = useRouter();
 
   const categoryStore = useCategoryStore();
-  const { categoryList } = storeToRefs(categoryStore);
+  const { categoryListWithDesc } = storeToRefs(categoryStore);
 
   const { type, id, result } = route.query;
 
@@ -72,7 +72,7 @@ export const useDeal = () => {
 
   return {
     dealModel,
-    categoryList,
+    categoryListWithDesc,
     type,
     handleUpdateAmount,
     handleAdd,

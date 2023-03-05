@@ -13,7 +13,7 @@
               <div class="form__title">分类</div>
               <div class="form__category">
                 <label
-                  v-for="item in categoryList"
+                  v-for="item in categoryListWithDesc"
                   :class="{
                     form__category__label: true,
                     'form__category__label--active': item.id === dealModel.categoryId
@@ -85,7 +85,7 @@ import Header from '../../components/Header.vue';
 import Card from '../../components/Card.vue';
 import Calculator from '../../components/Calculator.vue';
 import { useDeal } from '../../composables/useDeal';
-const { dealModel, categoryList, type, handleUpdateAmount, handleAdd, handleEdit, handleDelete } = useDeal();
+const { dealModel, categoryListWithDesc, type, handleUpdateAmount, handleAdd, handleEdit, handleDelete } = useDeal();
 
 const showDate = ref(false);
 const showTime = ref(false);
