@@ -1,7 +1,7 @@
 <template>
   <router-view v-slot="{ Component, route }">
     <Transition :name="transition">
-      <div :key="route.name">
+      <div :key="(route.name as string)">
         <component :is="Component"></component>
       </div>
     </Transition>
@@ -20,7 +20,7 @@ router.afterEach((to, from) => {
     transition.value = '';
     return;
   }
-  
+
   if (['Home', 'Show', 'My'].includes(from.name as string) && ['Home', 'Show', 'My'].includes(to.name as string)) {
     transition.value = '';
     return;
