@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia';
 import { useCategoryStore } from './useCategoryStore';
-import { Deal } from '../types/deal';
+import { OriginDeal, Deal } from '../types/deal';
 import { useGroup } from '../composables/useGroup';
+import deepClone from '../utils/deepClone';
 import * as math from 'mathjs';
 
 const { convertListToGroup, convertObjToArray } = useGroup();
@@ -10,30 +11,30 @@ export const useDealStore = defineStore('deal', {
   state: () => {
     return {
       dealList: [
-        { id: 0, name: '未分类', categoryId: 1, desc: '手机壳', amount: -0.1, date: '2022-07-22', time: '12:00' },
-        { id: 1, name: '未分类', categoryId: 1, desc: '钢化膜', amount: -0.2, date: '2022-07-23', time: '12:00' },
-        { id: 2, name: '未分类', categoryId: 0, desc: '', amount: -23, date: '2022-08-24', time: '12:00' },
-        { id: 3, name: '未分类', categoryId: 0, desc: '', amount: -12, date: '2022-08-22', time: '12:00' },
-        { id: 4, name: '未分类', categoryId: 0, desc: '', amount: -13.1, date: '2022-09-10', time: '13:00' },
-        { id: 5, name: '未分类', categoryId: 0, desc: '', amount: -12.5, date: '2022-09-10', time: '13:00' }
-      ] as Deal[]
+        { id: 0, categoryId: 1, desc: '手机壳', amount: -0.1, date: '2022-07-22', time: '12:00' },
+        { id: 1, categoryId: 1, desc: '钢化膜', amount: -0.2, date: '2022-07-23', time: '12:00' },
+        { id: 2, categoryId: 0, desc: '', amount: -23, date: '2022-08-24', time: '12:00' },
+        { id: 3, categoryId: 0, desc: '', amount: -12, date: '2022-08-22', time: '12:00' },
+        { id: 4, categoryId: 0, desc: '', amount: -13.1, date: '2022-09-10', time: '13:00' },
+        { id: 5, categoryId: 0, desc: '', amount: -12.5, date: '2022-09-10', time: '13:00' }
+      ] as OriginDeal[]
     };
   },
   getters: {
-    // 添加分类名(更改原数组)
+    // 添加分类名
     dealListWithName: (state) => {
+      const dealListWithName: Deal[] = deepClone(state.dealList);
       const categoryList = useCategoryStore().categoryList;
-      state.dealList.forEach((deal) => {
+      dealListWithName.forEach((deal) => {
         const category = categoryList.find((category) => category.id === deal.categoryId);
         deal.name = category?.name || '未分类';
       });
-      return state.dealList;
+      return dealListWithName;
     },
     // 按日期与时间倒序排序
     orderDealList() {
-      const dealListOrderByTime: Deal[] = JSON.parse(JSON.stringify(this.dealListWithName));
+      const dealListOrderByTime: Deal[] = deepClone(this.dealListWithName);
       dealListOrderByTime.sort((a, b) => {
-        // 日期
         if (b.date > a.date) {
           return 1;
         } else if (b.date < a.date) {
@@ -96,7 +97,7 @@ export const useDealStore = defineStore('deal', {
     searchDealList(list: Deal[], keyword: string) {
       let dealList = list;
       dealList = dealList.filter((deal) => {
-        return deal.desc.includes(keyword) || deal.name.includes(keyword) || deal.date.includes(keyword);
+        return deal.desc.includes(keyword) || deal.name?.includes(keyword) || deal.date.includes(keyword);
       });
       return dealList;
     },
@@ -118,7 +119,7 @@ export const useDealStore = defineStore('deal', {
     },
     addDeal(categoryId: number, desc: string, amount: number, date: string, time: string) {
       const newId = this.dealList[this.dealList.length - 1].id + 1;
-      this.dealList.push({ id: newId, name: '未分类', categoryId, desc, amount: -amount, date, time });
+      this.dealList.push({ id: newId, categoryId, desc, amount: -amount, date, time });
     },
     editDeal(id: number, categoryId: number, desc: string, amount: number, date: string, time: string) {
       this.dealList.forEach((deal) => {
