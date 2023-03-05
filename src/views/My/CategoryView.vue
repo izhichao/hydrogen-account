@@ -8,7 +8,13 @@
       </var-button>
     </div>
     <Card :header="false">
-      <ListItem v-for="item in categoryListWithDesc" :item="item" :button="true">
+      <ListItem
+        v-for="item in categoryListWithDesc"
+        :key="item.id"
+        :item="item"
+        :button="true"
+        @click="handlePush(item.name)"
+      >
         <var-icon name="cog" class="btn" @click="handleShow(item.id)" />
         <var-icon name="delete" class="delete" @click="handleDelete(item.id)" />
       </ListItem>
@@ -25,7 +31,8 @@ import Header from '../../components/Header.vue';
 import Card from '../../components/Card.vue';
 import ListItem from '../../components/ListItem.vue';
 import { useCategory } from '../../composables/useCategory';
-const { categoryListWithDesc, name, editModel, handleAdd, handleDelete, handleEdit, handleShow } = useCategory();
+const { categoryListWithDesc, name, editModel, handleAdd, handleDelete, handleEdit, handleShow, handlePush } =
+  useCategory();
 </script>
 
 <style lang="less" scoped>

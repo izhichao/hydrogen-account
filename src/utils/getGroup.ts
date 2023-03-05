@@ -52,7 +52,6 @@ export const convertObjToArray = (obj: { [key: string]: Deal[] }) => {
     );
     dealList.push({ name: key, total, value: obj[key] });
   }
-  console.log(dealList);
   
   return dealList;
 };
