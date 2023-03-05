@@ -12,7 +12,7 @@
         </var-button>
       </div>
       <ChartCard :title="title" :amount="expends" :option="options" :more="false"></ChartCard>
-      <Card :header="false" v-for="item in list" class="padding-small">
+      <Card :header="false" v-for="item in list" :key="item.id" class="padding-small">
         <ListItem :item="item" @click="handlePush(item)"></ListItem>
       </Card>
     </div>

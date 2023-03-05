@@ -14,12 +14,12 @@
               <div class="form__category">
                 <label
                   v-for="item in categoryListWithDesc"
+                  :key="item.id"
                   :class="{
                     form__category__label: true,
                     'form__category__label--active': item.id === dealModel.categoryId
                   }"
                   :for="item.id.toString()"
-                  :key="item.id"
                 >
                   <input
                     class="form__category__input"

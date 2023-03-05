@@ -4,8 +4,8 @@
     <div class="card-list">
       <Card :header="false">
         <var-collapse v-model="active" :offset="false" class="help">
-          <var-collapse-item v-for="item in helpList" :title="item.title">
-            <p v-for="subItem in item.text">
+          <var-collapse-item v-for="item in helpList" :key="item.title" :title="item.title">
+            <p v-for="subItem in item.text" :key="subItem">
               {{ subItem }}
             </p>
           </var-collapse-item>

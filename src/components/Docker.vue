@@ -2,7 +2,7 @@
   <div class="docker">
     <router-link
       v-for="(item, index) in dockerList"
-      :key="item.to"
+      :key="item.text"
       :to="item.to"
       :class="{ docker__item: true, 'docker__item--active': currentIndex == index }"
     >

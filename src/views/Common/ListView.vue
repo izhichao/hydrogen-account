@@ -26,6 +26,7 @@
           <Card :header="false" :class="{ 'padding-small': item.value.length === 1 }">
             <ListItem
               v-for="subItem in item.value"
+              :key="subItem.id"
               :item="subItem"
               @more="router.push({ name: 'Detail', query: { type: 'edit', id: subItem.id } })"
             ></ListItem>
@@ -49,7 +50,7 @@
         </Card>
 
         <Card :header="false" class="padding-small">
-          <ListItem v-for="item in accountList" :item="item" @click="handleShowEdit(item.id)"></ListItem>
+          <ListItem v-for="item in accountList" :key="item.id" :item="item" @click="handleShowEdit(item.id)"></ListItem>
 
           <div class="add" v-ripple @click="handleShowAdd">
             <var-icon name="plus" class="add__icon" />
