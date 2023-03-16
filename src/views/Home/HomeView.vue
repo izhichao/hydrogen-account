@@ -1,34 +1,37 @@
 <template>
-  <Header title="首页">
-    <template #center>
-      <input type="text" class="header__input" v-model="keyword" ref="inputRef" />
-    </template>
-    <template #right>
-      <span class="header__search iconfont" @click="handleSearch">&#xe623;</span>
-    </template>
-  </Header>
-  <div class="card-list">
-    <ChartCard
-      :title="`${month}月支出`"
-      :amount="monthExpend"
-      :option="dayOptions(`${year}-${monthStr}`)"
-      @more="router.push({ name: 'Chart', query: { type: 'day', time: `${year}-${monthStr}` } })"
-    ></ChartCard>
-    <Card title="最近交易" @more="router.push({ name: 'List', query: { list: 'deal' } })">
-      <ul class="list">
-        <ListItem
-          v-for="item in orderDealList.slice(0, 3)"
-          :key="item.id"
-          :item="item"
-          @more="router.push({ name: 'Detail', query: { type: 'edit', id: item.id } })"
-        ></ListItem>
-      </ul>
-    </Card>
-    <Card title="所有账户" @more="router.push({ name: 'List', query: { list: 'account' } })">
-      <ul class="list">
-        <ListItem v-for="item in accountList" :key="item.id" :item="item" @click="handleShowEdit(item.id)"></ListItem>
-      </ul>
-    </Card>
+  <div class="main-content">
+    <Circle></Circle>
+    <Header title="首页">
+      <template #center>
+        <input type="text" class="header__input" v-model="keyword" ref="inputRef" />
+      </template>
+      <template #right>
+        <span class="header__search iconfont" @click="handleSearch">&#xe623;</span>
+      </template>
+    </Header>
+    <div class="card-list">
+      <ChartCard
+        :title="`${month}月支出`"
+        :amount="monthExpend"
+        :option="dayOptions(`${year}-${monthStr}`)"
+        @more="router.push({ name: 'Chart', query: { type: 'day', time: `${year}-${monthStr}` } })"
+      ></ChartCard>
+      <Card title="最近交易" @more="router.push({ name: 'List', query: { list: 'deal' } })">
+        <ul class="list">
+          <ListItem
+            v-for="item in orderDealList.slice(0, 3)"
+            :key="item.id"
+            :item="item"
+            @more="router.push({ name: 'Detail', query: { type: 'edit', id: item.id } })"
+          ></ListItem>
+        </ul>
+      </Card>
+      <Card title="所有账户" @more="router.push({ name: 'List', query: { list: 'account' } })">
+        <ul class="list">
+          <ListItem v-for="item in accountList" :key="item.id" :item="item" @click="handleShowEdit(item.id)"></ListItem>
+        </ul>
+      </Card>
+    </div>
   </div>
 
   <var-button class="btn" type="primary" size="large" round @click="handlePop">
@@ -46,6 +49,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import Circle from '../../components/Circle.vue';
 import Header from '../../components/Header.vue';
 import ChartCard from '../../components/ChartCard.vue';
 import Card from '../../components/Card.vue';
