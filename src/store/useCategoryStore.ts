@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { useDealStore } from './useDealStore';
-import { OriginCategory, Category } from '../types/category';
+import { BaseCategory, Category } from '../types';
 import deepClone from '../utils/deepClone';
 export const useCategoryStore = defineStore('category', {
   state: () => {
@@ -10,7 +10,7 @@ export const useCategoryStore = defineStore('category', {
         { id: 1, name: '购物' },
         { id: 2, name: '水电费' },
         { id: 3, name: '交通' }
-      ] as OriginCategory[]
+      ] as BaseCategory[]
     };
   },
   getters: {

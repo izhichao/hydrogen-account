@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { Show } from '../types/config';
+import { Show } from '../types';
 
 export const useConfigStore = defineStore('config', {
   state: () => {

@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { Account } from '../types/account';
+import { Account } from '../types';
 import * as math from 'mathjs';
 
 export const useAccountStore = defineStore('account', {

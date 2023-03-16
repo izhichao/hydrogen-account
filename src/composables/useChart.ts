@@ -1,5 +1,5 @@
 import { useDealStore } from '../store/useDealStore';
-import { PieChart } from '../types/chart';
+import { PieChart } from '../types';
 import convertPx from '../utils/convertPx';
 const { timeDiff, dealListGroup } = useDealStore();
 

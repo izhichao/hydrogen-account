@@ -29,7 +29,7 @@ import Header from '../../components/Header.vue';
 import ChartCard from '../../components/ChartCard.vue';
 import Card from '../../components/Card.vue';
 import ListItem from '../../components/ListItem.vue';
-import { DealStats } from '../../types/deal';
+import { DealStats } from '../../types';
 import { useDealStore } from '../../store/useDealStore';
 import getNow from '../../utils/getNow';
 import { useChart } from '../../composables/useChart';
