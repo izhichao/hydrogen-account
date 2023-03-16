@@ -1,36 +1,39 @@
 <template>
-  <Header title="我的"></Header>
-  <div class="card-list">
-    <Card :header="false">
-      <div class="total">
-        <div class="total__title">总资产</div>
-        <div class="total__amount">{{ totalAsset }}</div>
-      </div>
-      <div class="statistics">
-        <div class="statistics__count">
-          <div class="statistics__count__amount">{{ timeDiff }}</div>
-          <div class="statistics__count__title">记账天数</div>
+  <div class="main-content">
+    <Circle></Circle>
+    <Header title="我的"></Header>
+    <div class="card-list">
+      <Card :header="false">
+        <div class="total">
+          <div class="total__title">总资产</div>
+          <div class="total__amount">{{ totalAsset }}</div>
         </div>
-        <div class="statistics__count">
-          <div class="statistics__count__amount">{{ dealAmount }}</div>
-          <div class="statistics__count__title">交易笔数</div>
+        <div class="statistics">
+          <div class="statistics__count">
+            <div class="statistics__count__amount">{{ timeDiff }}</div>
+            <div class="statistics__count__title">记账天数</div>
+          </div>
+          <div class="statistics__count">
+            <div class="statistics__count__amount">{{ dealAmount }}</div>
+            <div class="statistics__count__title">交易笔数</div>
+          </div>
+          <div class="statistics__count">
+            <div class="statistics__count__amount">{{ -totalExpend }}</div>
+            <div class="statistics__count__title">总支出</div>
+          </div>
         </div>
-        <div class="statistics__count">
-          <div class="statistics__count__amount">{{ -totalExpend }}</div>
-          <div class="statistics__count__title">总支出</div>
-        </div>
-      </div>
-    </Card>
+      </Card>
 
-    <Card :header="false">
-      <div class="select">
-        <div class="select__item" v-for="item in selectList" :key="item.text" @click="handleClick(item.text)">
-          <div class="select__item__icon iconfont" v-html="item.icon"></div>
-          <div class="select__item__title">{{ item.text }}</div>
-          <div class="select__item__enter iconfont">&#xe645;</div>
+      <Card :header="false">
+        <div class="select">
+          <div class="select__item" v-for="item in selectList" :key="item.text" @click="handleClick(item.text)">
+            <div class="select__item__icon iconfont" v-html="item.icon"></div>
+            <div class="select__item__title">{{ item.text }}</div>
+            <div class="select__item__enter iconfont">&#xe645;</div>
+          </div>
         </div>
-      </div>
-    </Card>
+      </Card>
+    </div>
   </div>
   <input type="file" ref="inRef" style="display: none" />
 
@@ -52,6 +55,7 @@ import { ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
 import { Dialog, Snackbar } from '@varlet/ui';
+import Circle from '../../components/Circle.vue';
 import Header from '../../components/Header.vue';
 import Card from '../../components/Card.vue';
 import { useAccountStore } from '../../store/useAccountStore';

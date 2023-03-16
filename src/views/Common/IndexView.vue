@@ -1,8 +1,5 @@
 <template>
-  <div class="main-content">
-    <div class="bg"></div>
-    <router-view></router-view>
-  </div>
+  <router-view></router-view>
   <Docker :currentIndex="index"></Docker>
 </template>
 
@@ -22,19 +19,6 @@ switch (route.name) {
     break;
   case 'My':
     index.value = 2;
+    break;
 }
 </script>
-
-<style lang="less" scoped>
-.bg {
-  position: absolute;
-  left: 50%;
-  top: -350px;
-  transform: translate(-50%);
-  width: 800px;
-  height: 500px;
-  border-radius: 50%;
-  background-image: linear-gradient(239deg, #3a6ff3, #50c7fb);
-  z-index: -999;
-}
-</style>
