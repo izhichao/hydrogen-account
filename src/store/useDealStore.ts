@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { useCategoryStore } from './useCategoryStore';
-import { OriginDeal, Deal } from '../types/deal';
+import { BaseDeal, Deal } from '../types';
 import { convertListToGroup, convertObjToArray } from '../utils/getGroup';
 import deepClone from '../utils/deepClone';
 import * as math from 'mathjs';
@@ -15,7 +15,7 @@ export const useDealStore = defineStore('deal', {
         { id: 3, categoryId: 0, desc: '', amount: -12, date: '2022-08-22', time: '12:00' },
         { id: 4, categoryId: 0, desc: '', amount: -13.1, date: '2022-09-10', time: '13:00' },
         { id: 5, categoryId: 0, desc: '', amount: -12.5, date: '2022-09-10', time: '13:00' }
-      ] as OriginDeal[]
+      ] as BaseDeal[]
     };
   },
   getters: {

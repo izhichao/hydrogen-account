@@ -17,9 +17,7 @@
 
 <script lang="ts" setup>
 import { PropType } from 'vue';
-import { Account } from '../types/account';
-import { Deal, DealStats } from '../types/deal';
-import { Category } from '../types/category';
+import { Account, Deal, DealStats, Category } from '../types';
 
 defineProps({
   item: {
