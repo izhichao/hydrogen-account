@@ -1,4 +1,4 @@
-import { Deal, DealGroup } from '../types/deal';
+import { Deal, DealGroup } from '../types';
 import * as math from 'mathjs';
 
 /**
