@@ -21,18 +21,18 @@ export const useDealStore = defineStore('deal', {
   getters: {
     // 添加分类名
     dealListWithName: (state) => {
-      const dealListWithName: Deal[] = deepClone(state.dealList);
+      const dealList: Deal[] = deepClone(state.dealList);
       const categoryList = useCategoryStore().categoryList;
-      dealListWithName.forEach((deal) => {
+      dealList.forEach((deal) => {
         const category = categoryList.find((category) => category.id === deal.categoryId);
         deal.name = category?.name || '未分类';
       });
-      return dealListWithName;
+      return dealList;
     },
     // 按日期与时间倒序排序
     orderDealList() {
-      const orderDealList: Deal[] = deepClone(this.dealListWithName);
-      orderDealList.sort((a, b) => {
+      const dealList: Deal[] = deepClone(this.dealListWithName);
+      dealList.sort((a, b) => {
         const dateComparison = new Date(`${b.date} ${b.time}`).getTime() - new Date(`${a.date} ${a.time}`).getTime();
         if (dateComparison !== 0) {
           return dateComparison;
@@ -40,7 +40,7 @@ export const useDealStore = defineStore('deal', {
         // 时间相同则比较id
         return b.id - a.id;
       });
-      return orderDealList;
+      return dealList;
     },
     dealAmount: (state) => {
       return state.dealList.length;
@@ -62,30 +62,20 @@ export const useDealStore = defineStore('deal', {
   },
   actions: {
     // 根据日期过滤交易数据
-    filterDealList(list: Deal[], time: string) {
-      let dealList = list;
-      if (time.length === 10) {
-        dealList = list.filter((deal) => deal.date === time);
-      } else if (time.length === 7) {
-        dealList = list.filter((deal) => deal.date.slice(0, 7) === time);
-      } else if (time.length === 4) {
-        dealList = list.filter((deal) => deal.date.slice(0, 4) === time);
-      }
-      return dealList;
+    filterByTime(dealList: Deal[], time: string) {
+      return dealList.filter((deal) => deal.date.slice(0, time.length) === time);
     },
     // 根据关键字过滤交易数据
-    searchDealList(list: Deal[], keyword: string) {
-      let dealList = list;
-      dealList = dealList.filter((deal) => {
+    filterByKeyword(dealList: Deal[], keyword: string) {
+      return dealList.filter((deal) => {
         return deal.desc.includes(keyword) || deal.name?.includes(keyword) || deal.date.includes(keyword);
       });
-      return dealList;
     },
     // 按日、月、年、类别分类
     dealListGroup(type: string, { time, keyword }: { time?: string; keyword?: string } = {}) {
       let list = this.orderDealList;
-      time && (list = this.filterDealList(list, time));
-      keyword && (list = this.searchDealList(list, keyword));
+      time && (list = this.filterByTime(list, time));
+      keyword && (list = this.filterByKeyword(list, keyword));
 
       const dealObj = convertListToGroup(list as Deal[], type);
       const dealList = convertObjToArray(dealObj);
