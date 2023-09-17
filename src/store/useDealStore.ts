@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { useCategoryStore } from './useCategoryStore';
 import { BaseDeal, Deal } from '../types';
-import { convertListToGroup, convertObjToArray } from '../utils/getGroup';
+import { getGroupList } from '../utils/getGroupList';
 import deepClone from '../utils/deepClone';
 import * as math from 'mathjs';
 
@@ -76,10 +76,7 @@ export const useDealStore = defineStore('deal', {
       let list = this.orderDealList;
       time && (list = this.filterByTime(list, time));
       keyword && (list = this.filterByKeyword(list, keyword));
-
-      const dealObj = convertListToGroup(list as Deal[], type);
-      const dealList = convertObjToArray(dealObj);
-      return dealList;
+      return getGroupList(list, type);
     },
     findDeal(id: number) {
       return this.dealList.find((deal) => deal.id === id);
