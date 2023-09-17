@@ -101,12 +101,7 @@ export const useDealStore = defineStore('deal', {
       });
     },
     deleteDeal(id: number) {
-      const newDealList = this.dealList.filter((deal) => {
-        if (deal.id !== id) {
-          return deal;
-        }
-      });
-      this.dealList = newDealList;
+      this.dealList = this.dealList.filter((deal) => deal.id !== id);
     }
   },
   persist: true
