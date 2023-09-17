@@ -33,16 +33,12 @@ export const useDealStore = defineStore('deal', {
     orderDealList() {
       const orderDealList: Deal[] = deepClone(this.dealListWithName);
       orderDealList.sort((a, b) => {
-        const aDate = new Date(`${a.date} ${a.time}`);
-        const bDate = new Date(`${b.date} ${b.time}`);
-        if (bDate > aDate) {
-          return 1;
-        } else if (bDate < aDate) {
-          return -1;
-        } else {
-          // 时间相同则比较id
-          return b.id > a.id ? 1 : -1;
+        const dateComparison = new Date(`${b.date} ${b.time}`).getTime() - new Date(`${a.date} ${a.time}`).getTime();
+        if (dateComparison !== 0) {
+          return dateComparison;
         }
+        // 时间相同则比较id
+        return b.id - a.id;
       });
       return orderDealList;
     },
@@ -88,12 +84,9 @@ export const useDealStore = defineStore('deal', {
     // 按日、月、年、类别分类
     dealListGroup(type: string, { time, keyword }: { time?: string; keyword?: string } = {}) {
       let list = this.orderDealList;
-      if (time) {
-        list = this.filterDealList(list, time);
-      }
-      if (keyword) {
-        list = this.searchDealList(list, keyword);
-      }
+      time && (list = this.filterDealList(list, time));
+      keyword && (list = this.searchDealList(list, keyword));
+
       const dealObj = convertListToGroup(list as Deal[], type);
       const dealList = convertObjToArray(dealObj);
       return dealList;
