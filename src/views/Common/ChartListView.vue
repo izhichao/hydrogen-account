@@ -94,7 +94,7 @@ watch(
   () => {
     expends.value = math.number(
       list.value.reduce(
-        (total, currentValue) => math.add(math.bignumber(total), math.bignumber(currentValue.amount)),
+        (total, item) => math.add(math.bignumber(total), math.bignumber(item.amount)),
         math.bignumber(0)
       )
     );

@@ -24,13 +24,12 @@ export const convertListToGroup = (list: Deal[], type: string) => {
     }
 
     // 2.添加数据
-    if (dealObj[key]) {
-      dealObj[key].push(deal);
-    } else {
-      dealObj[key] = [deal];
+    if (!dealObj[key]) {
+      dealObj[key] = [];
     }
+    dealObj[key].push(deal);
   });
-  
+
   return dealObj;
 };
 
@@ -46,12 +45,12 @@ export const convertObjToArray = (obj: { [key: string]: Deal[] }) => {
   for (const key in obj) {
     // 计算该日期或分类下的总金额
     const total = math.number(
-      obj[key].reduce((total, currentValue) => {
-        return math.add(math.bignumber(total), math.bignumber(currentValue.amount));
+      obj[key].reduce((total, item) => {
+        return math.add(math.bignumber(total), math.bignumber(item.amount));
       }, math.bignumber(0))
     );
     dealList.push({ name: key, total, value: obj[key] });
   }
-  
+
   return dealList;
 };
