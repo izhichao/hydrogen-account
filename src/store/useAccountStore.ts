@@ -12,9 +12,7 @@ export const useAccountStore = defineStore('account', {
     };
   },
   getters: {
-    accountAmount: (state) => {
-      return state.accountList.length;
-    },
+    accountAmount: (state) => state.accountList.length,
     totalAsset: (state) => {
       return math.number(
         state.accountList.reduce(
@@ -33,21 +31,14 @@ export const useAccountStore = defineStore('account', {
       return this.accountList.find((account) => account.id === id);
     },
     deleteAccount(id: number) {
-      const newAccountList = this.accountList.filter((account) => {
-        if (account.id !== id) {
-          return account;
-        }
-      });
-      this.accountList = newAccountList;
+      this.accountList = this.accountList.filter((account) => account.id !== id);
     },
     editAccount(id: number, name: string, amount: number) {
-      this.accountList.forEach((account) => {
-        if (account.id === id) {
-          account.name = name;
-          account.amount = amount;
-        }
-        return account;
-      });
+      const account = this.findAccount(id);
+      if (account) {
+        account.name = name;
+        account.amount = amount;
+      }
     }
   },
   persist: true
