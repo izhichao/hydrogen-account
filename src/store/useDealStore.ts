@@ -42,9 +42,7 @@ export const useDealStore = defineStore('deal', {
       });
       return dealList;
     },
-    dealAmount: (state) => {
-      return state.dealList.length;
-    },
+    dealAmount: (state) => state.dealList.length,
     totalExpend: (state) => {
       return math.number(
         state.dealList.reduce(
@@ -54,10 +52,9 @@ export const useDealStore = defineStore('deal', {
       );
     },
     timeDiff(): number {
-      const firstDay = this.orderDealList[this.orderDealList.length - 1].date;
-      const lastDay = this.orderDealList[0].date;
-      const days = (new Date(lastDay).getTime() - new Date(firstDay).getTime()) / (3600 * 24 * 1000);
-      return days;
+      const firstDay = new Date(this.orderDealList[this.orderDealList.length - 1].date).getTime();
+      const lastDay = new Date(this.orderDealList[0].date).getTime();
+      return (lastDay - firstDay) / (3600 * 24 * 1000);
     }
   },
   actions: {
@@ -86,16 +83,14 @@ export const useDealStore = defineStore('deal', {
       this.dealList.push({ id: newId, categoryId, desc, amount: -amount, date, time });
     },
     editDeal(id: number, categoryId: number, desc: string, amount: number, date: string, time: string) {
-      this.dealList.forEach((deal) => {
-        if (deal.id === id) {
-          deal.categoryId = categoryId;
-          deal.desc = desc;
-          deal.amount = -amount;
-          deal.date = date;
-          deal.time = time;
-        }
-        return deal;
-      });
+      const deal = this.dealList.find((deal) => deal.id === id);
+      if (deal) {
+        deal.categoryId = categoryId;
+        deal.desc = desc;
+        deal.amount = -amount;
+        deal.date = date;
+        deal.time = time;
+      }
     },
     deleteDeal(id: number) {
       this.dealList = this.dealList.filter((deal) => deal.id !== id);
