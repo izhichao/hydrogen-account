@@ -15,8 +15,8 @@
         :button="true"
         @click="handlePush(item.name)"
       >
-        <var-icon name="cog" class="btn" @click="handleShow(item.id)" />
-        <var-icon name="delete" class="delete" @click="handleDelete(item.id)" />
+        <var-icon name="cog" class="btn" @click.stop="handleShow(item.id)" />
+        <var-icon name="delete" class="delete" @click.stop="handleDelete(item.id)" />
       </ListItem>
     </Card>
 
