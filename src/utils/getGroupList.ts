@@ -16,7 +16,7 @@ export const getGroupList = (list: Deal[], type: string) => {
     day: (deal: Deal) => deal.date,
     month: (deal: Deal) => deal.date.slice(0, 7),
     year: (deal: Deal) => deal.date.slice(0, 4),
-    category: (deal: Deal) => deal.name
+    category: (deal: Deal) => deal.name as string
   };
 
   // 2.添加数据
@@ -44,3 +44,5 @@ export const getGroupList = (list: Deal[], type: string) => {
 
   return dealList;
 };
+
+export default getGroupList;

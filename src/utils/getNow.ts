@@ -1,3 +1,5 @@
+const formatNumber = (number: number) => number.toString().padStart(2, '0');
+
 export const getNow = () => {
   const date = new Date();
 
@@ -7,13 +9,18 @@ export const getNow = () => {
   const hour = date.getHours();
   const minute = date.getMinutes();
 
-  const yearStr = year.toString();
-  const monthStr = month.toString().padStart(2, '0');
-  const dayStr = day.toString().padStart(2, '0');
-  const hourStr = hour.toString().padStart(2, '0');
-  const minuteStr = minute.toString().padStart(2, '0');
-
-  return { year, month, day, hour, minute, yearStr, monthStr, dayStr, hourStr, minuteStr };
+  return {
+    year,
+    month,
+    day,
+    hour,
+    minute,
+    yearStr: year.toString(),
+    monthStr: formatNumber(month),
+    dayStr: formatNumber(day),
+    hourStr: formatNumber(hour),
+    minuteStr: formatNumber(minute)
+  };
 };
 
 export default getNow;
