@@ -34,7 +34,7 @@ export interface BaseDeal {
 }
 
 export interface Deal extends BaseDeal {
-  name: string
+  name?: string
 }
 
 export interface DealStats {
