@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { useCategoryStore } from './useCategoryStore';
 import { BaseDeal, Deal } from '../types';
 import { getGroupList } from '../utils/getGroupList';
-import deepClone from '../utils/deepClone';
+import cloneDeep from 'lodash/cloneDeep';
 import * as math from 'mathjs';
 
 export const useDealStore = defineStore('deal', {
@@ -21,7 +21,7 @@ export const useDealStore = defineStore('deal', {
   getters: {
     // 添加分类名
     dealListWithName: (state) => {
-      const dealList: Deal[] = deepClone(state.dealList);
+      const dealList: Deal[] = cloneDeep(state.dealList);
       const categoryList = useCategoryStore().categoryList;
       dealList.forEach((deal) => {
         const category = categoryList.find((category) => category.id === deal.categoryId);
@@ -31,7 +31,7 @@ export const useDealStore = defineStore('deal', {
     },
     // 按日期与时间倒序排序
     orderDealList() {
-      const dealList: Deal[] = deepClone(this.dealListWithName);
+      const dealList: Deal[] = cloneDeep(this.dealListWithName);
       dealList.sort((a, b) => {
         const dateComparison = new Date(`${b.date} ${b.time}`).getTime() - new Date(`${a.date} ${a.time}`).getTime();
         if (dateComparison !== 0) {
@@ -83,7 +83,7 @@ export const useDealStore = defineStore('deal', {
       this.dealList.push({ id: newId, categoryId, desc, amount: -amount, date, time });
     },
     editDeal(id: number, categoryId: number, desc: string, amount: number, date: string, time: string) {
-      const deal = this.dealList.find((deal) => deal.id === id);
+      const deal = this.findDeal(id);
       if (deal) {
         deal.categoryId = categoryId;
         deal.desc = desc;
