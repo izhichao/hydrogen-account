@@ -1,5 +1,7 @@
 <template>
   <li class="item" @click="$emit('more')">
+    <div class="item__dot item__dot--green" v-if="color === 'green'"></div>
+    <div class="item__dot item__dot--red" v-else></div> 
     <div>
       <div class="item__title">
         <span>{{ item.name }}</span>
@@ -8,10 +10,10 @@
         </span>
       </div>
     </div>
-    <div class="item__price" v-if="!button">{{ (item as Deal | DealStats | Account).amount }}</div>
     <div class="item__btn" v-if="button">
       <slot></slot>
     </div>
+    <div class="item__price" v-else>{{ (item as Deal | DealStats | Account).amount }}</div>
   </li>
 </template>
 
@@ -27,6 +29,9 @@ defineProps({
   button: {
     type: Boolean,
     default: false
+  },
+  color: {
+    type: String
   }
 });
 </script>
@@ -46,15 +51,20 @@ defineProps({
     margin-bottom: 10px;
   }
 
-  &::before {
-    content: '';
-    display: block;
+  &__dot {
     position: absolute;
     left: 6px;
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background-color: @themeRedColor;
+
+    &--green {
+      background-color: @themeGreenColor;
+    }
+
+    &--red {
+      background-color: @themeRedColor;
+    }
   }
 
   &__title {
