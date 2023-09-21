@@ -39,12 +39,11 @@ onMounted(() => {
 </script>
 
 <style lang="less" scoped>
-@import '../style/variables.less';
 
 .amount {
   font-size: 20px;
   font-weight: 700;
-  color: @themeRedColor;
+  color: var(--themeRedColor);
   margin-bottom: 5px;
 }
 

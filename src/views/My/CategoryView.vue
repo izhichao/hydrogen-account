@@ -104,8 +104,7 @@ const handlePush = (name: string) => {
 </script>
 
 <style lang="less" scoped>
-@import '../../style/variables.less';
-@import '../../style/inner.less';
+@import '../../style/inner.css';
 
 .btn {
   &:first-child {
@@ -135,7 +134,7 @@ const handlePush = (name: string) => {
   }
 
   &__btn {
-    background-color: @themeColor;
+    background-color: var(--themeColor);
   }
 }
 </style>

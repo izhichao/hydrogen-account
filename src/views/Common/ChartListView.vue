@@ -169,8 +169,7 @@ const handleYearChange = () => {
 </script>
 
 <style lang="less" scoped>
-@import '../../style/variables.less';
-@import '../../style/inner.less';
+@import '../../style/inner.css';
 :deep(.var-counter) {
   &__input {
     width: 40px;
@@ -180,7 +179,7 @@ const handleYearChange = () => {
 .switch {
   display: flex;
   align-items: center;
-  --counter-background: @themeLightColor;
+  --counter-background: var(--themeLightColor);
 
   &__date {
     width: 112px;
@@ -188,8 +187,8 @@ const handleYearChange = () => {
     line-height: 28px;
     text-align: center;
     font-size: 14px;
-    color: @themeLightBgColor;
-    background-color: @themeLightColor;
+    color: var(--themeLightBgColor);
+    background-color: var(--themeLightColor);
     border-radius: 14px;
     box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px,
       rgba(0, 0, 0, 0.12) 0px 1px 5px 0px;

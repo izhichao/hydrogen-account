@@ -27,11 +27,10 @@ defineProps({
 </script>
 
 <style lang="less" scoped>
-@import '../style/variables.less';
 .card {
   padding: 15px;
   border-radius: 20px;
-  background: @themeLightBgColor;
+  background: var(--themeLightBgColor);
 
   &:not(:nth-of-type(1)) {
     margin-top: 10px;
@@ -52,7 +51,7 @@ defineProps({
     &__more {
       font-size: 13px;
       margin-right: 5px;
-      color: @themeColor;
+      color: var(--themeColor);
       opacity: 0.85;
     }
   }

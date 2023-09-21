@@ -176,22 +176,20 @@ const handleDelete = () => {
 </script>
 
 <style lang="less" scoped>
-@import '../../style/variables.less';
-@import '../../style/inner.less';
-
+@import '../../style/inner.css';
 .form {
   &__title {
     font-size: 12px;
-    color: @fontLightColor;
+    color: var(--fontLightColor);
   }
 
   &__content {
     height: 32px;
     line-height: 32px;
-    border-bottom: 1px solid @borderColor;
+    border-bottom: 1px solid var(--borderColor);
 
     &__input {
-      border-bottom: 1px solid @borderColor;
+      border-bottom: 1px solid var(--borderColor);
     }
   }
 
@@ -210,12 +208,12 @@ const handleDelete = () => {
       line-height: 30px;
       font-size: 14px;
       text-align: center;
-      border: 1px solid @borderColor;
+      border: 1px solid var(--borderColor);
       border-radius: 15px;
 
       &--active {
-        color: @themeRedColor;
-        border: 1px solid @themeRedColor;
+        color: var(--themeRedColor);
+        border: 1px solid var(--themeRedColor);
       }
     }
   }

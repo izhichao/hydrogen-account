@@ -1,11 +1,11 @@
-// 内部页面布局
+/* 内部页面布局 */
 .main-content {
   top: 50px;
   bottom: 0;
 }
 .header {
   padding: 0 20px;
-  background-image: @linearColor;
+  background-image: var(--linearColor);
 }
 
 .card-list {

@@ -225,8 +225,6 @@ const handleClick = (type: string) => {
 </script>
 
 <style lang="less" scoped>
-@import '../../style/variables.less';
-
 .total {
   display: flex;
   justify-content: space-between;
@@ -240,7 +238,7 @@ const handleClick = (type: string) => {
   &__amount {
     font-size: 22px;
     font-weight: 700;
-    color: @themeRedColor;
+    color: var(--themeRedColor);
   }
 }
 
@@ -255,7 +253,7 @@ const handleClick = (type: string) => {
     align-items: center;
 
     &__title {
-      color: @fontLightColor;
+      color: var(--fontLightColor);
       font-size: 10px;
       margin-top: 5px;
     }

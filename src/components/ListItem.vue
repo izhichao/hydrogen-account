@@ -37,7 +37,6 @@ defineProps({
 </script>
 
 <style lang="less" scoped>
-@import '../style/variables.less';
 
 .item {
   position: relative;
@@ -59,11 +58,11 @@ defineProps({
     border-radius: 50%;
 
     &--green {
-      background-color: @themeGreenColor;
+      background-color: var(--themeGreenColor);
     }
 
     &--red {
-      background-color: @themeRedColor;
+      background-color: var(--themeRedColor);
     }
   }
 
@@ -76,7 +75,7 @@ defineProps({
     margin-left: 5px;
     font-size: 10px;
     font-weight: 400;
-    color: @fontLightColor;
+    color: var(--fontLightColor);
   }
 
   &__price {
