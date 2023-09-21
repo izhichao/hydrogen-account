@@ -75,9 +75,16 @@ const helpList = [
 .help {
   --collapse-text-color: @fontColor;
   --collapse-header-font-size: 14px;
+  box-shadow: none;
 
-  :deep(.var-collapse-item__header-title) {
-    font-weight: 700;
+  :deep(.var-collapse-item) {
+    &__shadow {
+      display: none;
+    }
+
+    &__header-title {
+      font-weight: 700;
+    }
   }
 
   p {
