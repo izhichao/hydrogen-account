@@ -12,7 +12,7 @@
     </div>
     <template v-for="(list, key) in categoryLists">
       <Card :title="key === 'out' ? '支出' : '收入'" :more="false" v-if="list.length !== 0">
-        <ListItem v-for="item in list" :key="item.id" :item="item" :button="true" @click="handlePush(item.name)">
+        <ListItem v-for="item in list" :key="item.id" :item="item" :button="true" :color="key ==='out' ? '': 'green'" @click="handlePush(item.name)">
           <var-icon name="cog" class="btn" @click.stop="handleShow(item.id)" />
           <var-icon name="delete" class="delete" @click.stop="handleDelete(item.id)" />
         </ListItem>
