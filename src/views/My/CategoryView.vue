@@ -2,23 +2,22 @@
   <Header title="分类" :back="true"></Header>
   <div class="main-content">
     <div class="add">
-      <input type="text" class="add__input" v-model="name" />
-      <var-button type="primary" round class="add__btn" @click="handleAdd">
+      <input type="text" class="add__input" v-model="categoryModel.name" />
+      <var-button size="small" text outline type="primary" @click="handleSwitch(categoryModel.type)">
+        {{ categoryModel.text }}
+      </var-button>
+      <var-button type="primary" round @click="handleAdd(categoryModel.type)">
         <var-icon name="plus" />
       </var-button>
     </div>
-    <Card :header="false">
-      <ListItem
-        v-for="item in categoryListWithDesc"
-        :key="item.id"
-        :item="item"
-        :button="true"
-        @click="handlePush(item.name)"
-      >
-        <var-icon name="cog" class="btn" @click.stop="handleShow(item.id)" />
-        <var-icon name="delete" class="delete" @click.stop="handleDelete(item.id)" />
-      </ListItem>
-    </Card>
+    <template v-for="(list, key) in categoryLists">
+      <Card :title="key === 'out' ? '支出' : '收入'" :more="false" v-if="list.length !== 0">
+        <ListItem v-for="item in list" :key="item.id" :item="item" :button="true" @click="handlePush(item.name)">
+          <var-icon name="cog" class="btn" @click.stop="handleShow(item.id)" />
+          <var-icon name="delete" class="delete" @click.stop="handleDelete(item.id)" />
+        </ListItem>
+      </Card>
+    </template>
 
     <var-dialog v-model:show="editModel.status" @confirm="handleEdit">
       <var-input placeholder="请输入新的分类名" v-model="editModel.name" />
@@ -35,19 +34,35 @@ import Card from '../../components/Card.vue';
 import ListItem from '../../components/ListItem.vue';
 import { useCategoryStore } from '../../store/useCategoryStore';
 const categoryStore = useCategoryStore();
-// 获取store中的数据及函数
-const { categoryListWithDesc } = storeToRefs(categoryStore);
+// 获取 store 中的数据及函数
+const { categoryLists } = storeToRefs(categoryStore);
 const { addCategory, deleteCategory, editCategory } = categoryStore;
 
+// 切换类型
+const categoryModel = ref({
+  name: '',
+  type: 'out',
+  text: '支出'
+});
+
+const handleSwitch = (type: string) => {
+  if (type === 'out') {
+    categoryModel.value.type = 'in';
+    categoryModel.value.text = '收入';
+  } else {
+    categoryModel.value.type = 'out';
+    categoryModel.value.text = '支出';
+  }
+};
+
 // 新增分类
-const name = ref('');
-const handleAdd = () => {
-  if (!name.value) {
+const handleAdd = (type: string) => {
+  if (!categoryModel.value.name) {
     Snackbar('请输入分类名称');
     return;
   }
-  addCategory(name.value);
-  name.value = '';
+  addCategory(categoryModel.value.name, type as 'in' | 'out');
+  categoryModel.value.name = '';
 };
 
 // 编辑分类名称
@@ -107,13 +122,16 @@ const handlePush = (name: string) => {
 
   &__input {
     flex: 1;
-    margin: 0 10px 0 0;
     height: 32px;
     border-radius: 16px;
     border: none;
     outline: none;
     padding: 0 15px;
     font-size: 14px;
+  }
+
+  button {
+    margin-left: 10px;
   }
 
   &__btn {

@@ -7,6 +7,7 @@ export interface Account {
 export interface BaseCategory {
   id: number;
   name: string;
+  type: 'in' | 'out';
 }
 
 export interface Category extends BaseCategory {
@@ -34,7 +35,7 @@ export interface BaseDeal {
 }
 
 export interface Deal extends BaseDeal {
-  name?: string
+  name?: string;
 }
 
 export interface DealStats {

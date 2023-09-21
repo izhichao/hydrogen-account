@@ -26,7 +26,11 @@ declare module '@vue/runtime-core' {
     VarForm: typeof import('@varlet/ui')['_FormComponent']
     VarIcon: typeof import('@varlet/ui')['_IconComponent']
     VarInput: typeof import('@varlet/ui')['_InputComponent']
+    VarOption: typeof import('@varlet/ui')['_OptionComponent']
     VarPopup: typeof import('@varlet/ui')['_PopupComponent']
+    VarRadio: typeof import('@varlet/ui')['_RadioComponent']
+    VarRadioGroup: typeof import('@varlet/ui')['_RadioGroupComponent']
+    VarSelect: typeof import('@varlet/ui')['_SelectComponent']
     VarSpace: typeof import('@varlet/ui')['_SpaceComponent']
     VarTimePicker: typeof import('@varlet/ui')['_TimePickerComponent']
   }
