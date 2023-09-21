@@ -69,11 +69,10 @@ const helpList = [
 </script>
 
 <style lang="less" scoped>
-@import '../../style/variables.less';
-@import '../../style/inner.less';
+@import '../../style/inner.css';
 
 .help {
-  --collapse-text-color: @fontColor;
+  --collapse-text-color: var(--fontColor);
   --collapse-header-font-size: 14px;
   box-shadow: none;
 

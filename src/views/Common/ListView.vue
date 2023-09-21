@@ -133,8 +133,7 @@ if (keyword) {
 </script>
 
 <style lang="less" scoped>
-@import '../../style/variables.less';
-@import '../../style/inner.less';
+@import '../../style/inner.css';
 
 .total {
   display: flex;
@@ -143,7 +142,7 @@ if (keyword) {
   padding: 5px 0;
   &:first-child {
     padding-bottom: 15px;
-    border-bottom: 1px solid @borderColor;
+    border-bottom: 1px solid var(--borderColor);
   }
 
   &:last-child {
@@ -157,7 +156,7 @@ if (keyword) {
 
   &__amount {
     font-size: 14px;
-    color: @themeRedColor;
+    color: var(--themeRedColor);
   }
 }
 
@@ -170,7 +169,7 @@ if (keyword) {
     &__time,
     &__total {
       font-size: 13px;
-      color: @fontLightColor;
+      color: var(--fontLightColor);
     }
   }
 }
@@ -178,7 +177,7 @@ if (keyword) {
 .add {
   height: 30px;
   line-height: 30px;
-  color: @themeColor;
+  color: var(--themeColor);
   border-radius: 15px;
   text-align: center;
   &__icon {

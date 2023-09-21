@@ -1,13 +1,23 @@
-@import './iconfont.less';
-@import './variables.less';
+@import './iconfont.css';
 
 :root {
-  --color-primary: @themeColor !important;
+  --color-primary: var(--themeColor) !important;
+  --themeColor: #46a0f7;
+  --themeLightColor: #4aaef8;
+  --themeDeepColor: #4291f6;
+  --themeRedColor: #ff6c7a;
+  --themeGreenColor: #61d673;
+  --themeBgColor: #f2f5fa;
+  --themeLightBgColor: #fff;
+  --borderColor: #cccccc7f;
+  --fontColor: #333;
+  --fontLightColor: #999;
+  --linearColor: linear-gradient(239deg, var(--themeDeepColor), var(--themeLightColor));
 }
 
 body {
   font-size: 16px;
-  color: @fontColor;
+  color: var(--fontColor);
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Emoji, Helvetica, Arial, sans-serif;
 }
 
@@ -31,12 +41,12 @@ p {
 }
 
 a {
-  color: @fontColor;
+  color: var(--fontColor);
   text-decoration: none;
   -webkit-tap-highlight-color: transparent;
 
   &:hover {
-    color: @fontColor;
+    color: var(--fontColor);
   }
 }
 
@@ -58,5 +68,5 @@ ul {
   z-index: -999;
   overflow-x: hidden;
   overflow-y: auto;
-  background-color: @themeBgColor;
+  background-color: var(--themeBgColor);
 }

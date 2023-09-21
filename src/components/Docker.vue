@@ -25,7 +25,6 @@ const dockerList = [
 </script>
 
 <style lang="less" scoped>
-@import '../style/variables.less';
 .docker {
   position: absolute;
   display: flex;
@@ -34,8 +33,8 @@ const dockerList = [
   left: 0;
   right: 0;
   bottom: 0;
-  background: @themeLightBgColor;
-  border-top: 0.5px solid @borderColor;
+  background: var(--themeLightBgColor);
+  border-top: 0.5px solid var(--borderColor);
   padding: 0 20px;
   box-sizing: border-box;
 
@@ -58,7 +57,7 @@ const dockerList = [
     &--active {
       i,
       p {
-        color: @themeColor;
+        color: var(--themeColor);
       }
     }
   }

@@ -96,7 +96,6 @@ const handleSearch = () => {
 </script>
 
 <style lang="less" scoped>
-@import '../../style/variables.less';
 
 .header {
   :deep(&__center) {

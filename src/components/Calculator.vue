@@ -130,12 +130,10 @@ defineExpose({
 </script>
 
 <style lang="less" scoped>
-@import '../style/variables.less';
-
 .calculator {
   &__result {
     height: 60px;
-    border-bottom: 0.5px solid @borderColor;
+    border-bottom: 0.5px solid var(--borderColor);
 
     input {
       width: 100%;
@@ -145,7 +143,7 @@ defineExpose({
       outline: none;
       font-size: 20px;
       padding: 0 20px;
-      color: @themeRedColor;
+      color: var(--themeRedColor);
     }
   }
   &__btns {
@@ -160,15 +158,15 @@ defineExpose({
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 0.5px solid @borderColor;
+    border: 0.5px solid var(--borderColor);
     user-select: none; // 禁止选中文字
 
     &__ok {
       grid-column: 4 / 5;
       grid-row: 4 / 6;
-      background-color: @themeColor;
-      color: @themeLightBgColor;
-      border: 0.5px solid @themeColor;
+      background-color: var(--themeColor);
+      color: var(--themeLightBgColor);
+      border: 0.5px solid var(--themeColor);
     }
 
     &__zero {
