@@ -90,7 +90,6 @@
 import { ref, reactive } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { storeToRefs } from 'pinia';
-import { Snackbar, Dialog } from '@varlet/ui';
 import Header from '../../components/Header.vue';
 import Card from '../../components/Card.vue';
 import Calculator from '../../components/Calculator.vue';

@@ -30,7 +30,6 @@
 import { reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia';
-import { Dialog, Snackbar } from '@varlet/ui';
 import Header from '../../components/Header.vue';
 import Card from '../../components/Card.vue';
 import ListItem from '../../components/ListItem.vue';

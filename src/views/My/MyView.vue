@@ -54,7 +54,6 @@
 import { ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
-import { Dialog, Snackbar } from '@varlet/ui';
 import Circle from '../../components/Circle.vue';
 import Header from '../../components/Header.vue';
 import Card from '../../components/Card.vue';
