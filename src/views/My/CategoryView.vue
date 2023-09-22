@@ -1,26 +1,48 @@
 <template>
   <Header title="分类" :back="true"></Header>
   <div class="main-content">
+    <var-space justify="space-around">
+      <var-button
+        class="switch-btn"
+        :type="categoryModel.type === 'out' ? 'primary' : 'default'"
+        @click="handleSwitch('out')"
+      >
+        支出
+      </var-button>
+      <var-button
+        class="switch-btn"
+        :type="categoryModel.type === 'in' ? 'primary' : 'default'"
+        @click="handleSwitch('in')"
+      >
+        收入
+      </var-button>
+    </var-space>
+
     <div class="add">
       <input type="text" class="add__input" v-model="categoryModel.name" />
-      <var-button size="small" text outline type="primary" @click="handleSwitch(categoryModel.type)">
-        {{ categoryModel.text }}
-      </var-button>
       <var-button type="primary" round @click="handleAdd(categoryModel.type)">
         <var-icon name="plus" />
       </var-button>
     </div>
+
     <template v-for="(list, key) in categoryLists">
       <Card :title="key === 'out' ? '支出' : '收入'" :more="false" v-if="list.length !== 0">
-        <ListItem v-for="item in list" :key="item.id" :item="item" :button="true" :color="key ==='out' ? '': 'green'" @click="handlePush(item.name)">
+        <ListItem
+          v-for="item in list"
+          :key="item.id"
+          :item="item"
+          :button="true"
+          :color="key === 'out' ? 'red' : 'blue'"
+          @click="handlePush(item.name)"
+        >
           <var-icon name="cog" class="btn" @click.stop="handleShow(item.id)" />
           <var-icon name="delete" class="delete" @click.stop="handleDelete(item.id)" />
         </ListItem>
       </Card>
     </template>
 
-    <var-dialog v-model:show="editModel.status" @confirm="handleEdit">
-      <var-input placeholder="请输入新的分类名" v-model="editModel.name" />
+    <var-dialog v-model:show="categoryModel.status" @confirm="handleEdit">
+      <var-input placeholder="请输入新的分类名" v-model="categoryModel.name" />
     </var-dialog>
   </div>
 </template>
@@ -38,53 +60,43 @@ const categoryStore = useCategoryStore();
 const { categoryLists } = storeToRefs(categoryStore);
 const { addCategory, deleteCategory, editCategory } = categoryStore;
 
-// 切换类型
-const categoryModel = ref({
+// Model
+const categoryModel = reactive({
+  id: 0,
   name: '',
   type: 'out',
-  text: '支出'
+  status: false
 });
 
+// 切换类型
 const handleSwitch = (type: string) => {
-  if (type === 'out') {
-    categoryModel.value.type = 'in';
-    categoryModel.value.text = '收入';
-  } else {
-    categoryModel.value.type = 'out';
-    categoryModel.value.text = '支出';
-  }
+  categoryModel.type = type;
 };
 
 // 新增分类
 const handleAdd = (type: string) => {
-  if (!categoryModel.value.name) {
+  if (!categoryModel.name) {
     Snackbar('请输入分类名称');
     return;
   }
-  addCategory(categoryModel.value.name, type as 'in' | 'out');
-  categoryModel.value.name = '';
+  addCategory(categoryModel.name, type as 'in' | 'out');
+  categoryModel.name = '';
 };
 
 // 编辑分类名称
-const editModel = reactive({
-  id: 0,
-  name: '',
-  status: false
-});
-
 const handleShow = (id: number) => {
-  editModel.status = true;
-  editModel.id = id;
+  categoryModel.status = true;
+  categoryModel.id = id;
 };
 
 const handleEdit = () => {
-  if (!editModel.name) {
+  if (!categoryModel.name) {
     Snackbar('请输入新的分类名称');
     return;
   }
-  editCategory(editModel.id, editModel.name);
-  editModel.name = '';
-  editModel.status = false;
+  editCategory(categoryModel.id, categoryModel.name);
+  categoryModel.name = '';
+  categoryModel.status = false;
 };
 
 // 删除分类
@@ -105,6 +117,9 @@ const handlePush = (name: string) => {
 
 <style lang="less" scoped>
 @import '../../style/inner.css';
+.var-space {
+  margin-top: 10px !important;
+}
 
 .btn {
   &:first-child {
