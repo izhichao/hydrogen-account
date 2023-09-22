@@ -11,7 +11,7 @@ declare module 'vue' {
     Card: typeof import('./src/components/Card.vue')['default']
     ChartCard: typeof import('./src/components/ChartCard.vue')['default']
     Circle: typeof import('./src/components/Circle.vue')['default']
-    Docker: typeof import('./src/components/Docker.vue')['default']
+    Dock: typeof import('./src/components/Dock.vue')['default']
     Header: typeof import('./src/components/Header.vue')['default']
     ListItem: typeof import('./src/components/ListItem.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

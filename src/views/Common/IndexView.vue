@@ -1,12 +1,11 @@
 <template>
   <router-view></router-view>
-  <Docker :currentIndex="index"></Docker>
+  <Dock :currentIndex="index"></Dock>
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
-import Docker from '../../components/Docker.vue';
 const route = useRoute();
 const index = ref(0);
 

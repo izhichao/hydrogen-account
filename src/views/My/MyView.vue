@@ -52,11 +52,8 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
-import Circle from '../../components/Circle.vue';
-import Header from '../../components/Header.vue';
-import Card from '../../components/Card.vue';
+import { storeToRefs } from 'pinia';
 import { useAccountStore } from '../../store/useAccountStore';
 import { useDealStore } from '../../store/useDealStore';
 import { useConfigStore } from '../../store/useConfigStore';

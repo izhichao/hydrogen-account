@@ -48,12 +48,9 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from 'vue';
+import { reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia';
-import Header from '../../components/Header.vue';
-import Card from '../../components/Card.vue';
-import ListItem from '../../components/ListItem.vue';
 import { useCategoryStore } from '../../store/useCategoryStore';
 const categoryStore = useCategoryStore();
 // 获取 store 中的数据及函数

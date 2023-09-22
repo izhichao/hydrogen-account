@@ -16,8 +16,6 @@
 </template>
 
 <script lang="ts" setup>
-import Header from '../../components/Header.vue';
-import Card from '../../components/Card.vue';
 import { ref } from 'vue';
 const active = ref(['']);
 const helpList = [
