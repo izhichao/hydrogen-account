@@ -74,13 +74,10 @@
 </template>
 
 <script lang="ts" setup>
-import Header from '../../components/Header.vue';
-import Card from '../../components/Card.vue';
-import ListItem from '../../components/ListItem.vue';
-import { useDealStore } from '../../store/useDealStore';
-import { useRoute, useRouter } from 'vue-router';
-import { useAccount } from '../../composables/useAccount';
 import { ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { useDealStore } from '../../store/useDealStore';
+import { useAccount } from '../../composables/useAccount';
 import * as math from 'mathjs';
 const route = useRoute();
 const router = useRouter();

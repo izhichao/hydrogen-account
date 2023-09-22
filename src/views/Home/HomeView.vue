@@ -56,12 +56,6 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import Circle from '../../components/Circle.vue';
-import Header from '../../components/Header.vue';
-import ChartCard from '../../components/ChartCard.vue';
-import Card from '../../components/Card.vue';
-import ListItem from '../../components/ListItem.vue';
-import Calculator from '../../components/Calculator.vue';
 import { useDealStore } from '../../store/useDealStore';
 import { useAccount } from '../../composables/useAccount';
 import { useChart } from '../../composables/useChart';

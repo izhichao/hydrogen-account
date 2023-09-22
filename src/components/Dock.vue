@@ -1,10 +1,10 @@
 <template>
-  <div class="docker">
+  <div class="dock">
     <router-link
-      v-for="(item, index) in dockerList"
+      v-for="(item, index) in dockList"
       :key="item.text"
       :to="item.to"
-      :class="{ docker__item: true, 'docker__item--active': currentIndex == index }"
+      :class="{ dock__item: true, 'dock__item--active': currentIndex == index }"
     >
       <i class="iconfont" v-html="item.icon"></i>
       <p>{{ item.text }}</p>
@@ -17,7 +17,7 @@ defineProps({
   currentIndex: Number
 });
 
-const dockerList = [
+const dockList = [
   { icon: '&#xe64e;', text: '首页', to: { name: 'Home' } },
   { icon: '&#xe667;', text: '统计', to: { name: 'Show' } },
   { icon: '&#xe78b;', text: '我的', to: { name: 'My' } }
@@ -25,7 +25,7 @@ const dockerList = [
 </script>
 
 <style lang="less" scoped>
-.docker {
+.dock {
   position: absolute;
   display: flex;
   align-items: center;
