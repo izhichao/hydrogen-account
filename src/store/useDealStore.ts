@@ -1,8 +1,7 @@
 import { defineStore } from 'pinia';
 import { useCategoryStore } from './useCategoryStore';
-import { BaseDeal, Deal } from '../types';
+import { BaseCategory, BaseDeal, Deal } from '../types';
 import { getGroupList } from '../utils/getGroupList';
-import cloneDeep from 'lodash/cloneDeep';
 import * as math from 'mathjs';
 
 export const useDealStore = defineStore('deal', {
@@ -20,27 +19,25 @@ export const useDealStore = defineStore('deal', {
   },
   getters: {
     // 添加分类名
-    dealListWithName: (state) => {
-      const dealList: Deal[] = cloneDeep(state.dealList);
-      const categoryList = useCategoryStore().categoryList;
-      dealList.forEach((deal) => {
+    catDealList: (state) => {
+      const categoryList: BaseCategory[] = useCategoryStore().categoryList;
+      return state.dealList.map((deal) => {
         const category = categoryList.find((category) => category.id === deal.categoryId);
-        deal.name = category?.name || '未分类';
+        return {
+          ...deal,
+          name: category?.name || '未分类'
+        };
       });
-      return dealList;
     },
     // 按日期与时间倒序排序
     orderDealList() {
-      const dealList: Deal[] = cloneDeep(this.dealListWithName);
-      dealList.sort((a, b) => {
-        const dateComparison = new Date(`${b.date} ${b.time}`).getTime() - new Date(`${a.date} ${a.time}`).getTime();
-        if (dateComparison !== 0) {
-          return dateComparison;
-        }
+      const dealList: Deal[] = [...this.catDealList];
+      return dealList.sort((a, b) => {
+        const dataA = new Date(`${a.date} ${a.time}`).getTime();
+        const dataB = new Date(`${b.date} ${b.time}`).getTime();
         // 时间相同则比较id
-        return b.id - a.id;
+        return dataB - dataA || b.id - a.id;
       });
-      return dealList;
     },
     dealAmount: (state) => state.dealList.length,
     totalExpend: (state) => {
@@ -76,18 +73,18 @@ export const useDealStore = defineStore('deal', {
       return getGroupList(list, type);
     },
     findDeal(id: number) {
-      return this.dealList.find((deal) => deal.id === id);
+      return this.dealList.find((deal) => deal.id === id) as Deal;
     },
-    addDeal(categoryId: number, desc: string, amount: number, date: string, time: string) {
+    addDeal(categoryId: number, desc: string, amount: number, date: string, time: string, type: string) {
       const newId = this.dealList[this.dealList.length - 1].id + 1;
-      this.dealList.push({ id: newId, categoryId, desc, amount: -amount, date, time });
+      this.dealList.push({ id: newId, categoryId, desc, amount: type === 'out' ? -amount : amount, date, time });
     },
-    editDeal(id: number, categoryId: number, desc: string, amount: number, date: string, time: string) {
+    editDeal(id: number, categoryId: number, desc: string, amount: number, date: string, time: string, type: string) {
       const deal = this.findDeal(id);
       if (deal) {
         deal.categoryId = categoryId;
         deal.desc = desc;
-        deal.amount = -amount;
+        deal.amount = type === 'out' ? -amount : amount;
         deal.date = date;
         deal.time = time;
       }
