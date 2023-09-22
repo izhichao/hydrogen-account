@@ -1,7 +1,7 @@
 <template>
   <li class="item" @click="$emit('more')">
-    <div class="item__dot item__dot--green" v-if="color === 'green'"></div>
-    <div class="item__dot item__dot--red" v-else></div> 
+    <div class="item__dot item__dot--red" v-if="color === 'red'"></div>
+    <div class="item__dot item__dot--blue" v-else></div> 
     <div>
       <div class="item__title">
         <span>{{ item.name }}</span>
@@ -57,8 +57,8 @@ defineProps({
     height: 6px;
     border-radius: 50%;
 
-    &--green {
-      background-color: var(--themeGreenColor);
+    &--blue {
+      background-color: var(--themeColor);
     }
 
     &--red {
