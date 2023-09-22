@@ -1,19 +1,36 @@
 <template>
-  <Header title="支出" :back="true"></Header>
+  <Header title="添加交易" :back="true"></Header>
   <div class="main-content">
     <div class="card-list">
       <Card :header="false">
         <var-form ref="form">
           <var-space direction="column" :size="[15, 0]">
+            <var-space justify="space-around">
+              <var-button
+                class="switch-btn"
+                :type="dealModel.type === 'out' ? 'primary' : 'default'"
+                @click="handleSwitch('out')"
+              >
+                支出
+              </var-button>
+              <var-button
+                class="switch-btn"
+                :type="dealModel.type === 'in' ? 'primary' : 'default'"
+                @click="handleSwitch('in')"
+              >
+                收入
+              </var-button>
+            </var-space>
             <div @click="calculatorRef.handleShow()">
-              <div class="form__title">支出</div>
-              <div class="form__content">{{ dealModel.amount }}</div>
+              <div class="form__content form__number">
+                {{ dealModel.type === 'out' ? -dealModel.amount : dealModel.amount }}
+              </div>
             </div>
             <div>
               <div class="form__title">分类</div>
               <div class="form__category">
                 <label
-                  v-for="item in categoryListWithDesc"
+                  v-for="item in list"
                   :key="item.id"
                   :class="{
                     form__category__label: true,
@@ -111,7 +128,8 @@ const route = useRoute();
 const router = useRouter();
 
 const categoryStore = useCategoryStore();
-const { categoryListWithDesc } = storeToRefs(categoryStore);
+const { categoryLists } = storeToRefs(categoryStore);
+const list = ref(categoryLists.value.out);
 const dealStore = useDealStore();
 const { findDeal, addDeal, editDeal, deleteDeal } = dealStore;
 
@@ -122,20 +140,34 @@ const { yearStr, monthStr, dayStr, hourStr, minuteStr } = getNow();
 
 const dealModel = reactive({
   amount: (result as string) || '0',
-  categoryId: 0,
+  categoryId: list.value[0].id,
   date: `${yearStr}-${monthStr}-${dayStr}`,
   time: `${hourStr}:${minuteStr}`,
-  desc: ''
+  desc: '',
+  type: 'out'
 });
+
+const handleSwitch = (type: string) => {
+  if (type === 'out') {
+    document.documentElement.style.setProperty('--themeDotColor', 'var(--themeRedColor)');
+    list.value = categoryLists.value.out;
+  } else if (type === 'in') {
+    document.documentElement.style.setProperty('--themeDotColor', 'var(--themeColor)');
+    list.value = categoryLists.value.in;
+  }
+  dealModel.type = type;
+  dealModel.categoryId = list.value[0].id;
+};
 
 // 获取当前交易信息
 if (type === 'edit') {
-  const deal = findDeal(+(id as string));
-  dealModel.amount = (-(deal?.amount as number)).toString();
-  dealModel.categoryId = deal?.categoryId as number;
-  dealModel.date = deal?.date as string;
-  dealModel.time = deal?.time as string;
-  dealModel.desc = deal?.desc as string;
+  const deal = findDeal(+id!);
+  dealModel.amount = Math.abs(deal.amount).toString();
+  dealModel.categoryId = deal.categoryId;
+  dealModel.date = deal.date;
+  dealModel.time = deal.time;
+  dealModel.desc = deal.desc;
+  dealModel.type = deal.amount < 0 ? 'out' : 'in';
 }
 
 // 计算器组件 点击确认后更新金额
@@ -150,7 +182,7 @@ const handleAdd = () => {
     Snackbar('请输入正确的金额');
     return;
   }
-  addDeal(dealModel.categoryId, dealModel.desc, +dealModel.amount, dealModel.date, dealModel.time);
+  addDeal(dealModel.categoryId, dealModel.desc, +dealModel.amount, dealModel.date, dealModel.time, dealModel.type);
   router.push({ name: 'Home' });
 };
 
@@ -160,7 +192,15 @@ const handleEdit = () => {
     Snackbar('请输入正确的金额');
     return;
   }
-  editDeal(+(id as string), dealModel.categoryId, dealModel.desc, +dealModel.amount, dealModel.date, dealModel.time);
+  editDeal(
+    +id!,
+    dealModel.categoryId,
+    dealModel.desc,
+    +dealModel.amount,
+    dealModel.date,
+    dealModel.time,
+    dealModel.type
+  );
   router.go(-1);
 };
 
@@ -168,7 +208,7 @@ const handleEdit = () => {
 const handleDelete = () => {
   Dialog('确认删除').then((res) => {
     if (res === 'confirm') {
-      deleteDeal(+(id as string));
+      deleteDeal(+id!);
       router.push({ name: 'Home' });
     }
   });
@@ -193,6 +233,13 @@ const handleDelete = () => {
     }
   }
 
+  &__number {
+    color: var(--themeDotColor);
+    height: 50px;
+    line-height: 50px;
+    font-size: 28px;
+  }
+
   &__category {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -212,8 +259,8 @@ const handleDelete = () => {
       border-radius: 15px;
 
       &--active {
-        color: var(--themeRedColor);
-        border: 1px solid var(--themeRedColor);
+        color: var(--themeDotColor);
+        border: 1px solid var(--themeDotColor);
       }
     }
   }
