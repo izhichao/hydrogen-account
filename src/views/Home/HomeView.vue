@@ -22,13 +22,20 @@
             v-for="item in orderDealList.slice(0, 3)"
             :key="item.id"
             :item="item"
+            :color="item.amount < 0 ? 'red' : 'blue'"
             @more="router.push({ name: 'Detail', query: { type: 'edit', id: item.id } })"
           ></ListItem>
         </ul>
       </Card>
       <Card title="所有账户" @more="router.push({ name: 'List', query: { list: 'account' } })">
         <ul class="list">
-          <ListItem v-for="item in accountList" :key="item.id" :item="item" @click="handleShowEdit(item.id)"></ListItem>
+          <ListItem
+            v-for="item in accountList"
+            :key="item.id"
+            :item="item"
+            color="blue"
+            @click="handleShowEdit(item.id)"
+          ></ListItem>
         </ul>
       </Card>
     </div>
@@ -96,7 +103,6 @@ const handleSearch = () => {
 </script>
 
 <style lang="less" scoped>
-
 .header {
   :deep(&__center) {
     flex: 1;

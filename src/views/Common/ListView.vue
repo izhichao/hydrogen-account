@@ -28,6 +28,7 @@
               v-for="subItem in item.value"
               :key="subItem.id"
               :item="subItem"
+              :color="subItem.amount < 0 ? 'red' : 'blue'"
               @more="router.push({ name: 'Detail', query: { type: 'edit', id: subItem.id } })"
             ></ListItem>
           </Card>
