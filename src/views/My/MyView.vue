@@ -9,17 +9,9 @@
           <div class="total__amount">{{ totalAsset }}</div>
         </div>
         <div class="statistics">
-          <div class="statistics__count">
-            <div class="statistics__count__amount">{{ timeDiff }}</div>
-            <div class="statistics__count__title">记账天数</div>
-          </div>
-          <div class="statistics__count">
-            <div class="statistics__count__amount">{{ dealAmount }}</div>
-            <div class="statistics__count__title">交易笔数</div>
-          </div>
-          <div class="statistics__count">
-            <div class="statistics__count__amount">{{ -totalExpend }}</div>
-            <div class="statistics__count__title">总支出</div>
+          <div class="statistics__count" v-for="item in statistics" :key="item.text">
+            <div class="statistics__count__amount">{{ item.value }}</div>
+            <div class="statistics__count__title">{{ item.text }}</div>
           </div>
         </div>
       </Card>
@@ -64,7 +56,14 @@ import getNow from '../../utils/getNow';
 const router = useRouter();
 // 获取总支出 交易数 记账天数
 const dealStore = useDealStore();
-const { totalExpend, dealAmount, timeDiff } = storeToRefs(dealStore);
+const { timeDiff, dealAmount, totalExpense, totalIncome } = storeToRefs(dealStore);
+
+const statistics = [
+  { value: timeDiff, text: '记账天数' },
+  { value: dealAmount, text: '交易笔数' },
+  { value: totalExpense, text: '总支出' },
+  { value: totalIncome, text: '总收入' }
+];
 
 // 获取总资产
 const accountStore = useAccountStore();
