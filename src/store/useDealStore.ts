@@ -13,7 +13,8 @@ export const useDealStore = defineStore('deal', {
         { id: 2, categoryId: 0, desc: '', amount: -23, date: '2022-08-24', time: '12:00' },
         { id: 3, categoryId: 0, desc: '', amount: -12, date: '2022-08-22', time: '12:00' },
         { id: 4, categoryId: 0, desc: '', amount: -13.1, date: '2022-09-10', time: '13:00' },
-        { id: 5, categoryId: 0, desc: '', amount: -12.5, date: '2022-09-10', time: '13:00' }
+        { id: 5, categoryId: 0, desc: '', amount: -12.5, date: '2022-09-10', time: '13:00' },
+        { id: 6, categoryId: 4, desc: '', amount: 5, date: '2023-09-10', time: '13:00' }
       ] as BaseDeal[]
     };
   },
@@ -30,23 +31,34 @@ export const useDealStore = defineStore('deal', {
       });
     },
     // 按日期与时间倒序排序
-    orderDealList() {
-      const dealList: Deal[] = [...this.catDealList];
-      return dealList.sort((a, b) => {
+    orderDealList(): Deal[] {
+      return [...this.catDealList].sort((a, b) => {
         const dataA = new Date(`${a.date} ${a.time}`).getTime();
         const dataB = new Date(`${b.date} ${b.time}`).getTime();
         // 时间相同则比较id
         return dataB - dataA || b.id - a.id;
       });
     },
+    outDealList(): Deal[] {
+      return this.orderDealList.filter((deal) => deal.amount < 0);
+    },
+    inDealList(): Deal[] {
+      return this.orderDealList.filter((deal) => deal.amount > 0);
+    },
     dealAmount: (state) => state.dealList.length,
-    totalExpend: (state) => {
-      return math.number(
-        state.dealList.reduce(
-          (total, item) => math.add(math.bignumber(total), math.bignumber(item.amount)),
-          math.bignumber(0)
-        )
+    totalExpense(): number {
+      const total = this.outDealList.reduce(
+        (total, item) => math.add(math.bignumber(total), math.bignumber(item.amount)),
+        math.bignumber(0)
       );
+      return math.number(total);
+    },
+    totalIncome(): number {
+      const total = this.inDealList.reduce(
+        (total, item) => math.add(math.bignumber(total), math.bignumber(item.amount)),
+        math.bignumber(0)
+      );
+      return math.number(total);
     },
     timeDiff(): number {
       const firstDay = new Date(this.orderDealList[this.orderDealList.length - 1].date).getTime();
@@ -66,11 +78,17 @@ export const useDealStore = defineStore('deal', {
       });
     },
     // 按日、月、年、类别分类
-    dealListGroup(type: string, { time, keyword }: { time?: string; keyword?: string } = {}) {
-      let list = this.orderDealList;
+    dealListGroup(unit: string, { time, keyword, type }: { time?: string; keyword?: string; type?: string } = {}) {
+      let list: Deal[] = this.orderDealList;
+      if (type === 'out') {
+        list = this.outDealList;
+      } else if (type === 'in') {
+        list = this.inDealList;
+      }
       time && (list = this.filterByTime(list, time));
       keyword && (list = this.filterByKeyword(list, keyword));
-      return getGroupList(list, type);
+
+      return getGroupList(list, unit);
     },
     findDeal(id: number) {
       return this.dealList.find((deal) => deal.id === id) as Deal;
