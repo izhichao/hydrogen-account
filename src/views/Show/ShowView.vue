@@ -9,28 +9,28 @@
       <ChartCard
         v-if="show.category"
         title="分类统计"
-        :amount="monthExpend"
+        :amount="monthExpense"
         :option="categoryOptions(`${year}-${monthStr}`)"
         @more="router.push({ name: 'Chart', query: { type: 'category', time: `${year}-${monthStr}` } })"
       ></ChartCard>
       <ChartCard
         v-if="show.day"
         :title="`${month}月支出`"
-        :amount="monthExpend"
+        :amount="monthExpense"
         :option="dayOptions(`${year}-${monthStr}`)"
         @more="router.push({ name: 'Chart', query: { type: 'day', time: `${year}-${monthStr}` } })"
       ></ChartCard>
       <ChartCard
         v-if="show.month"
         :title="`${year}年支出`"
-        :amount="yearExpend"
+        :amount="yearExpense"
         :option="monthOptions(`${year}`)"
         @more="router.push({ name: 'Chart', query: { type: 'month', time: `${year}` } })"
       ></ChartCard>
       <ChartCard
         v-if="show.year"
         :title="`全部支出`"
-        :amount="totalExpend"
+        :amount="totalExpense"
         :option="yearOptions()"
         @more="router.push({ name: 'Chart', query: { type: 'year' } })"
       ></ChartCard>
@@ -56,9 +56,9 @@ const { categoryOptions, dayOptions, monthOptions, yearOptions } = useChart();
 
 // 获取各时间支出
 const { year, month, monthStr } = getNow();
-const { totalExpend, dealListGroup } = useDealStore();
-const monthExpend = dealListGroup('month', { time: `${year}-${monthStr}` })[0]?.total || 0;
-const yearExpend = dealListGroup('year', { time: `${year}` })[0]?.total || 0;
+const { totalExpense, dealListGroup } = useDealStore();
+const monthExpense = dealListGroup('month', { time: `${year}-${monthStr}`, type: 'out' })[0]?.total || 0;
+const yearExpense = dealListGroup('year', { time: `${year}`, type: 'out' })[0]?.total || 0;
 </script>
 
 <style lang="less" scoped>

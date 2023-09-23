@@ -13,7 +13,7 @@ export const useChart = () => {
     let amount = 0;
     const data: PieChart[] = [];
 
-    dealListGroup('category', { time }).forEach((item) => {
+    dealListGroup('category', { time, type: 'out' }).forEach((item) => {
       amount += item.value.length;
       data.push({
         name: item.name,
@@ -78,7 +78,7 @@ export const useChart = () => {
 
     // 生成数据
     const data = new Array(totalDays).fill(0);
-    dealListGroup('day', { time }).forEach((item) => {
+    dealListGroup('day', { time, type: 'out' }).forEach((item) => {
       const day = +item.name.split('-')[2];
       data[day - 1] = -item.total;
     });
@@ -127,7 +127,7 @@ export const useChart = () => {
    */
   const monthOptions = (time: string) => {
     const data = new Array(12).fill(0);
-    dealListGroup('month', { time }).forEach((item) => {
+    dealListGroup('month', { time, type: 'out' }).forEach((item) => {
       const month = +item.name.split('-')[1];
       data[month - 1] = -item.total;
     });
@@ -176,7 +176,7 @@ export const useChart = () => {
    */
   const yearOptions = () => {
     const data: PieChart[] = [];
-    dealListGroup('year').forEach((item) => {
+    dealListGroup('year', { type: 'out' }).forEach((item) => {
       data.push({
         name: item.name,
         value: -item.total

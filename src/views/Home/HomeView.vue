@@ -12,7 +12,7 @@
     <div class="card-list">
       <ChartCard
         :title="`${month}月支出`"
-        :amount="monthExpend"
+        :amount="monthExpense"
         :option="dayOptions(`${year}-${monthStr}`)"
         @more="router.push({ name: 'Chart', query: { type: 'day', time: `${year}-${monthStr}` } })"
       ></ChartCard>
@@ -67,7 +67,7 @@ const { dayOptions } = useChart();
 const { year, month, monthStr } = getNow();
 
 const router = useRouter();
-const monthExpend = dealListGroup('month', { time: `${year}-${monthStr}` })[0]?.total || 0;
+const monthExpense = dealListGroup('month', { time: `${year}-${monthStr}`, type: 'out' })[0]?.total || 0;
 
 // 显示计算器
 const calculatorRef = ref();
