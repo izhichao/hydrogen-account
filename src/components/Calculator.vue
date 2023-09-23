@@ -45,40 +45,6 @@ const handleShow = () => {
 
 const result = ref(props.amount);
 
-const calculate = (expression: string): string => {
-  const stack: number[] = [];
-  let num = 0;
-  let operator = '+';
-
-  const processOperand = () => {
-    if (operator === '+') {
-      stack.push(num);
-    } else if (operator === '-') {
-      stack.push(-num);
-    } else if (operator === '*') {
-      stack.push(stack.pop()! * num);
-    } else if (operator === '/') {
-      stack.push(Math.trunc(stack.pop()! / num));
-    }
-  };
-
-  for (let i = 0; i < expression.length; i++) {
-    const char = expression[i];
-    if (!isNaN(Number(char))) {
-      num = num * 10 + Number(char);
-    }
-    if ((isNaN(Number(char)) && char !== ' ') || i === expression.length - 1) {
-      processOperand();
-      operator = char;
-      num = 0;
-    }
-  }
-
-  const result = stack.reduce((sum, item) => sum + item, 0);
-
-  return (+result.toFixed(2)).toString();
-};
-
 const handleClickBtn = (str: string) => {
   const lastOne = result.value[result.value.length - 1];
   if (['-Infinity', 'Infinity'].includes(result.value)) {
@@ -112,7 +78,7 @@ const handleClickBtn = (str: string) => {
     }
   } else {
     if (['+', '-', '*', '/'].some((op) => result.value.includes(op))) {
-      result.value = calculate(result.value);
+      result.value = (+eval(result.value).toFixed(2)).toString();
     } else {
       if (route.name === 'Home') {
         router.push({ name: 'Detail', query: { type: 'add', result: result.value || '0' } });
