@@ -73,7 +73,7 @@ const handlePush = (item: DealStats) => {
 const handleStatsList = (time?: string) => {
   list.value = [];
   let id = 0;
-  dealListGroup(type as string, { time }).forEach((item) => {
+  dealListGroup(type as string, { time, type: 'out' }).forEach((item) => {
     list.value.push({
       id,
       name: item.name,
