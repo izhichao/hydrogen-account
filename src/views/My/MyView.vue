@@ -158,7 +158,7 @@ const handleOut = () => {
   const blob = new Blob([data], { type: 'text/json' });
   const link = document.createElement('a');
   link.href = window.URL.createObjectURL(blob);
-  link.download = `H2记账_${yearStr}年${monthStr}月${dayStr}日.json`;
+  link.download = `氢记账_${yearStr}年${monthStr}月${dayStr}日.json`;
 
   document.body.appendChild(link);
   link.click();
@@ -185,7 +185,7 @@ const handleShare = () => {
     alert('您的浏览器不支持分享功能！');
   } else {
     navigator.share({
-      title: 'H2记账',
+      title: '氢记账',
       url: window.location.href.replace(window.location.hash, ''),
       text: '轻量级记账神器，记录您的每一笔交易！'
     });
