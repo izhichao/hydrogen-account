@@ -1,4 +1,4 @@
-# H2 记账
+# 氢记账
 
 基于 Vue3 的极简记账 Web [在线预览](https://account.zhichao.org)
 
