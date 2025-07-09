@@ -1,6 +1,6 @@
 # 氢记账
 
-基于 Vue3 的极简记账 Web [在线预览](https://link.zhichao.org/account)
+基于 Vue3 的极简记账 Web
 
 ## 特点
 
