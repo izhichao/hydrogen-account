@@ -1,0 +1,1 @@
+const e=t=>t.toString().padStart(2,"0"),g=()=>{const t=new Date,o=t.getFullYear(),r=t.getMonth()+1,n=t.getDate(),a=t.getHours(),s=t.getMinutes();return{year:o,month:r,day:n,hour:a,minute:s,yearStr:o.toString(),monthStr:e(r),dayStr:e(n),hourStr:e(a),minuteStr:e(s)}};export{g};
