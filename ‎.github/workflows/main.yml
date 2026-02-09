@@ -1,18 +1,40 @@
-name: Build and Deploy
-on: [push]
-permissions:
-  contents: write
+name: deploy-website
+
+on:
+  push:
+    branches: ['master']
+
+  workflow_dispatch:
+
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [24]
+
     steps:
-      - name: Checkout 🛎️
+      - name: Checkout
         uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Install pnpm 🔧
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Use Node.js ${{ matrix.node-version }} 🔧
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+
+      - name: Install dependencies 🔧
+        run: pnpm install
 
       - name: Install and Build 🔧
-        run: |
-          npm ci
-          npm run build
+        run: pnpm build
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
