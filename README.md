@@ -16,11 +16,11 @@
 
 ## 预览
 
-<img src="https://minio.zhichao.org/images/hydrogen-account-home.webp" width="270"/><img src="https://minio.zhichao.org/images/hydrogen-account-show.webp" width="270"/><img src="https://minio.zhichao.org/images/hydrogen-account-my.webp" width="270"/>
+<img src="https://s3.zhichao.org/images/hydrogen-account-home.webp" width="270"/><img src="https://s3.zhichao.org/images/hydrogen-account-show.webp" width="270"/><img src="https://s3.zhichao.org/images/hydrogen-account-my.webp" width="270"/>
 
 ## 内部页面
 
-<img src="https://minio.zhichao.org/images/hydrogen-account-calc.webp" width="270"/><img src="https://minio.zhichao.org/images/hydrogen-account-list.webp" width="270"/><img src="https://minio.zhichao.org/images/hydrogen-account-category.webp" width="270"/><img src="https://minio.zhichao.org/images/hydrogen-account-categoryChart.webp" width="270"/><img src="https://minio.zhichao.org/images/hydrogen-account-timeChart.webp" width="270"/>
+<img src="https://s3.zhichao.org/images/hydrogen-account-calc.webp" width="270"/><img src="https://s3.zhichao.org/images/hydrogen-account-list.webp" width="270"/><img src="https://s3.zhichao.org/images/hydrogen-account-category.webp" width="270"/><img src="https://s3.zhichao.org/images/hydrogen-account-categoryChart.webp" width="270"/><img src="https://s3.zhichao.org/images/hydrogen-account-timeChart.webp" width="270"/>
 
 ## 技术栈
 
